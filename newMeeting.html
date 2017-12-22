@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/re.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <header>
+        <button class="back">&lt;</button>
+        <h1 class="title">新建会议</h1>
+    </header>
+    <article>
+        <div class="new">
+            <ul class="newBox">
+                <li>
+                    <input type="text" placeholder="会议名称">
+                </li>
+                <li>
+                    <textarea name="" id="" placeholder="会议详情"></textarea>
+                </li>
+                <li class="inputBox">
+                    <span>附件</span>
+                    <input type="file" id="newsPic">
+                    <input type="button" value="上传" id="upLoadPicBtn">
+                    <img src="" id="uploadImg" alt="">
+                </li>
+            </ul>
+            <ul class="newBox">
+                <li class="inputBox">
+                    <span>开始时间</span>
+                    <input type="datetime-local" name="" id="">
+                </li>
+                <li class="inputBox">
+                    <span>结束时间</span>
+                    <input type="datetime-local" name="" id="">
+                </li>
+                <li class="chooseBox">
+                    <span>会议地点</span>
+                    <span class="val">1号会议室</span>
+                    <span class="btn">&gt;</span>
+                    <ul>
+                        <li>1号会议室</li>
+                        <li>2号会议室</li>
+                        <li>3号会议室</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="newBox">
+                <li class="chooseBox">
+                    <span>发起人</span>
+                    <span class="val">已选择1人</span>
+                    <span class="btn">&gt;</span>
+                    <ul>
+                        <li>张三</li>
+                        <li>李四</li>
+                        <li>王麻子</li>
+                    </ul>
+                </li>
+                <li class="chooseList">
+                    <span>参会人</span>
+                    <span class="val">已选择9人</span>
+                    <span class="btn">&gt;</span>
+                    <ul>
+                        <li>张三</li>
+                        <li>李四</li>
+                        <li>王麻子</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="newBox">
+                <li class="selectBox">
+                    <span>可查看会议纪要</span>
+                    <div class="choose">
+                        <div class="">
+                            <span></span>
+                        </div>
+                    </div>
+                </li>
+                <li class="selectBox">
+                    <span>阅读会议即为确认参加</span>
+                    <div class="choose">
+                        <div class="">
+                            <span></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <footer>
+            <div class="flexBox">
+                <span class="back">返回</span>
+                <span class="success save">保存</span>
+            </div>
+        </footer>
+    </article>
+
+    <script src="js/tools.js"></script>
+    <script src="js/ajaxFunc.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/pageLoad/newMeeting.js"></script>
+</body>
+</html>

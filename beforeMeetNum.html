@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/re.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <header>
+        <button class="back">&lt;</button>
+        <h1 class="title">会议详情</h1>
+    </header>
+    <article>
+        <div class="tab meetPeopleTab meetPeopleSelect">
+            <ul class="tabTittle">
+                <li class="select" data-index="1">待审批（<span>1</span>人）</li>
+                <li data-index="2">已请假（<span>2</span>人）</li>
+                <li data-index="3">退审（<span>0</span>人）</li>
+            </ul>
+            <ul class="tabMain">
+                <li class="select" data-index="1">
+                    <ul class="hasFooter">
+                        <li class="select">
+                            <img src="" alt="">
+                            <div>
+                                <h5>张三</h5>
+                                <span>外出培训</span>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="" alt="">
+                            <div>
+                                <h5>张三123</h5>
+                                <span>外出213培训</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <footer>
+                        <div class="flexBox">
+                            <span class="noPass warning">不通过</span>
+                            <span class="pass success">通过</span>
+                        </div>
+                    </footer>
+                </li>
+                <li data-index="2">
+                    <ul>
+                        <li>
+                            <img src="" alt="">
+                            <div>
+                                <h5>张三</h5>
+                                <span>外出培训</span>
+                            </div>
+                        </li>
+                        <li class="select">
+                            <img src="" alt="">
+                            <div>
+                                <h5>张三123</h5>
+                                <span>外出213培训</span>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li data-index="3">
+                    <ul>
+                        <li>
+                            <img src="" alt="">
+                            <div>
+                                <h5>张三</h5>
+                                <span>外出培训</span>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </article>
+    
+
+    <script src="js/tools.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

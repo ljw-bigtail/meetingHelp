@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/re.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <header>
+        <button class="back">&lt;</button>
+        <h1 class="title">会议详情</h1>
+    </header>
+    <article>
+        <div class="tab meetPeopleTab">
+            <ul class="tabTittle">
+                <li class="select" data-index="1">确认参加（<span>1</span>人）</li>
+                <li data-index="2">已签到（<span>2</span>人）</li>
+                <li data-index="3">未签到（<span>0</span>人）</li>
+            </ul>
+            <ul class="tabMain">
+                <li data-index="1">
+                    <ul class="userPic">
+                        <li>
+                            <img src="" alt="">
+                            <span>张三</span>
+                        </li>
+                        <li>
+                            <img src="" alt="">
+                            <span>张三1</span>
+                        </li>
+                    </ul>
+                </li>
+                <li data-index="2">
+                    <ul class="userPic">
+                        <li>
+                            <img src="" alt="">
+                            <span>张三</span>
+                        </li>
+                    </ul>
+                </li>
+                <li data-index="3">
+                    <ul class="hasFooter userPic">
+                        <li>
+                            <img src="" alt="">
+                            <span>张三</span>
+                        </li>
+                        <li>
+                            <img src="" alt="">
+                            <span>张三123</span>
+                        </li>
+                    </ul>
+                    <footer>
+                        <div class="flexBox">
+                            <span class="back">返回</span>
+                            <span class="tipsTo success">提醒签到</span>
+                        </div>
+                    </footer>
+                </li>
+            </ul>
+        </div>
+    </article>
+    
+    <script src="js/tools.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

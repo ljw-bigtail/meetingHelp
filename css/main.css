@@ -1,0 +1,919 @@
+@media only screen and (max-width: 320px) {
+    html {
+        font-size: 5px !important;
+    }
+}
+
+@media only screen and (min-width: 320px) {
+    html {
+        font-size: 5px !important;
+    }
+}
+
+@media only screen and (min-width: 384px) {
+    html {
+        font-size: 6px !important;
+    }
+}
+
+@media only screen and (min-width: 480px) {
+    html {
+        font-size: 7.5px !important;
+    }
+}
+
+@media only screen and (min-width: 640px) {
+    html {
+        font-size: 10px !important;
+    }
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background: #e8e8e8;
+    color: #3f3f3f;
+}
+
+* {
+    font-family: '微软雅黑';
+    color: #3f3f3f;
+}
+
+a {
+    text-decoration: none;
+}
+
+textarea:focus,
+button:focus,
+input:focus {
+    outline: none;
+}
+
+.mes span {
+    color: #aaaaaa;
+    font-size: 3rem;
+    margin-right: 1rem;
+    line-height: 4rem;
+}
+
+.search {
+    background: #ffffff;
+    padding: 0 1rem;
+    margin: 1rem 2rem;
+    font-size: 0;
+    border-radius: 1rem;
+    border: 1px solid #cccccc;
+}
+
+.search input {
+    display: inline-block;
+    width: calc( 100% - 2rem);
+    font-size: 2.6rem;
+    border: 0;
+    padding: 1rem;
+    text-align: center;
+}
+
+footer {
+    height: 8rem;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+footer .flexBox {
+    display: flex;
+    padding: 1rem 0rem;
+}
+
+footer .flexBox span {
+    flex: 2;
+    text-align: center;
+    line-height: 6rem;
+    height: 6rem;
+    font-size: 3rem;
+    margin: 0 1rem;
+    margin-top: -1px;
+    border: 1px solid #cccccc;
+    border-radius: 1rem;
+}
+
+footer .flexBox span.success {
+    background: #0BB908;
+    color: #ffffff;
+    margin-top: 0;
+    border: none;
+}
+
+footer .flexBox span.success a {
+    color: #ffffff;
+}
+
+footer .flexBox span.warning {
+    background: #FE6103;
+    color: #ffffff;
+    margin-top: 0;
+    border: none;
+}
+
+footer .flexBox span.warning a {
+    color: #ffffff;
+}
+
+.userPic li {
+    font-size: 2.6rem;
+    line-height: 3rem;
+    color: #666666;
+    display: inline-block;
+    padding: 1rem;
+    margin: 0;
+    width: 9.6rem;
+    vertical-align: top;
+}
+
+.userPic li img {
+    height: 9.6rem;
+    width: 100%;
+    display: block;
+    border-radius: 50%;
+    border: 1px solid #cccccc;
+}
+
+.userPic li span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+
+/* ------------------------------------------- */
+
+body>header {
+    height: 8rem;
+    font-size: 0;
+    line-height: 8rem;
+    background: #5176AB;
+}
+
+body>header .back {
+    display: inline-block;
+    width: 10rem;
+    height: 8rem;
+    border: 0;
+    font-size: 4rem;
+    background: transparent;
+    line-height: 8rem;
+    color: #ffffff;
+    font-family: serif;
+    font-weight: bold;
+}
+
+body>header .title {
+    font-size: 4rem;
+    color: #ffffff;
+    display: inline-block;
+    margin-right: 10rem;
+    text-align: center;
+    width: calc( 100% - 20rem);
+    vertical-align: top;
+}
+
+body>article.hasFooter {
+    height: calc( 100% - 16rem);
+}
+
+body>article {
+    height: calc( 100% - 8rem);
+    overflow-y: auto;
+}
+
+body>article .tip {
+    overflow: hidden;
+    background: #4C4F58;
+    height: calc( 28% - 8rem);
+    min-height: 16rem;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 300;
+    padding: 4rem 0;
+}
+
+body>article .tip .num {
+    font-size: 8rem;
+    line-height: 11rem;
+    color: #ffffff;
+}
+
+body>article .tip p {
+    font-size: 2.6rem;
+    line-height: 6rem;
+    color: #ffffff;
+}
+
+body>article .tip a {
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+body>article .btnBox {
+    padding: 1rem;
+    margin: 2rem 0;
+    background: #ffffff;
+}
+
+body>article .btnBox .btnTitle {
+    display: block;
+    height: 6rem;
+    line-height: 6rem;
+    color: #aaaaaa;
+    border-bottom: 1px solid #dddddd;
+}
+
+body>article .btnBox .btnTitle h3 {
+    font-size: 3rem;
+}
+
+body>article .btnBox ul {
+    font-size: 0;
+}
+
+body>article .btnBox ul li {
+    display: inline-block;
+    width: 33.33%;
+}
+
+body>article .btnBox ul li .pic {
+    display: block;
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 7rem;
+    height: 7rem;
+    background: #cccccc;
+    border-radius: 50%;
+    position: relative;
+}
+
+body>article .btnBox ul li img {
+    display: block;
+    margin: 0 auto;
+    width: 4rem;
+    height: 4rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -2rem;
+    margin-left: -2rem;
+}
+
+body>article .btnBox ul li h5 {
+    font-size: 2.6rem;
+    text-align: center;
+    line-height: 3rem;
+    color: #3f3f3f;
+}
+
+body>footer {
+    height: 8rem;
+}
+
+body>article .btnBox:nth-child(2) ul li:nth-child(1) .pic {
+    background: #EC8C74;
+}
+
+body>article .btnBox:nth-child(2) ul li:nth-child(2) .pic {
+    background: #9C97F0;
+}
+
+body>article .btnBox:nth-child(3) ul li:nth-child(1) .pic {
+    background: #6DBDE5;
+}
+
+body>article .btnBox:nth-child(3) ul li:nth-child(2) .pic {
+    background: #6DC56E;
+}
+
+body>article .btnBox:nth-child(3) ul li:nth-child(3) .pic {
+    background: #FDA96E;
+}
+
+.list ul li {
+    margin-top: 1.5rem;
+    display: block;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+.list ul li .main {
+    font-size: 0rem;
+    padding: 1rem 2rem;
+}
+
+.list ul li .main .mes {
+    display: inline-block;
+    font-size: 4rem;
+    width: calc( 100% - 4rem);
+    color: #3f3f3f;
+    vertical-align: middle;
+}
+
+.list ul li .main .mes h3 {
+    font-size: 3.6rem;
+}
+
+.list ul li .main .mes+span {
+    display: inline-block;
+    font-size: 3.2rem;
+    font-family: serif;
+    width: 4rem;
+    text-align: center;
+    vertical-align: middle;
+    color: #aaaaaa;
+    font-weight: bold;
+}
+
+.list ul li .main .mes h3 {
+    line-height: 7rem;
+    color: #3f3f3f;
+}
+
+.list ul li .main .mes>div {
+    line-height: 3.6rem;
+}
+
+.list ul li .main .mes img {
+    width: 2.4rem;
+    vertical-align: middle;
+}
+
+.list ul li .del {
+    display: none;
+    font-size: 4rem;
+    background: rgb(200, 80, 80);
+    color: #ffffff;
+    line-height: 7rem;
+    height: 7rem;
+    text-align: center;
+}
+
+body article .roomState h6 {
+    font-size: 2.8rem;
+    padding: 1.5rem;
+    color: #aaaaaa;
+}
+
+body article .roomState .mes {
+    background: #ffffff;
+    padding: 1.5rem
+}
+
+body article .roomState .mes .top {
+    margin: 1rem 0;
+}
+
+body article .roomState .mes p {
+    font-size: 2.6rem;
+    line-height: 3rem;
+    color: #aaaaaa;
+}
+
+body article .roomState .mes span {
+    font-size: 3rem;
+    color: #3f3f3f;
+    line-height: 4rem;
+}
+
+body article .roomState .mes ul li {
+    font-size: 2.6rem;
+    line-height: 3rem;
+    color: #666666;
+}
+
+body article .roomState .mes ul li span {
+    color: #666666;
+}
+
+body article .new {
+    margin-bottom: 2rem;
+}
+
+body article .new .newBox:first-child {
+    margin-top: 0;
+}
+
+body article .new .newBox {
+    margin-top: 2rem;
+    background: #ffffff;
+    padding: 2rem;
+}
+
+body article .new .newBox li {
+    border-bottom: 1px solid #cccccc;
+    font-size: 0;
+    padding: .51rem 0;
+}
+
+body article .new .newBox li input {
+    border: 0;
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 3rem;
+    width: 100%;
+    vertical-align: middle;
+    padding: 0;
+}
+
+body article .new .newBox li textarea {
+    border: 0;
+    line-height: 3rem;
+    font-size: 3rem;
+    resize: none;
+    height: 12rem;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+body article .new .newBox li.inputBox span {
+    font-size: 3rem;
+    line-height: 5rem;
+}
+
+body article .new .newBox li.inputBox #uploadImg{
+    display: block;
+    max-height: 10rem;
+}
+
+body article .new .newBox li.inputBox input {
+    width: calc( 100% - 12rem );
+    padding: 0;
+    text-align: right;
+}
+
+body article .new .newBox li.inputBox input#newsPic {
+    width: calc( 100% - 12rem - 12rem );
+}
+body article .new .newBox li.inputBox input#upLoadPicBtn {
+    width: 12rem;
+    text-align: center;  
+    background: #6DC56E;
+    color: #ffffff;  
+    border-radius: 6rem;
+}
+
+body article .new .newBox li span {
+    width: 12rem;
+    font-size: 3rem;
+    line-height: 5rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+body article .new .newBox li span.val {
+    width: calc( 100% - 12rem - 4rem);
+    text-align: right;
+}
+
+body article .new .newBox li span.btn {
+    display: inline-block;
+    font-family: serif;
+    width: 4rem;
+    text-align: center;
+    vertical-align: middle;
+    color: #aaaaaa;
+    font-weight: bold;
+}
+
+body article .new .newBox li.selectBox span {
+    width: 30rem;
+}
+
+body article .new .newBox li.selectBox .choose {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc( 100% - 30rem);
+    text-align: right;
+}
+
+body article .new .newBox li.selectBox .choose>div {
+    float: right;
+    width: calc( 6rem - 2px);
+    height: 3rem;
+    border-radius: 1.5rem;
+    background: #BBBBBB;
+    position: relative;
+}
+
+body article .new .newBox li.selectBox .choose>div>span {
+    position: absolute;
+    height: calc( 3rem - 2px);
+    width: calc( 3rem - 2px);
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #aaaaaa;
+    left: 0;
+}
+
+body article .new .newBox li.selectBox .choose>div.selected {
+    background: #0BB908;
+}
+
+body article .new .newBox li.selectBox .choose>div.selected>span {
+    left: auto;
+    right: 0;
+}
+
+body article .new .newBox li.chooseBox ul,
+body article .new .newBox li.chooseList ul {
+    display: none;
+}
+
+body article .new .newBox li.chooseBox ul li,
+body article .new .newBox li.chooseList ul li {
+    font-size: 2.6rem;
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin: 1rem;
+    padding: 1rem 2rem;
+}
+
+body article .new .newBox li.chooseBox ul li.select,
+body article .new .newBox li.chooseList ul li.select {
+    background: #0BB908;
+    color: #ffffff;
+    border-color: #0BB908;
+}
+
+body article .meetMain .mesPeople img {
+    width: 2.4rem;
+    margin-right: 1rem;
+    vertical-align: sub;
+}
+
+body article .meetMain .mesPeople span {
+    color: #aaaaaa;
+    font-size: 2.6rem;
+    margin-right: 1rem;
+    line-height: 4rem;
+}
+
+body article .meetMain .flexBox span {
+    line-height: 6rem;
+}
+
+body article .meetMain .flexBox span.success {
+    color: #ffffff;
+}
+
+body article .meetMain h3 {
+    font-size: 3.4rem;
+    color: #3f3f3f;
+    line-height: 4rem;
+    margin-top: 2rem;
+}
+
+body article .meetMain h3+a {
+    font-size: 2.6rem;
+    line-height: 5rem;
+    color: #5176AB;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+body article .meetMain h5 {
+    padding: 3rem 0;
+    font-size: 2.8rem;
+    line-height: 4rem;
+}
+
+body article .meetMain ul:not(.userPic) {
+    display: flex;
+}
+
+body article .meetMain ul:not(.userPic) li {
+    flex: 3;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+body article .meetMain ul:not(.userPic) li:nth-child(1),
+body article .meetMain ul:not(.userPic) li:nth-child(2) {
+    border-right: 1px solid #cccccc;
+}
+
+body article .meetMain ul li span {
+    margin: 0;
+}
+
+body article .meetMain ul li.colorBlue {
+    color: #5176AB;
+}
+
+body article .meetMain ul li.colorBlue span {
+    color: #5176AB;
+}
+
+footer .inputBox {
+    border-top: 1px solid #999999;
+    background: #E8E8E8;
+    padding: 1rem;
+    font-size: 0;
+}
+
+footer .inputBox input {
+    border: 1px solid #cccccc;
+    padding: 0;
+    height: 6rem;
+    margin-top: -1px;
+    display: inline-block;
+    width: 70%;
+    border-radius: 1rem;
+    font-size: 2.4rem;
+    padding: 0 1rem;
+}
+
+footer .inputBox button {
+    width: calc( 30% - 4rem);
+    font-size: 2.4rem;
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    margin-left: 1rem;
+    border: 1px solid #cccccc;
+    height: 6rem;
+    border-radius: 1rem;
+}
+
+.writeMain {
+    height: 100%;
+}
+
+.writeMain .textMain {
+    height: calc( 100% - 2.8rem - 3rem - 3rem - 2rem - 4rem - 4rem - 6rem - 4rem - 3rem);
+}
+
+.writeMain .textMain textarea {
+    border: 0;
+    resize: none;
+    width: 100%;
+    padding: 0;
+    font-size: 3rem;
+    line-height: 4rem;
+    height: 100%;
+}
+
+.leaveBox {
+    display: none;
+}
+
+.tipBox {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .3);
+    padding: 4rem;
+}
+
+.tipMain {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 4rem;
+    right: 4rem;
+    background: #ffffff;
+    border: 1px solid #999999;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.tipMain .leaveMain {
+    padding: 2rem;
+}
+
+.tipMain .leaveMain textarea {
+    padding: 1rem;
+    height: 16rem;
+    line-height: 4rem;
+    width: 100%;
+    resize: none;
+    padding: 0;
+    border: 0;
+}
+
+.tipMain .leaveMain .fontLength {
+    text-align: right;
+    font-size: 2.6rem;
+    margin-top: 1rem;
+}
+
+.tipMain .leaveFooter {
+    border-top: 1px solid #cccccc;
+    height: 7rem;
+}
+
+.tipMain .leaveFooter .flexBox {
+    padding: 0;
+}
+
+.tipMain .leaveFooter .flexBox span {
+    border: 0;
+    line-height: 7rem;
+    height: 7rem;
+    border-radius: 0;
+}
+
+.tipMain .leaveFooter .flexBox span:first-child {
+    border-right: 1px solid #cccccc;
+}
+
+.tipMain .leaveFooter .flexBox span.save {
+    color: #0BB908;
+}
+
+.tab .tabTittle {
+    display: flex;
+}
+
+.tab .tabTittle li {
+    flex: 3;
+    font-size: 3rem;
+    line-height: 8rem;
+    height: 8rem;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+}
+
+.tab .tabTittle li:last-child {
+    border-right: 0;
+}
+
+.tab .tabTittle li.select {
+    background: #ffffff;
+    border-bottom: 2px solid #5176AB;
+    margin-bottom: -1px;
+}
+
+.meetPeopleTab .tabMain {
+    height: calc( 100% - 8rem);
+    background: #f8f8f8;
+}
+
+.meetPeopleTab .tabMain img {
+    height: 8rem;
+    width: 8rem;
+    display: block;
+    border-radius: 50%;
+    border: 1px solid #cccccc;
+}
+
+.meetPeopleTab {
+    height: 100%;
+    border-bottom: 1px solid #333333;
+    margin-top: -1px;
+}
+
+.meetPeopleTab .tabMain>li {
+    height: 100%;
+}
+
+.meetPeopleTab .tabMain li ul {
+    height: 100%;
+}
+
+.meetPeopleTab .tabMain li ul.hasFooter {
+    height: calc( 100% - 8rem - 3rem);
+}
+
+.meetPeopleTab .tabMain ul li {
+    background: #ffffff;
+    border-bottom: 1px solid #cccccc;
+    padding: 2rem;
+}
+
+.meetPeopleTab .tabMain ul li.select {
+    background: #6DC56E;
+}
+
+.meetPeopleTab .tabMain ul li.select h5,
+.meetPeopleTab .tabMain ul li.select span {
+    color: #ffffff;
+}
+
+.meetPeopleTab .tabMain ul li img,
+.meetPeopleTab .tabMain ul li div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.meetPeopleTab .tabMain ul li div {
+    padding: 0 2rem;
+}
+
+.meetPeopleTab .tabMain ul li div h5 {
+    font-size: 3.4rem;
+    line-height: 5rem;
+    font-weight: bold;
+}
+
+.meetPeopleTab .tabMain ul li div span {
+    font-size: 2.4rem;
+    line-height: 3rem;
+}
+
+.meetPeopleTab .tabMain>li[data-index="2"],
+.meetPeopleTab .tabMain>li[data-index="3"] {
+    display: none;
+}
+
+.meetPeopleTab .tabMain .userPic {
+    background: #ffffff;
+    height: calc( 100% - 3rem);
+    padding: 1.5rem;
+}
+
+.meetPeopleTab .tabMain .userPic li {
+    padding: 1rem;
+    margin: 0;
+    border: 0;
+}
+
+.loginBG {
+    height: 100%;
+    width: 100%;
+    background: #5176AB;
+}
+
+.loginBG .loginBox {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 4rem;
+    right: 4rem;
+    background: #ffffff;
+    border: 1px solid #999999;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.loginBG .loginBox header {
+    font-size: 5rem;
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.loginBG .loginBox article {
+    padding: 0 2rem;
+}
+
+.loginBG .loginBox article input {
+    display: inline-block;
+    width: calc( 100% - 2rem);
+    line-height: 4rem;
+    font-size: 2.6rem;
+    border: 0;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 1rem;
+    border: 1px solid #cccccc;
+    margin-bottom: 2rem;
+}
+
+.loginBG .loginBox footer {
+    text-align: center;
+    height: auto;
+}
+
+.loginBG .loginBox footer button {
+    border: 0;
+    background: #5176AB;
+    color: #ffffff;
+    height: 0rem;
+    line-height: 6rem;
+    padding: 0 8rem;
+    border-radius: 3rem;
+    margin-bottom: 2rem;
+}
+
+.loginBG .loginBox #reqMes {
+    display: none;
+    text-align: center;
+    font-size: 2.4rem;
+    color: red;
+    line-height: 3.4rem;
+    margin-bottom: 2rem;
+}
+
+body article .myMes li.changeMes {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+}
+
+body article .myMes li.changeMes span {
+    width: auto;
+}
