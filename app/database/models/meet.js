@@ -21,7 +21,7 @@ let meetSchema = new Schema({
     "mEndTime": {
         type: String,
     },
-    "mRoom": {
+    "rName": {
         type: String,
     },
     "mAdmin": {
@@ -30,10 +30,14 @@ let meetSchema = new Schema({
     "mPeople": {
         type: String,
     },
-    "mContainer": {
-        type: String,
-    },
+    // "mContainer": {
+    //     type: String,
+    // }, 暂不需要
     "mNote": {
+        type: Number,
+        default: 0
+	},
+	"mJoin": {
         type: Number,
         default: 0
     },
@@ -102,10 +106,16 @@ meetSchema.statics = {
 	},
 	addMeet: function (meet, callback) {
 		let newMeet = {
-			"mName": meet.mName || '',
-			"rPlace": meet.rPlace || '',
-			"rNum": meet.rNum || '',
-			"rDevice": meet.rDevice || '',
+			"mName": meet.name || '',
+			"mDesc": meet.detail || '',
+			"mFile": meet.uploadImg || '',
+			"mStartTime": meet.start || '',
+			"mEndTime": meet.end || '',
+			"rName": meet.room || '',
+			"mAdmin": meet.sponsor || '',
+			"mPeople": meet.joinList || '',
+			"mNote": meet.canRead || '',
+			"mJoin": meet.autoJoin || '',
 		}
     
 		this.create(newMeet, (err) => {
@@ -119,7 +129,7 @@ meetSchema.statics = {
 					'status': "success",
 				});
 			}
-		})
+		});
 	},
 	delMeet: function (mName, callback) {
 		this.remove({

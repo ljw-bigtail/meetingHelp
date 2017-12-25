@@ -32,11 +32,11 @@ var Status = require('../database/models/status');
 // 	"mFile": '',
 // 	"mStartTime": '2017/12/24 12:00:00',
 // 	"mEndTime": '2017/12/24 14:00:00',
-// 	"mRoom": '会议室1',
+// 	"rName": '会议室1',
 // 	"mAdmin": 'Wi7fF5',
 // 	"mPeople": ["N5r8QC", "rAzTar"],
-// 	"mContainer": '下#%*^HGAVSDLJFHVBALKSJB:SDVB按时打发阿萨1号',
-// 	"mNote": 0
+// 	"mNote": 0,
+// 	"mJoin": 0
 // })
 // Department.create({
 // 	"dName": '会议室1',
@@ -92,6 +92,7 @@ router.post('/uploadImg', function (req, res) {
 
 
 // 获取账户列表
+// 需要过滤数组部分值，暂未处理
 router.post('/getUserList', function (req, res) {
 	let attr = req.body.attr || null;
 	let val = req.body.val || null;
@@ -190,6 +191,37 @@ router.post('/addRoom', function (req, res) {
 	}
 	Room.addRoom(req.body, (mes) => {
 		res.send(200, mes);
+	})
+});
+
+// 新建会议
+router.post('/addMeet', function (req, res) {
+	if (!req.body.name || !req.body.detail || !req.body.start || !req.body.end || !req.body.room || !req.body.sponsor || !req.body.joinList) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Meet.addMeet(req.body, (mes) => {
+		res.send(200, mes);
+	})
+});
+
+// 获取会议室列表
+// 需要过滤数组部分值，暂未处理
+router.post('/getRoomList', function (req, res) {
+	let attr = req.body.attr || null;
+	let val = req.body.val || null;
+	if (attr && attr !== 'rDevice') {
+		res.send(200, {
+			mes: '仅支持通过 rDevice 搜索。'
+		});
+		return false;
+	}
+	Room.findRoomList(attr, val, (roomList) => {
+		res.send(200, {
+			'roomList': roomList
+		});
 	})
 });
 

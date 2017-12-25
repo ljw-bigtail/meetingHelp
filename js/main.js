@@ -35,21 +35,29 @@ window.onload = function () {
         toggleShow(chooseListBox[index].querySelector('ul'));
     })
     
-    //单选盒子
+    //单选盒子,事件代理
     chooseBox.forEach(function(item, index){
-        let chooseOneList = item.querySelectorAll('ul li');
-        addEventForList (chooseOneList, 'click', function(_item, _index){
-            removeClass(chooseOneList);      
-            toggleClass(_item, 'select', '');
-        })
+        let chooseOne = item.querySelector('ul');
+        chooseOne.addEventListener('click', function(e){
+            if(e.target.nodeName == 'LI'){
+                let chooseOneList = this.querySelectorAll('li');
+                removeClass(chooseOneList);
+                toggleClass(e.toElement, 'select', '');
+                chooseOne.parentNode.querySelector('span.val').innerHTML = e.toElement.innerHTML;
+            }
+        });
     });
 
-    // 多选盒子
+    // 多选盒子,事件代理
     chooseListBox.forEach(function(item, index){
-        let chooseOneList = item.querySelectorAll('ul li');
-        addEventForList (chooseOneList, 'click', function(_item, _index){
-            toggleClass(_item, 'select', '');
-        })
+        let chooseOne = item.querySelector('ul');
+        chooseOne.addEventListener('click', function(e){
+            if(e.target.nodeName == 'LI'){
+                let chooseOneList = this.querySelectorAll('li');
+                toggleClass(e.toElement, 'select', '');
+                item.querySelector('span.val').innerHTML = '已选择' + item.querySelectorAll('ul li.select').length + '人';    
+            }
+        });
     });
 
     addEventForList (selectChoose, 'click', function(item, index){
