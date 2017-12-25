@@ -72,9 +72,9 @@ roomSchema.statics = {
 			});
 		}
 	},
-	findRoomByAttr: function (rName, callback) {
+	findRoomByAttr: function (attr, val, callback) {
 		this.findOne({
-			'rName': rName
+			[attr]: val
 		}).exec((err, room) => {
 			if (err) {
 				console.log(err);

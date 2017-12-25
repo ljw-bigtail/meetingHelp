@@ -1,7 +1,6 @@
 window.onload = function () {
     let backList = document.querySelectorAll('.back');
-    let showList = document.querySelectorAll('.showBtn');
-    let delList = document.querySelectorAll('.del');
+    let showList = document.querySelectorAll('.roomList ul');
     
     let chooseBox = document.querySelectorAll('.chooseBox');
     let chooseBtnList = document.querySelectorAll('.chooseBox .btn');
@@ -15,15 +14,20 @@ window.onload = function () {
         history.go(-1);
     })
     
-    // 删除本条
-    addEventForList (delList, 'click', function(item, index){
-        console.log('删除')
-    })
-
-    // 展开删除按钮
-    addEventForList (showList, 'click', function(item, index){
-        toggleShow(delList[index]);
-    })
+    showList.forEach(function(item, index){
+        item.addEventListener('click', function(e){
+            // 展开删除按钮,事件代理
+            if(e.target.className == 'showBtn'){
+                toggleShow(e.toElement.parentNode.parentNode.querySelector('.del'));
+            }
+            // 删除本条,事件代理
+            if(e.target.className == 'del'){
+                // 删除当前节点，后续操作没有想好：
+                // 不确定是直接删除还是不允许删除，等待管理员进行删除
+                item.removeChild(e.toElement.parentNode)
+            }
+        });
+    });
 
     // 展开单选盒子
     addEventForList (chooseBtnList, 'click', function(item, index){

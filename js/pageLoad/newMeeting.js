@@ -25,6 +25,14 @@
 
         // 在会议地点中加载
         room.parentElement.querySelector('ul').innerHTML = dom;
+
+        // 根据传递来的参数自动选择当前的会议室地点，然后click
+        var place = tools.getQuery('place');
+        room.parentNode.querySelectorAll('ul li').forEach((e)=>{
+            if(e.innerHTML == place){
+                e.click();
+            }
+        });
     });
     // 加载会议人物
     ajaxTool.getUserList((data) => {

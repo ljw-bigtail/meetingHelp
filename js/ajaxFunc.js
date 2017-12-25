@@ -91,4 +91,20 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    //新建会议信息
+    findRoom: function (meetData, callback) {
+        fetch(Url + "/api/getRoomByAttr", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(meetData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    
 }

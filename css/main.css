@@ -54,7 +54,7 @@ input:focus {
 .mes span {
     color: #aaaaaa;
     font-size: 3rem;
-    margin-right: 1rem;
+    margin: 0 1rem;
     line-height: 4rem;
 }
 
@@ -163,6 +163,7 @@ div#errMes {
     border-bottom-right-radius: 1rem;
     font-weight: bold;
 }
+
 div.errMes {
     animation: 3s showErr;
 }
@@ -431,6 +432,22 @@ body article .roomState .mes ul li {
 
 body article .roomState .mes ul li span {
     color: #666666;
+    font-size: 2.6rem;
+}
+
+body article .roomState .mes ul li span.roomDevice {
+    display: block;
+    padding-left: calc( 5 * 2.6rem);
+}
+
+body article .roomState .mes ul li span.roomDevice i {
+    color: #666666;
+}
+
+body article .roomState .mes ul li span.roomDevice i::before {
+    content: '-';
+    padding-right: 1rem;
+    display: inline;
 }
 
 body article .new {

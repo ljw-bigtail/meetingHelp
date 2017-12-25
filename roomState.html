@@ -27,12 +27,12 @@
             <h6>会议室信息</h6>
             <div class="mes">
                 <div class="top">
-                    <span>一号会议室</span>
+                    <span class="roomName"></span>
                 </div>
                 <ul>
-                    <li>可容纳人数：<span>20</span></li>
-                    <li>会议室地址：<span>20</span></li>
-                    <li>会议室设备：<span>20</span></li>
+                    <li>可容纳人数：<span class="roomNumber"></span></li>
+                    <li>会议室地址：<span class="roomAddress"></span></li>
+                    <li>会议室设备：<span class="roomDevice"></span></li>
                 </ul>
             </div>
         </div>
@@ -40,11 +40,14 @@
     <footer>
         <div class="flexBox">
             <span class="back">返回</span>
-            <span class="success"><a href="newMeeting">新建会议</a></span>
+            <span class="success newMeet">新建会议</span>
         </div>
     </footer>
 
     <script src="js/tools.js"></script>
+    <script src="js/err.js"></script>
+    <script src="js/ajaxFunc.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/pageLoad/roomState.js"></script>
 </body>
 </html>

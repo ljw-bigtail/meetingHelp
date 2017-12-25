@@ -225,4 +225,17 @@ router.post('/getRoomList', function (req, res) {
 	})
 });
 
+// 获取会议室信息
+router.post('/getRoomByAttr', function (req, res) {
+	if (!req.body.attr || !req.body.val) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Room.findRoomByAttr(req.body.attr, req.body.val, (user) => {
+		res.send(200, user);
+	})
+});
+
 module.exports = router;
