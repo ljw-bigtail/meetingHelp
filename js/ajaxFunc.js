@@ -135,4 +135,19 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    //更新纪要信息
+    updateNote: function (res, callback) {
+        fetch(Url + "/api/updateNote", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(res)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
 }

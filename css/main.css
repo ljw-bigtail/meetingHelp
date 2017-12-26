@@ -405,7 +405,15 @@ body article .roomState h6 {
 
 body article .roomState .mes {
     background: #ffffff;
-    padding: 1.5rem
+    padding: 1.5rem;
+    position: relative;
+}
+
+body article .roomState .mes>img {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 4rem;
 }
 
 body article .roomState .mes .top {
@@ -638,9 +646,13 @@ body article .meetMain h3+a {
 }
 
 body article .meetMain h5 {
-    padding: 3rem 0;
+    padding: 2rem 0;
     font-size: 2.8rem;
     line-height: 4rem;
+}
+
+body article .meetMain h5 a {
+    border-bottom: 1px solid #000;
 }
 
 body article .meetMain ul:not(.userPic) {

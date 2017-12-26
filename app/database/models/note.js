@@ -3,7 +3,9 @@
  */
 let mongoose = require('../db'),
     Schema = mongoose.Schema; 
-    
+
+let _underscore = require('underscore');
+
 let noteSchema = new Schema({
     "nTitle": {
         unique: true,
@@ -122,11 +124,10 @@ noteSchema.statics = {
 			}
 		})
 	},
-	updateNote: function (mName, update, callback) {
+	updateNote: function (nTitle, update, callback) {
 		var _this = this;
 		this.findOne({
-            'nTitle': nTitle,
-			'name': name,
+			'nTitle': nTitle,
         }, function (err, oldNote) {
 			if (err) {
 				callback({
@@ -152,13 +153,12 @@ noteSchema.statics = {
 					return false;
 				}
 
-				let newUser = _underscore.extend(oldNote, update);
-				newUser.meta.updateAt = Date.now();
+				let newNote = _underscore.extend(oldNote, update);
+				newNote.meta.updateAt = Date.now();
 
 				_this.update({
                     'nTitle': nTitle,
-                    'name': name,
-                }, newUser, { upsert: true }, function (error) {
+                }, newNote, { upsert: true }, function (error) {
 					if (err) {
 						callback({
 							'status': "faile",

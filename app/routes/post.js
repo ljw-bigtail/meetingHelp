@@ -75,9 +75,9 @@ router.post('/uploadImg', function (req, res) {
 		let uploadedPath = inputFile.path;
 		let dstPath = URL + '/uploads_' + inputFile.originalFilename;
 		fs.rename(uploadedPath, dstPath, (err) => {
-			if (err){
+			if (err) {
 				console.log('rename error: ' + err);
-			}else{
+			} else {
 				// files.file.path = dstPath;
 				// let data = files;
 				res.send(200, {
@@ -86,7 +86,7 @@ router.post('/uploadImg', function (req, res) {
 				});
 			}
 		});
-		
+
 	});
 });
 
@@ -266,6 +266,32 @@ router.post('/getNoteByAttr', function (req, res) {
 	}
 	Note.findNoteByAttr(req.body.attr, req.body.val, (note) => {
 		res.send(200, note);
+	})
+});
+
+// 新建纪要 
+router.post('/addNote', function (req, res) {
+	if (!req.body.nTitle || !req.body.nMes || !req.body.nTitle || !req.body.name) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Note.addNote(req.body, (mes) => {
+		res.send(200, mes);
+	})
+});
+
+// 修改纪要
+router.post('/updateNote', function (req, res) {
+	if (!req.body.nTitle || !req.body.nMes || !req.body.nTitle) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Note.updateNote(req.body.nTitle, req.body, (mes) => {
+		res.send(200, mes);
 	})
 });
 
