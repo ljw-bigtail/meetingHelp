@@ -238,4 +238,35 @@ router.post('/getRoomByAttr', function (req, res) {
 	})
 });
 
+// 获取会议室列表
+// 需要过滤数组部分值，暂未处理
+router.post('/getwriteList', function (req, res) {
+	let attr = req.body.attr || null;
+	let val = req.body.val || null;
+	if (attr && attr !== 'rDevice') {
+		res.send(200, {
+			mes: '仅支持通过 rDevice 搜索。'
+		});
+		return false;
+	}
+	Note.findNoteList(attr, val, (writeList) => {
+		res.send(200, {
+			'writeList': writeList
+		});
+	})
+});
+
+// 获取纪要信息
+router.post('/getNoteByAttr', function (req, res) {
+	if (!req.body.attr || !req.body.val) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Note.findNoteByAttr(req.body.attr, req.body.val, (note) => {
+		res.send(200, note);
+	})
+});
+
 module.exports = router;

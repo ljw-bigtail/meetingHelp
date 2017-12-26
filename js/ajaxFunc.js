@@ -91,7 +91,7 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
-    //新建会议信息
+    //查询会议信息
     findRoom: function (meetData, callback) {
         fetch(Url + "/api/getRoomByAttr", {
                 method: "POST",
@@ -106,5 +106,33 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
-    
+    //获取纪要列表
+    getwriteList: function (callback) {
+        fetch(Url + "/api/getwriteList", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //查询纪要信息
+    findNote: function (noteData, callback) {
+        fetch(Url + "/api/getNoteByAttr", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(noteData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
 }

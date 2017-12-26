@@ -1,6 +1,6 @@
 window.onload = function () {
     let backList = document.querySelectorAll('.back');
-    let showList = document.querySelectorAll('.roomList ul');
+    let showList = document.querySelectorAll('.list ul');
     
     let chooseBox = document.querySelectorAll('.chooseBox');
     let chooseBtnList = document.querySelectorAll('.chooseBox .btn');
@@ -120,42 +120,6 @@ window.onload = function () {
         });
     }
      
-    //搜索
-    let searchBtn =document.querySelector('.searchBtn');
-    let writeList =document.querySelectorAll('.writeList li');
-    let writeTitleData = [];
-    document.querySelectorAll('.writeList li h3').forEach(function(dom){
-        writeTitleData.push(dom.innerHTML)
-    });
-    if(searchBtn){
-        searchBtn.addEventListener('keyup', function(){
-            haveTextInData(this.value, writeTitleData, function(){
-                hideList(writeList);        
-            }, function(isFind){
-                hideList(writeList);        
-                isFind.map(function(num){
-                    writeList[num].style.display = 'block';
-                });
-            });
-        });
-    }
-
-    // 查询Data中是否有text
-    function haveTextInData(text, Data, callback1, callback2){
-        var reg = new RegExp(text);
-        var isFind = [];
-        Data.map(function(value, index){
-            if(value.match(reg)){
-                isFind.push(index)
-                console.log(value,index+1);
-            }
-        });
-        if(isFind.length == 0){
-            callback1();
-        }else{
-            callback2(isFind);
-        }
-    }
 }
 
 // 批量删除dom的类名

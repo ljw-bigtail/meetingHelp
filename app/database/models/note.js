@@ -75,8 +75,7 @@ noteSchema.statics = {
 	},
 	findNoteByAttr: function (attr, val, callback) {
 		this.findOne({
-            'nTitle': nTitle,
-			'name': name,
+            [attr]: val
 		}).exec((err, note) => {
 			if (err) {
 				console.log(err);
