@@ -67,7 +67,7 @@ meetSchema.pre('save', function (next) {
 
 
 meetSchema.statics = {
-	findUserFromMeet: function (val, callback) {
+	findMeetFromUser: function (val, callback) {
 		this.find().exec((err, meetList) => {
 			if (err) {
 				console.log(err);
@@ -85,22 +85,32 @@ meetSchema.statics = {
 			}
 		});
 	},
-	findMeetList: function (attr, val, callback) {
-		// 先找用户相关的会议
-		// 再找会议的公共纪要
-		if (attr && val) {
+	findMeetList: function (user, attr, val, callback) {
+		console.log(user || attr || val)
+		console.log(user,attr,val)
+		if (user || attr || val) {
 			this.find({
-				[attr]: val
+				[attr]: val,
 			}).sort({
 				"_id": -1
 			}).exec((err, meetList) => {
 				if (err) {
 					console.log(err);
 				} else {
-					callback(meetList);
+					let meetData = [];
+					meetList.map((data) => {
+						let userData = data.mPeople.split(",");
+						userData.map((_user) => {
+							if(_user == user){
+								meetData.push(data);
+							}
+						});
+					});
+					callback(meetData);
 				}
 			});
 		} else {
+			// 管理员查找
 			this.find().sort({
 				"_id": -1
 			}).exec((err, meetList) => {

@@ -985,3 +985,9 @@ body article .myMes li.changeMes {
 body article .myMes li.changeMes span {
     width: auto;
 }
+
+body article .meetList h4 {
+    font-size: 2.8rem;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    color: #aaaaaa;
+}

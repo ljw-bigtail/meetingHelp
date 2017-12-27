@@ -2,14 +2,14 @@ const Url = 'http://192.168.199.206:3000';
 
 let ajaxTool = {
     // 校验账户
-    checkUser: function (res, callback) {
+    checkUser: function (req, callback) {
         fetch(Url + "/api/checkPassword", {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(res)
+                body: JSON.stringify(req)
             })
             .then(response => response.json())
             .then(data => {
@@ -18,13 +18,13 @@ let ajaxTool = {
             .catch(e => console.log("sendAjax报错信息：", e))
     },
     //更新用户具体信息
-    updateUser: function (res, callback) {
+    updateUser: function (req, callback) {
         fetch(Url + "/api/updateUser", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(res)
+                body: JSON.stringify(req)
             })
             .then(response => response.json())
             .then(data => {
@@ -33,10 +33,10 @@ let ajaxTool = {
             .catch(e => console.log("报错信息：", e))
     },
     //上传会议附件图片
-    uploadImg: function (resFile, callback) {
+    uploadImg: function (reqFile, callback) {
         // 模拟form表单上传时的数据结构
         let imgData = new FormData();
-        imgData.append('file', resFile.files[0]);
+        imgData.append('file', reqFile.files[0]);
 
         fetch(Url + "/api/uploadImg", {
                 method: "POST",
@@ -137,13 +137,28 @@ let ajaxTool = {
             .catch(e => console.log("报错信息：", e))
     },
     //更新纪要信息
-    updateNote: function (res, callback) {
+    updateNote: function (req, callback) {
         fetch(Url + "/api/updateNote", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(res)
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //获取会议列表
+    getMeetList: function (req, callback) {
+        fetch(Url + "/api/getMeetList", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
             })
             .then(response => response.json())
             .then(data => {

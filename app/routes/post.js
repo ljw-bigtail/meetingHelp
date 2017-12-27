@@ -242,7 +242,7 @@ router.post('/getRoomByAttr', function (req, res) {
 router.post('/getwriteList', function (req, res) {
 	let user = req.body.user || null;
 	// 先找用户相关的会议
-	Meet.findUserFromMeet(user, (meetList) => {
+	Meet.findMeetFromUser(user, (meetList) => {
 		// 用户参与的会议
 		var condition = [];
 		meetList.map((meetData)=>{
@@ -300,5 +300,25 @@ router.post('/updateNote', function (req, res) {
 		res.send(200, mes);
 	})
 });
+
+// 获取会议室列表
+// 需要过滤数组部分值，暂未处理
+router.post('/getMeetList', function (req, res) {
+	let attr = req.body.attr || null;
+	let val = req.body.val || null;
+	let user = req.body.user || null;
+	if (attr !== null && attr !== 'mAdmin') {
+		res.send(200, {
+			mes: '仅支持通过 mAdmin 搜索。'
+		});
+		return false;
+	}
+	Meet.findMeetList(user, attr, val, (meetList) => {
+		res.send(200, {
+			'meetList': meetList
+		});
+	})
+});
+
 
 module.exports = router;
