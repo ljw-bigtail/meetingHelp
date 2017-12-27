@@ -1,6 +1,11 @@
 (() => {
+    var user = tools.getCookie('username');
+    console.log(user)
+
     // 加载会议室列表
-    ajaxTool.getwriteList((data) => {
+    ajaxTool.getwriteList({
+        'user': user
+    }, (data) => {
         var dom = '';
         data.writeList.map((_data) => {
             dom += '<li><div class="main"><div class="mes">' +

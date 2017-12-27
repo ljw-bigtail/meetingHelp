@@ -107,12 +107,13 @@ let ajaxTool = {
             .catch(e => console.log("报错信息：", e))
     },
     //获取纪要列表
-    getwriteList: function (callback) {
+    getwriteList: function (user, callback) {
         fetch(Url + "/api/getwriteList", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify(user)
             })
             .then(response => response.json())
             .then(data => {

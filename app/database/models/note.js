@@ -2,82 +2,79 @@
  * 用户表
  */
 let mongoose = require('../db'),
-    Schema = mongoose.Schema; 
+	Schema = mongoose.Schema;
 
 let _underscore = require('underscore');
 
 let noteSchema = new Schema({
-    "nTitle": {
-        unique: true,
-        type: String
-    },
-    "name": {
-        unique: true,
-        type: String
-    },
-    "mName": {
-        unique: true,
-        type: String,
-    },
-    "nMes": {
-        unique: true,
-        type: String
-    },
-    "meta": {
-        createAt: {
-            type: Date,
-            default: Date.now()
-        },
-        updateAt: {
-            type: Date,
-            default: Date.now()
-        }
-    }
+	"nTitle": {
+		unique: true,
+		type: String
+	},
+	"name": {
+		type: String
+	},
+	"mName": {
+		type: String,
+	},
+	"nMes": {
+		type: String
+	},
+	"meta": {
+		createAt: {
+			type: Date,
+			default: Date.now()
+		},
+		updateAt: {
+			type: Date,
+			default: Date.now()
+		}
+	}
 });
 
 //每次创建都会调用这个方法
 noteSchema.pre('save', function (next) {
-    //判断是否是新的数据对象，更新创建|更新数据的时间
-    if (this.isNew) {
-        this.meta.createAt = this.meta.updateAt = Date.now()
-    }
-    else {
-        this.meta.updateAt = Date.now()
-    }
+	//判断是否是新的数据对象，更新创建|更新数据的时间
+	if (this.isNew) {
+		this.meta.createAt = this.meta.updateAt = Date.now()
+	} else {
+		this.meta.updateAt = Date.now()
+	}
 
-    next();
+	next();
 })
 
 
 noteSchema.statics = {
-    findNoteList: function (attr, val, callback) {
-        if(attr && val){
-            this.find({
-                [attr]: val
-            }).sort({
-                "_id": -1
-            }).exec((err, noteList) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    callback(noteList);
-                }
-            });
-        }else{
-            this.find().sort({
-                "_id": -1
-            }).exec((err, noteList) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    callback(noteList);
-                }
-            });
-        }
+	findNoteByCondition: function (condition, callback) {
+		this.find({
+			$or: condition
+		}).sort({
+			"_id": -1
+		}).exec((err, note) => {
+			if (err) {
+				console.log(err);
+			} else {
+				callback(note);
+			}
+		});
+	},
+	findNoteList: function (name, callback) {
+		this.find({
+			'name': name
+		}).sort({
+			"_id": -1
+		}).exec((err, noteList) => {
+			if (err) {
+				console.log(err);
+			} else {
+				callback(noteList);
+			}
+		});
 	},
 	findNoteByAttr: function (attr, val, callback) {
 		this.findOne({
-            [attr]: val
+			[attr]: val
 		}).exec((err, note) => {
 			if (err) {
 				console.log(err);
@@ -93,7 +90,7 @@ noteSchema.statics = {
 			"mName": note.mName || '',
 			"nMes": note.nMes || '',
 		}
-    
+
 		this.create(newNote, (err) => {
 			if (err) {
 				callback({
@@ -128,7 +125,7 @@ noteSchema.statics = {
 		var _this = this;
 		this.findOne({
 			'nTitle': nTitle,
-        }, function (err, oldNote) {
+		}, function (err, oldNote) {
 			if (err) {
 				callback({
 					'status': "faile",
@@ -157,8 +154,10 @@ noteSchema.statics = {
 				newNote.meta.updateAt = Date.now();
 
 				_this.update({
-                    'nTitle': nTitle,
-                }, newNote, { upsert: true }, function (error) {
+					'nTitle': nTitle,
+				}, newNote, {
+					upsert: true
+				}, function (error) {
 					if (err) {
 						callback({
 							'status': "faile",

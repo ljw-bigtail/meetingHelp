@@ -239,21 +239,27 @@ router.post('/getRoomByAttr', function (req, res) {
 });
 
 // 获取会议室列表
-// 需要过滤数组部分值，暂未处理
 router.post('/getwriteList', function (req, res) {
-	let attr = req.body.attr || null;
-	let val = req.body.val || null;
-	if (attr && attr !== 'rDevice') {
-		res.send(200, {
-			mes: '仅支持通过 rDevice 搜索。'
+	let user = req.body.user || null;
+	// 先找用户相关的会议
+	Meet.findUserFromMeet(user, (meetList) => {
+		// 用户参与的会议
+		var condition = [];
+		meetList.map((meetData)=>{
+			condition.push({
+				'mName': meetData.mName,
+				'name': ''
+			})
 		});
-		return false;
-	}
-	Note.findNoteList(attr, val, (writeList) => {
-		res.send(200, {
-			'writeList': writeList
+		condition.push({
+			'name': user
 		});
-	})
+		Note.findNoteByCondition(condition, (writeList) => {
+			res.send(200, {
+				'writeList': writeList
+			});
+		});
+	});
 });
 
 // 获取纪要信息
