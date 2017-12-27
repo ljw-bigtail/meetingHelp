@@ -91,14 +91,14 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
-    //查询会议信息
-    findRoom: function (meetData, callback) {
+    //查询会议室信息
+    findRoom: function (roomData, callback) {
         fetch(Url + "/api/getRoomByAttr", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(meetData)
+                body: JSON.stringify(roomData)
             })
             .then(response => response.json())
             .then(data => {
@@ -122,13 +122,13 @@ let ajaxTool = {
             .catch(e => console.log("报错信息：", e))
     },
     //查询纪要信息
-    findNote: function (noteData, callback) {
+    findNote: function (noteOption, callback) {
         fetch(Url + "/api/getNoteByAttr", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(noteData)
+                body: JSON.stringify(noteOption)
             })
             .then(response => response.json())
             .then(data => {
@@ -159,6 +159,66 @@ let ajaxTool = {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //查询会议信息
+    findMeet: function (meetData, callback) {
+        fetch(Url + "/api/getMeetByAttr", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(meetData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //查询用户信息
+    findUser: function (user, callback) {
+        fetch(Url + "/api/getUserByAttr", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //更新纪要信息
+    updateNote: function (noteData, callback) {
+        fetch(Url + "/api/updateNote", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(noteData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //新建纪要信息
+    addNote: function (noteData, callback) {
+        fetch(Url + "/api/addNote", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(noteData)
             })
             .then(response => response.json())
             .then(data => {

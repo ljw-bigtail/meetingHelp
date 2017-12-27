@@ -17,31 +17,31 @@
         <div class="roomState meetMain">
             <div class="mes">
                 <div>
-                    <h3>每日例会</h3>
-                    <a href="#">修改</a>
+                    <h3 class="meetTitle"></h3>
+                    <a href="javascript:void(0)" class="changeBtn">修改</a>
                 </div>
                 <div>
                     <div class="mesPeople">
                         <img src="img/04.png" alt="">
                         <span>会议地点</span>
-                        <span>会议室1</span>
+                        <span class="meetPlace"></span>
                     </div>
                     <div class="mesPeople">
                         <img src="img/03.png" alt="">
                         <span>开始时间</span>
-                        <span>2017-09-11 13:00</span>
+                        <span class="start"></span>
                     </div>
                     <div class="mesPeople">
                         <img src="img/03.png" alt="">
                         <span>结束时间</span>
-                        <span>2017-09-11 14:00</span>
+                        <span class="end"></span>
                     </div>
                 </div>
-                <h5>会议详情</h5>
+                <h5 class="meetMes"></h5>
                 <ul>
-                    <li class="colorBlue"><a href="afterMeetNum.html">参加（<span>2</span>人）</a></li>
-                    <li class="colorBlue"><a href="beforeMeetNum.html">请假（<span>3</span>人）</a></li>
-                    <li class="colorBlue"><a href="beforeMeetNum.html">未反馈（<span>6</span>人）</a></li>
+                    <li class="colorBlue"><a href="afterMeetNum.html">参加（<span class="joinNum">2</span>人）</a></li>
+                    <li class="colorBlue"><a href="beforeMeetNum.html">请假（<span class="leaveNum">3</span>人）</a></li>
+                    <li class="colorBlue"><a href="beforeMeetNum.html">未反馈（<span class="noBackNum">6</span>人）</a></li>
                 </ul>
                 <footer>
                     <div class="flexBox">
@@ -52,27 +52,20 @@
             </div>
             <h6>发起人</h6>
             <div class="mes">
-                <ul class="userPic">
+                <ul class="userPic meetAdmin">
                     <li>
-                        <img src="" alt="">
-                        <span>张三</span>
+                        <div class="pic"></div>
+                        <div class="adminMes">
+                            <span class="name">姓名：</span>
+                            <span class="email">邮箱：</span>
+                            <span class="phone">电话：</span>
+                        </div>
                     </li>
                 </ul>
             </div>
             <h6>参会人</h6>
             <div class="mes">
-                <ul class="userPic">
-                    <li>
-                        <img src="" alt="">
-                        <span>张三</span>
-                    </li>
-                    <li>
-                        <img src="" alt="">
-                        <span>李四
-
-                        </span>
-                    </li>
-                </ul>
+                <ul class="userPic meetPeople"></ul>
             </div>
         </div>
         <div class="tipBox leaveBox">
@@ -94,12 +87,16 @@
     </article>
     <footer>
         <div class="inputBox">
-            <input type="text" name="" id="">
-            <button>发表</button>
+            <input id="pushMes">
+            <button class="pushBtn"></button>
         </div>
     </footer>
+    <div id="errMes"></div>
 
     <script src="js/tools.js"></script>
+    <script src="js/err.js"></script>
+    <script src="js/ajaxFunc.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/pageLoad/meetDetail.js"></script>
 </body>
 </html>

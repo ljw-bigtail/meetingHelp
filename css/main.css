@@ -132,12 +132,16 @@ footer .flexBox span.warning a {
     vertical-align: top;
 }
 
-.userPic li img {
+.userPic li .pic {
     height: 9.6rem;
     width: 100%;
     display: block;
     border-radius: 50%;
-    border: 1px solid #cccccc;
+    /* border: 1px solid #cccccc; */
+    line-height: 9.6rem;
+    text-align: center;
+    color: #ffffff;
+    font-size: 4rem;
 }
 
 .userPic li span {
@@ -990,4 +994,28 @@ body article .meetList h4 {
     font-size: 2.8rem;
     padding: 1.5rem 1.5rem 0 1.5rem;
     color: #aaaaaa;
+}
+
+.userPic.meetAdmin li{
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.userPic.meetAdmin li .pic {
+    display: inline-block;
+    width: 9.6rem;
+    height: 9.6rem;
+    vertical-align: middle;
+}
+
+.userPic.meetAdmin li .adminMes {
+    display: inline-block;
+    padding: 0 2rem;
+    vertical-align: middle;
+}
+
+.userPic.meetAdmin li .adminMes span {
+    line-height: 3rem;
+    font-size: 2.4rem;
+    text-align: left;
 }

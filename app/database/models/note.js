@@ -72,10 +72,8 @@ noteSchema.statics = {
 			}
 		});
 	},
-	findNoteByAttr: function (attr, val, callback) {
-		this.findOne({
-			[attr]: val
-		}).exec((err, note) => {
+	findNoteByAttr: function (option, callback) {
+		this.findOne(option).exec((err, note) => {
 			if (err) {
 				console.log(err);
 			} else {
@@ -90,7 +88,6 @@ noteSchema.statics = {
 			"mName": note.mName || '',
 			"nMes": note.nMes || '',
 		}
-
 		this.create(newNote, (err) => {
 			if (err) {
 				callback({

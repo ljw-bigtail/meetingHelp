@@ -96,7 +96,6 @@ router.post('/uploadImg', function (req, res) {
 router.post('/getUserList', function (req, res) {
 	let attr = req.body.attr || null;
 	let val = req.body.val || null;
-	console.log(attr !== 'desc', attr !== 'dName', attr !== 'initiate')
 	if (attr !== 'desc' && attr !== 'dName' && attr !== 'initiate' && attr !== null) {
 		res.send(200, {
 			mes: '仅支持通过 desc/dName/initiate 搜索。'
@@ -245,7 +244,7 @@ router.post('/getwriteList', function (req, res) {
 	Meet.findMeetFromUser(user, (meetList) => {
 		// 用户参与的会议
 		var condition = [];
-		meetList.map((meetData)=>{
+		meetList.map((meetData) => {
 			condition.push({
 				'mName': meetData.mName,
 				'name': ''
@@ -264,20 +263,26 @@ router.post('/getwriteList', function (req, res) {
 
 // 获取纪要信息
 router.post('/getNoteByAttr', function (req, res) {
-	if (!req.body.attr || !req.body.val) {
+	if (!req.body.option) {
 		res.send(200, {
 			mes: '参数错误。'
 		});
 		return false;
 	}
-	Note.findNoteByAttr(req.body.attr, req.body.val, (note) => {
-		res.send(200, note);
+	Note.findNoteByAttr(req.body.option, (note) => {
+		if (note == null) {
+			res.send(200, {
+				'mes': null
+			});
+		} else {
+			res.send(200, note);
+		}
 	})
 });
 
 // 新建纪要 
 router.post('/addNote', function (req, res) {
-	if (!req.body.nTitle || !req.body.nMes || !req.body.nTitle || !req.body.name) {
+	if (!req.body.nTitle || !req.body.nMes || !req.body.nTitle) {
 		res.send(200, {
 			mes: '参数错误。'
 		});
@@ -320,5 +325,46 @@ router.post('/getMeetList', function (req, res) {
 	})
 });
 
+
+// 获取会议详情
+router.post('/getMeetByAttr', function (req, res) {
+	if (!req.body.attr || !req.body.val) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Meet.findMeetByAttr(req.body.attr, req.body.val, (meet) => {
+		res.send(200, meet);
+	})
+});
+
+// 获取账户信息
+router.post('/getUserByAttr', function (req, res) {
+	if (!req.body.attr || !req.body.val) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	User.findUserByAttr(req.body.attr, req.body.val, (user) => {
+		res.send(200, {
+			'user': user
+		});
+	})
+});
+
+//更新纪要信息
+router.post('/updateNote', function (req, res) {
+	if (!req.body.nTitle || !req.body.nMes || !req.body.mName) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Note.updateNote(req.body, (mes) => {
+		res.send(200, mes);
+	})
+});
 
 module.exports = router;

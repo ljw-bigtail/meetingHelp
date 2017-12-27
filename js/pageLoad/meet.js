@@ -46,7 +46,7 @@
 
     function initDom(data) {
         return '<li><div class="main"><div class="mes">' +
-            '<a href="meetDetail.html"><h3>' + data.mName + '</h3>' +
+            '<a href="meetDetail.html?meet='+data.mName+'"><h3>' + data.mName + '</h3>' +
             '<div class="mesPeople"><img src="img/04.png" alt="">' +
             '<span>会议地点</span><span>' + data.rName + '</span>' +
             '</div><div class="mesPeople">' +

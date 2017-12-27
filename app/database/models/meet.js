@@ -122,9 +122,9 @@ meetSchema.statics = {
 			});
 		}
 	},
-	findMeetByAttr: function (rName, callback) {
+	findMeetByAttr: function (attr, val, callback) {
 		this.findOne({
-			'rName': rName
+			[attr]: val,
 		}).exec((err, meet) => {
 			if (err) {
 				console.log(err);
