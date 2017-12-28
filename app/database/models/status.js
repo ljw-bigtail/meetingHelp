@@ -4,9 +4,10 @@
 let mongoose = require('../db'),
     Schema = mongoose.Schema;
 
+let _underscore = require('underscore');
+
 let statusSchema = new Schema({
     "name": {
-        unique: true,
         type: String
     },
     "mName": {
@@ -23,6 +24,9 @@ let statusSchema = new Schema({
     "sLeave": {
         default: 0,
         type: Number,
+    },
+    "sMes": {
+        type: String,
     },
     "meta": {
         createAt: {
@@ -41,8 +45,7 @@ statusSchema.pre('save', function (next) {
     //判断是否是新的数据对象，更新创建|更新数据的时间
     if (this.isNew) {
         this.meta.createAt = this.meta.updateAt = Date.now()
-    }
-    else {
+    } else {
         this.meta.updateAt = Date.now()
     }
 
@@ -52,7 +55,7 @@ statusSchema.pre('save', function (next) {
 
 statusSchema.statics = {
     findStatusList: function (attr, val, callback) {
-        if(attr && val){
+        if (attr && val) {
             this.find({
                 [attr]: val
             }).sort({
@@ -64,7 +67,7 @@ statusSchema.statics = {
                     callback(statusList);
                 }
             });
-        }else{
+        } else {
             this.find().sort({
                 "_id": -1
             }).exec((err, statusList) => {
@@ -76,27 +79,29 @@ statusSchema.statics = {
             });
         }
     },
-    findStatusOne: function (name, mName, callback) {
-        this.findOne({
-            'name': name,
-            'mName': mName
-        }).exec((err, status) => {
+    findStatusOne: function (option, callback) {
+        this.findOne(option).exec((err, status) => {
             if (err) {
                 console.log(err);
+                callback({
+                    'status': "faile",
+                    'mes': err
+                });
             } else {
                 callback(status);
             }
         });
     },
-    addStatus: function (status, callback) {
+    addStatus: function (option, callback) {
         let newStatus = {
-            "name": status.name || '',
-            "mName": status.mName || '',
-            "sStatus": status.sStatus || '',
-            "sSign": status.sSign || '',
-            "sLeave": status.sLeave || '',
+            "name": option.name || '',
+            "mName": option.mName || '',
+            "sStatus": option.sStatus,
+            "sSign": option.sSign,
+            "sLeave": option.sLeave,
+            "sMes": option.sMes || '',
         }
-
+        console.log(newStatus)
         this.create(newStatus, (err) => {
             if (err) {
                 callback({
@@ -113,7 +118,7 @@ statusSchema.statics = {
     delStatus: function (name, mName, callback) {
         this.remove({
             'name': name,
-            'mName': mName            
+            'mName': mName
         }, function (err) {
             if (err) {
                 callback({
@@ -127,12 +132,12 @@ statusSchema.statics = {
             }
         })
     },
-    updateStatus: function (name, mName, update, callback) {
+    updateStatus: function (update, callback) {
         var _this = this;
-        this.findOne({ 
-            'name': name,
-            'mName': mName
-         }, function (err, oldStatus) {
+        this.findOne({
+            'name': update.name,
+            'mName': update.mName
+        }, function (err, oldStatus) {
             if (err) {
                 callback({
                     'status': "faile",
@@ -161,9 +166,11 @@ statusSchema.statics = {
                 newUser.meta.updateAt = Date.now();
 
                 _this.update({
-                    'name': name,
-                    'mName': mName
-                }, newUser, { upsert: true }, function (error) {
+                    'name': update.name,
+                    'mName': update.mName
+                }, newUser, {
+                    upsert: true
+                }, function (error) {
                     if (err) {
                         callback({
                             'status': "faile",

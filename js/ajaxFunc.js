@@ -196,9 +196,9 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
-    //更新纪要信息
-    updateNote: function (noteData, callback) {
-        fetch(Url + "/api/updateNote", {
+    //新建纪要信息
+    addNote: function (noteData, callback) {
+        fetch(Url + "/api/addNote", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -211,14 +211,44 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
-    //新建纪要信息
-    addNote: function (noteData, callback) {
-        fetch(Url + "/api/addNote", {
+    //新建状态信息
+    addStatus: function (statusData, callback) {
+        fetch(Url + "/api/addStatus", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(noteData)
+                body: JSON.stringify(statusData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //更新状态信息
+    updateStatus: function (req, callback) {
+        fetch(Url + "/api/updateStatus", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //更新状态信息
+    getStatusByOption: function (req, callback) {
+        fetch(Url + "/api/getStatusByOption", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
             })
             .then(response => response.json())
             .then(data => {

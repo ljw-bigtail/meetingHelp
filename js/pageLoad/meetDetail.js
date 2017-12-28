@@ -4,7 +4,7 @@
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet')
 
-    let changeBtn = document.querySelector('.changeBtn');
+    // let changeBtn = document.querySelector('.changeBtn');
     let meetTitle = document.querySelector('.meetTitle');
     let meetPlace = document.querySelector('.meetPlace');
     let startDom = document.querySelector('.start');
@@ -18,27 +18,17 @@
     let phone = meetAdmin.querySelector('.phone');
     let pushMes = document.querySelector('#pushMes');
     let pushBtn = document.querySelector('.pushBtn');
+    let joinNum = document.querySelector('.joinNum');
+    let leaveNum = document.querySelector('.leaveNum');
+    let noBackNum = document.querySelector('.noBackNum');
+    let joinBtn = document.querySelector('.join');
+    let footerBtn = document.querySelector('.meetMain footer')
 
     // 保留会议纪要加载之后的那条信息
     let pushMesValue = '';
-    
+
     // 用户头像背景色数组
     const userBgData = ['#F76B8A', '#028090', '#02C39A', '#EC9454', '#849561'];
-
-    // 获取我对于本会议留过的会议纪要
-    ajaxTool.findNote({
-        option: {
-            'mName': meet,
-            'name':''
-        }
-    }, (noteData) => {
-        if(noteData.nMes){
-            pushMes.value = noteData.nMes;
-            pushBtn.innerHTML = '更新';        
-        }
-        pushMesValue = pushMes.value;
-        pushBtn.innerHTML = '发表';
-    });
 
     // 更新会议相关信息
     ajaxTool.findMeet({
@@ -78,44 +68,161 @@
         let end = new Date(meetData.mEndTime)
         if (now < start) {
             console.log('会议未开')
+            footerBtn.style.display = 'block';
 
         } else if (end < now) {
             console.log('会议开完')
-            document.querySelector('.meetMain footer').style.display = 'none';
 
         } else {
             console.log('会议正在开')
 
         }
 
+        // 加载会议回应状态
+        // joinNum.innerHTML = ;
+        // leaveNum.innerHTML = ;
+        // noBackNum.innerHTML = ;
+        // 
+
+        // 获取我对于本会议留过的会议纪要
+        ajaxTool.findNote({
+            option: {
+                'mName': meet,
+                'name': meetData.mAdmin == username ? '' : username,
+            }
+        }, (noteData) => {
+            if (noteData.nMes) {
+                pushMes.value = noteData.nMes;
+                pushBtn.innerHTML = '更新';
+                pushMes.setAttribute('data-title', noteData.nTitle);
+                return false;
+            }
+            pushMesValue = pushMes.value;
+            pushBtn.innerHTML = '发表';
+        });
+
+        // 判断用户在当前会议的状态
+        ajaxTool.getStatusByOption({
+            option: {
+                'mName': meet,
+                'name': username
+            }
+        }, (statusData) => {
+            console.log(statusData.sStatus)
+            if (statusData.sStatus == 2) {
+                // 参加的,隐藏状态标签
+                footerBtn.style.display = 'block';
+            }
+        });
     });
+
+    // 确认参加按钮
+    joinBtn.addEventListener('click', () => {
+        ajaxTool.updateStatus({
+            'option': {
+                'name': username,
+                'mName': meet,
+                'sStatus': 0,
+            }
+        }, (req) => {
+            if (req.status == "success") {
+                window.location.reload();
+            } else {
+                err.errMesShow('参加失败，请稍后重试。');
+            }
+        });
+    });
+
+    // 请假
+    let leaveBtn = document.querySelector('.leaveBtn');
+    let leaveBox = document.querySelector('.leaveBox');
+    let leaveClose = document.querySelector('.leaveClose');
+    let leaveSave = document.querySelector('.leaveSave');
+    let leaveMes = leaveBox.querySelector('textarea');
+    let nowSize = leaveBox.querySelector('.nowSize');
+    let maxSize = leaveBox.querySelector('.maxSize');
+    if (leaveBtn && leaveBox && leaveClose && leaveSave) {
+        leaveBtn.addEventListener('click', function () {
+            leaveBox.style.display = 'block';
+        });
+        leaveClose.addEventListener('click', function () {
+            leaveBox.style.display = 'none';
+            leaveMes.value = '';
+        });
+        leaveMes.addEventListener('keyup', () => {
+            if (leaveMes.value.length <= maxSize.innerHTML - 1) {
+                console.log(leaveMes.value.length)
+                nowSize.innerHTML = leaveMes.value.length + 1;
+            }else{
+                leaveMes.value = leaveMes.value.substring(0,99);
+                err.errMesShow('最多插入100个字符');
+            }
+        });
+        leaveSave.addEventListener('click', function () {
+            //保存请假信息
+            if (leaveMes.value == '') {
+                err.errMesShow('请填写请假原因再提交。');
+                return false;
+            }
+            ajaxTool.updateStatus({
+                'option': {
+                    'name': username,
+                    'mName': meet,
+                    'sStatus': 1,
+                    'sMes': leaveMes.value
+                }
+            }, (req) => {
+                console.log(req);
+                if (req.status == "success") {
+                    window.location.reload();
+                } else {
+                    err.errMesShow('请假失败，请稍后重试。');
+                }
+            });
+        });
+    }
 
     // 保存\更新纪要信息
     pushBtn.addEventListener('click', () => {
-        var note = {
-            'nTitle': pushMes.value.substring(0, 15),
-            'name': name.innerHTML.split('：')[1] == username ? '' : username,
-            'mName': meet,
-            'nMes': pushMes.value
-        };
-        if(pushBtn.innerHTML == '发表'){
-            // 新建纪要
+        if (pushBtn.innerHTML == '发表') {
+            let note = {
+                'nTitle': pushMes.value.substring(0, 15),
+                'name': name.innerHTML.split('：')[1] == username ? '' : username,
+                'mName': meet,
+                'nMes': pushMes.value
+            };
             if (pushMes.value == pushMesValue) {
                 err.errMesShow('请填写内容后再发表。');
                 return false;
-            }  
-            ajaxTool.addNote(note,(req)=>{
-                if(req.status == 'success'){
+            }
+            ajaxTool.addNote(note, (req) => {
+                if (req.status == 'success') {
                     err.errMesShow('会议纪要发表成功。');
-                }else{
-                    err.errMesShow('请稍后重试，谢谢。');                
+                } else {
+                    err.errMesShow('请稍后重试，谢谢。');
                 }
             });
-        }else if(pushBtn.innerHTML == '更新'){
+        } else if (pushBtn.innerHTML == '更新') {
             // 更新纪要
-            
-        }else{
-            err.errMesShow('系统繁忙，请稍后。');            
+            let note = {
+                'nTitle': pushMes.getAttribute('data-title'),
+                'name': name.innerHTML.split('：')[1] == username ? '' : username,
+                'mName': meet,
+                'nMes': pushMes.value
+            };
+            if (pushMes.value == pushMes.getAttribute('data-title')) {
+                err.errMesShow('请更新内容后再发表。');
+                return false;
+            }
+            ajaxTool.updateNote(note, (req) => {
+                if (req.status == 'success') {
+                    err.errMesShow('会议纪要更新成功。');
+                } else {
+                    err.errMesShow('请稍后重试，谢谢。');
+                }
+            });
+        } else {
+            err.errMesShow('系统繁忙，请稍后。');
         }
     });
 

@@ -43,11 +43,12 @@ var Status = require('../database/models/status');
 // 	"dFather": '-1'
 // })
 // Status.create({
-// 	"name": 'N5r8QC',
-// 	"mName": '总结会',
-// 	"sStatus": 2,
-// 	"sSign": 1,
+// 	"name": "6ECSwj",
+// 	"mName": "123",
+// 	"sMes": "",
 // 	"sLeave": 0,
+// 	"sSign": 1,
+// 	"sStatus": 2
 // })
 // Note.create({
 // 	"nTitle": '阿萨德阿萨的',
@@ -363,6 +364,45 @@ router.post('/updateNote', function (req, res) {
 		return false;
 	}
 	Note.updateNote(req.body, (mes) => {
+		res.send(200, mes);
+	})
+});
+
+// 新建状态
+router.post('/addStatus', function (req, res) {
+	if (!req.body.name || !req.body.mName) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Status.addStatus(req.body, (mes) => {
+		res.send(200, mes);
+	})
+});
+
+// 修改状态
+router.post('/updateStatus', function (req, res) {
+	if (!req.body.option || !req.body.option.name || !req.body.option.mName) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Status.updateStatus(req.body.option, (mes) => {
+		res.send(200, mes);
+	})
+});
+
+// 查看用户+会议的状态
+router.post('/getStatusByOption', function (req, res) {
+	if (!req.body.option) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Status.findStatusOne(req.body.option, (mes) => {
 		res.send(200, mes);
 	})
 });

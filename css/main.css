@@ -613,6 +613,10 @@ body article .new .newBox li.chooseList ul li.select {
     border-color: #0BB908;
 }
 
+body article .meetMain footer{
+    display: none;
+}
+
 body article .meetMain .mesPeople img {
     width: 2.4rem;
     margin-right: 1rem;

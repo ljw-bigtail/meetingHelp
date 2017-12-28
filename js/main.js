@@ -68,24 +68,6 @@ window.onload = function () {
         toggleClass(item.querySelector('div'), 'selected', '');
     })
 
-    // 请假
-    let leaveBtn = document.querySelector('.leaveBtn');    
-    let leaveBox = document.querySelector('.leaveBox');
-    let leaveClose = document.querySelector('.leaveClose');
-    let leaveSave = document.querySelector('.leaveSave');
-    if(leaveBtn && leaveBox && leaveClose && leaveSave){
-        leaveBtn.addEventListener('click', function(){
-            leaveBox.style.display = 'block';
-        });
-        leaveClose.addEventListener('click', function(){
-            leaveBox.style.display = 'none';
-        });
-        leaveSave.addEventListener('click', function(){
-            //保存请假信息
-            leaveBox.style.display = 'none';
-        });
-    }
-
     //是否选中，待审批
     let mPMainList = document.querySelectorAll('.meetPeopleSelect .tabMain > li');
     let meetPeopleList = document;
