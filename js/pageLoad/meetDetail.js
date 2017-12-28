@@ -109,7 +109,6 @@
                 'name': username
             }
         }, (statusData) => {
-            console.log(statusData.sStatus)
             if (now < start && statusData.sStatus == 2) {
                 // 参加的,隐藏状态标签
                 footerBtn.style.display = 'block';

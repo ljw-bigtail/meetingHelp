@@ -28,8 +28,8 @@
 
         // 根据传递来的参数自动选择当前的会议室地点，然后click
         var place = tools.getQuery('place');
-        room.parentNode.querySelectorAll('ul li').forEach((e)=>{
-            if(e.innerHTML == place){
+        room.parentNode.querySelectorAll('ul li').forEach((e) => {
+            if (e.innerHTML == place) {
                 e.click();
             }
         });
@@ -144,16 +144,17 @@
             'room': room.innerHTML,
             'sponsor': sponsor.innerHTML,
             'joinList': joinList,
-            'canRead': canRead.className == 'selected' ? 0 : 1,
-            'autoJoin': autoJoin.className == 'selected' ? 0 : 1
+            'mNote': canRead.className == 'selected' ? 0 : 1,
+            'mNote': autoJoin.className == 'selected' ? 0 : 1
         };
 
         ajaxTool.addMeet(meetData, (res) => {
-            console.log(res)
             if (res.status == 'success') {
-                window.location.href = '/';
-            }else{
-                err.errMesShow('新建失败，请重新来过');                
+                err.errMesShow('新建成功，正在跳转至首页', () => {
+                    window.location.href = '/';
+                });
+            } else {
+                err.errMesShow('新建失败，请重新来过');
             }
         });
 

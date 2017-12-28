@@ -202,9 +202,26 @@ router.post('/addMeet', function (req, res) {
 		});
 		return false;
 	}
+	let sure = 0;
 	Meet.addMeet(req.body, (mes) => {
-		res.send(200, mes);
-	})
+		req.body.joinList.map((join) => {
+			Status.addStatus({
+				'name': join,
+				'mName': req.body.name
+			}, (req) => {
+				if('status' == 'faile'){
+					sure += 1;
+				}
+			});
+		});
+		if(sure == 0){
+			res.send(200, mes);
+		}else{
+			res.send(200, {
+				'status': 'false' 
+			})
+		}
+	});
 });
 
 // 获取会议室列表

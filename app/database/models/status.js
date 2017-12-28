@@ -26,6 +26,7 @@ let statusSchema = new Schema({
         type: Number,
     },
     "sMes": {
+        default: '',
         type: String,
     },
     "meta": {
@@ -101,7 +102,6 @@ statusSchema.statics = {
             "sLeave": option.sLeave,
             "sMes": option.sMes || '',
         }
-        console.log(newStatus)
         this.create(newStatus, (err) => {
             if (err) {
                 callback({

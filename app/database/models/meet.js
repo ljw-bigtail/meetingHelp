@@ -86,8 +86,6 @@ meetSchema.statics = {
 		});
 	},
 	findMeetList: function (user, attr, val, callback) {
-		console.log(user || attr || val)
-		console.log(user,attr,val)
 		if (user || attr || val) {
 			this.find({
 				[attr]: val,
@@ -143,8 +141,6 @@ meetSchema.statics = {
 			"rName": meet.room || '',
 			"mAdmin": meet.sponsor || '',
 			"mPeople": meet.joinList || '',
-			"mNote": meet.canRead || '',
-			"mJoin": meet.autoJoin || '',
 		}
 
 		this.create(newMeet, (err) => {
