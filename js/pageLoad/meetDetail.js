@@ -18,9 +18,11 @@
     let phone = meetAdmin.querySelector('.phone');
     let pushMes = document.querySelector('#pushMes');
     let pushBtn = document.querySelector('.pushBtn');
+    
     let joinNum = document.querySelector('.joinNum');
     let leaveNum = document.querySelector('.leaveNum');
     let noBackNum = document.querySelector('.noBackNum');
+    
     let joinBtn = document.querySelector('.join');
     let footerBtn = document.querySelector('.meetMain footer')
 
@@ -29,6 +31,11 @@
 
     // 用户头像背景色数组
     const userBgData = ['#F76B8A', '#028090', '#02C39A', '#EC9454', '#849561'];
+
+    // 加载会议回应状态
+    joinNum.href = 'afterMeetNum.html?meet=' + meet;
+    leaveNum.href = 'beforeMeetNum.html?meet=' + meet;
+    // noBackNum
 
     // 更新会议相关信息
     ajaxTool.findMeet({
@@ -78,12 +85,6 @@
 
         }
 
-        // 加载会议回应状态
-        // joinNum.innerHTML = ;
-        // leaveNum.innerHTML = ;
-        // noBackNum.innerHTML = ;
-        // 
-
         // 获取我对于本会议留过的会议纪要
         ajaxTool.findNote({
             option: {
@@ -109,7 +110,7 @@
             }
         }, (statusData) => {
             console.log(statusData.sStatus)
-            if (statusData.sStatus == 2) {
+            if (now < start && statusData.sStatus == 2) {
                 // 参加的,隐藏状态标签
                 footerBtn.style.display = 'block';
             }
@@ -153,8 +154,8 @@
             if (leaveMes.value.length <= maxSize.innerHTML - 1) {
                 console.log(leaveMes.value.length)
                 nowSize.innerHTML = leaveMes.value.length + 1;
-            }else{
-                leaveMes.value = leaveMes.value.substring(0,99);
+            } else {
+                leaveMes.value = leaveMes.value.substring(0, 99);
                 err.errMesShow('最多插入100个字符');
             }
         });
