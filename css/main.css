@@ -613,7 +613,7 @@ body article .new .newBox li.chooseList ul li.select {
     border-color: #0BB908;
 }
 
-body article .meetMain footer{
+body article .meetMain footer {
     display: none;
 }
 
@@ -1000,7 +1000,7 @@ body article .meetList h4 {
     color: #aaaaaa;
 }
 
-.userPic.meetAdmin li{
+.userPic.meetAdmin li {
     width: 100%;
     padding: 1rem 0;
 }
@@ -1022,4 +1022,40 @@ body article .meetList h4 {
     line-height: 3rem;
     font-size: 2.4rem;
     text-align: left;
+}
+
+article.camera {
+    background: url(../img/bg.png) no-repeat center center;
+}
+
+div.camera {
+    position: relative;
+    height: 50%;
+}
+
+div.camera input {
+    display: none;
+}
+
+div.camera button {
+    display: block;
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    border: 1px solid #212125;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -10rem;
+    margin-left: -10rem;
+    color: #666666;
+    font-size: 4rem;
+    background: transparent;
+}
+
+div.camera #cameraBtn {
+
+}
+
+div.camera #photoBtn {
 }

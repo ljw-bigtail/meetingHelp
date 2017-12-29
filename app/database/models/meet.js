@@ -41,6 +41,10 @@ let meetSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	"mQRcode": {
+		type: String,
+		unique: true
+	},
 	"meta": {
 		createAt: {
 			type: Date,

@@ -1,16 +1,19 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var fs = require('fs');
-var express = require('express');
-var multiparty = require('multiparty');
+const fs = require('fs');
+const multiparty = require('multiparty');
+const qr_image = require('qr-image');
 
-var User = require('../database/models/user');
-var Department = require('../database/models/department');
-var Meet = require('../database/models/meet');
-var Note = require('../database/models/note');
-var Room = require('../database/models/room');
-var Status = require('../database/models/status');
+let User = require('../database/models/user');
+let Department = require('../database/models/department');
+let Meet = require('../database/models/meet');
+let Note = require('../database/models/note');
+let Room = require('../database/models/room');
+let Status = require('../database/models/status');
+
+const URL = 'D:/project/meetingHelp/uploads';
+
 
 //初始化数据
 // User.create({
@@ -36,7 +39,8 @@ var Status = require('../database/models/status');
 // 	"mAdmin": 'Wi7fF5',
 // 	"mPeople": ["N5r8QC", "rAzTar"],
 // 	"mNote": 0,
-// 	"mJoin": 0
+// 	"mJoin": 0,
+// 	"mQRcode":'./'
 // })
 // Department.create({
 // 	"dName": '会议室1',
@@ -59,7 +63,6 @@ var Status = require('../database/models/status');
 
 //上传文件
 router.post('/uploadImg', function (req, res) {
-	var URL = 'D:/project/meetingHelp/uploads';
 	//生成multiparty对象，并配置上传目标路径
 	let form = new multiparty.Form({
 		uploadDir: URL
@@ -202,26 +205,48 @@ router.post('/addMeet', function (req, res) {
 		});
 		return false;
 	}
+	// 是否成功保存
 	let sure = 0;
-	Meet.addMeet(req.body, (mes) => {
-		req.body.joinList.map((join) => {
-			Status.addStatus({
-				'name': join,
-				'mName': req.body.name
-			}, (req) => {
-				if('status' == 'faile'){
-					sure += 1;
-				}
-			});
-		});
-		if(sure == 0){
-			res.send(200, mes);
-		}else{
-			res.send(200, {
-				'status': 'false' 
-			})
-		}
+
+	// 创建二维码
+	let qr_png = qr_image.image(JSON.stringify(req.body), {
+		type: 'png',
+		size: 6
 	});
+	let qr_png_url = URL + '/qr_code/uploads_' + req.body.name + '.png';
+	let qr_pipe = qr_png.pipe(fs.createWriteStream(qr_png_url));
+	qr_pipe.on('error', function (err) {
+		res.send(200, {
+			'mes': err
+		});
+		return false;
+	})
+	qr_pipe.on('finish', function () {
+		console.log('mQRcode:' + qr_png_url);
+		// 创建会议
+		Meet.addMeet(Object.assign(req.body, {
+			'mQRcode': qr_png_url
+		}), (mes) => {
+			// 创建参会人员状态
+			req.body.joinList.map((join) => {
+				Status.addStatus({
+					'name': join,
+					'mName': req.body.name
+				}, (req) => {
+					if ('status' == 'faile') {
+						sure += 1;
+					}
+				});
+			});
+			if (sure == 0) {
+				res.send(200, mes);
+			} else {
+				res.send(200, {
+					'status': 'false'
+				})
+			}
+		});
+	})
 });
 
 // 获取会议室列表
