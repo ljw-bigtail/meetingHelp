@@ -222,11 +222,12 @@ router.post('/addMeet', function (req, res) {
 		return false;
 	})
 	qr_pipe.on('finish', function () {
-		console.log('mQRcode:' + qr_png_url);
-		// 创建会议
-		Meet.addMeet(Object.assign(req.body, {
+		var meetData = req.body;
+		Object.assign(meetData, {
 			'mQRcode': qr_png_url
-		}), (mes) => {
+		})
+		// 创建会议
+		Meet.addMeet(meetData, (mes) => {
 			// 创建参会人员状态
 			req.body.joinList.map((join) => {
 				Status.addStatus({

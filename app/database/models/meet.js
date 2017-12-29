@@ -144,7 +144,8 @@ meetSchema.statics = {
 			"mEndTime": meet.end || '',
 			"rName": meet.room || '',
 			"mAdmin": meet.sponsor || '',
-			"mPeople": meet.joinList || '',
+			"mPeople": meet.joinList || [],
+			"mQRcode": meet.mQRcode || ''
 		}
 
 		this.create(newMeet, (err) => {
