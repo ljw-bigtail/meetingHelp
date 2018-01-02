@@ -13,7 +13,9 @@
     const canRead = document.querySelector('#canRead');
     const autoJoin = document.querySelector('#autoJoin');
     const save = document.querySelector('#save');
-
+    const qrCodeClose = document.querySelector('.qrCodeClose');
+    const qrCodeSave = document.querySelector('.qrCodeSave');
+    const qrcode = document.querySelector('.qrcode');
     const now = new Date();
 
     // 加载会议地点
@@ -152,8 +154,8 @@
             if (res.status == 'success') {
                 err.errMesShow('新建成功，正在跳转。');
                 // 展示生成的二维码（签到用）
-                document.querySelector('#qrCodeImg').setAttribute('src', res.qrCode);
-                document.querySelector('.qrcode').style.display = 'block';
+                qrcode.querySelector('#qrCodeImg').setAttribute('src', res.qrCode);
+                qrcode.style.display = 'block';
             } else {
                 if (res.mes.code == 11000) {
                     err.errMesShow('会议重复，请修改名称。');
@@ -162,5 +164,9 @@
                 err.errMesShow('新建失败，请重新来过。');
             }
         });
+    });
+
+    qrCodeClose.addEventListener('click', () => {
+        window.location.href = '/';
     });
 })()

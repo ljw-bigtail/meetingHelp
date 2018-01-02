@@ -1088,3 +1088,11 @@ div.qrcode .qrcodeMain p {
 div.qrcode .qrcodeMain img {
     width: 100%;
 }
+div.qrcode .qrCodeClose{
+    border-top: 1px solid #cccccc;
+    display: block;
+    height: 8rem;
+    line-height: 8rem;
+    text-align: center;
+    font-size: 3rem;
+}
