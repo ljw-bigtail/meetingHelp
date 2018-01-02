@@ -4,6 +4,7 @@ const router = express.Router();
 const fs = require('fs');
 const multiparty = require('multiparty');
 const qr_image = require('qr-image');
+const nodeMailer = require('nodemailer')
 
 let User = require('../database/models/user');
 let Department = require('../database/models/department');
@@ -383,21 +384,6 @@ router.post('/getMeetByAttr', function (req, res) {
 	})
 });
 
-// 获取账户信息
-router.post('/getUserByAttr', function (req, res) {
-	if (!req.body.attr || !req.body.val) {
-		res.send(200, {
-			mes: '参数错误。'
-		});
-		return false;
-	}
-	User.findUserByAttr(req.body.attr, req.body.val, (user) => {
-		res.send(200, {
-			'user': user
-		});
-	})
-});
-
 //更新纪要信息
 router.post('/updateNote', function (req, res) {
 	if (!req.body.nTitle || !req.body.nMes || !req.body.mName) {
@@ -447,6 +433,65 @@ router.post('/getStatusByOption', function (req, res) {
 	}
 	Status.findStatusOne(req.body.option, (mes) => {
 		res.send(200, mes);
+	})
+});
+
+// 查找符合条件的用户状态列表
+router.post('/getStatusList', function (req, res) {
+	let attr = req.body.attr || null;
+	let val = req.body.val || null;
+	if (attr !== null && attr !== 'mAdmin') {
+		res.send(200, {
+			mes: '仅支持通过 mName 搜索。'
+		});
+		return false;
+	}
+	Status.findStatusList(attr, val, (statusList) => {
+		res.send(200, {
+			'statusList': statusList
+		});
+	})
+});
+
+// 批量发送邮件
+router.post('/sendMail', function (req, res) {
+	let email = req.body.email || null;
+	let title = req.body.title || null;
+	let mes = req.body.mes || null;
+	if (email == null || title == null || mes == null) {
+		res.send(200, {
+			mes: '请输入收件人邮箱、邮件标题、邮件内容。'
+		});
+		return false;
+	}
+	User.findUserByAttr('name', 'admin', (data) => {
+		let transporter = nodeMailer.createTransport({
+			service: 'qq',
+			port: 465,
+			secureConnection: true,
+			auth: {
+				user: data.email,
+				pass: data.desc,
+			}
+		});
+		let mailOptions = {
+			from: data.email,
+			to: email,
+			subject: title,
+			text: mes,
+		};
+		transporter.sendMail(mailOptions, function (error, info) {
+			if (error) {
+				console.log(error);
+				res.send(200, {
+					status: error.response
+				});
+			} else {
+				res.send(200, {
+					status: info.response
+				});
+			}
+		});
 	})
 });
 

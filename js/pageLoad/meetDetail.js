@@ -29,9 +29,6 @@
     // 保留会议纪要加载之后的那条信息
     let pushMesValue = '';
 
-    // 用户头像背景色数组
-    const userBgData = ['#F76B8A', '#028090', '#02C39A', '#EC9454', '#849561'];
-
     // 加载会议回应状态
     joinNum.href = 'afterMeetNum.html?meet=' + meet;
     leaveNum.href = 'beforeMeetNum.html?meet=' + meet;
@@ -51,7 +48,7 @@
 
         // 加载发起人
         pic.innerHTML = meetData.mAdmin.split('')[0];
-        pic.style.background = radomData(userBgData);
+        pic.style.background = tools.radomData(userBgData);
         ajaxTool.findUser({
             'attr': 'name',
             'val': meetData.mAdmin
@@ -65,7 +62,7 @@
         // 加载参会人
         let userDom = '';
         meetData.mPeople.split(',').map((data) => {
-            userDom += '<li><div class="pic" style="background:' + radomData(userBgData) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
+            userDom += '<li><div class="pic" style="background:' + tools.radomData(userBgData) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
         });
         meetPeople.innerHTML = userDom;
 
@@ -226,8 +223,5 @@
         }
     });
 
-    function radomData(data) {
-        let num = Math.floor(Math.random() * data.length);
-        return data[num];
-    }
+    
 })();

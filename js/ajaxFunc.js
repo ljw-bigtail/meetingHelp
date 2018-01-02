@@ -62,6 +62,7 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    
     //获取会议室信息
     getRoomList: function (callback) {
         fetch(Url + "/api/getRoomList", {
@@ -256,4 +257,35 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    //根据条件查找对应人员的状态列表
+    getStatusList: function (req, callback) {
+        fetch(Url + "/api/getStatusList", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    // 发送邮件
+    sendMail: function (req, callback) {
+        fetch(Url + "/api/sendMail", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    
 }

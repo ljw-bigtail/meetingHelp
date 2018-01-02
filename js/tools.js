@@ -1,3 +1,6 @@
+// 用户头像背景色数组
+const userBgData = ['#F76B8A', '#028090', '#02C39A', '#EC9454', '#849561'];
+
 let tools = {
     // 设置cookie
     setCookie: (c_name, value, expiredays) => {
@@ -64,4 +67,19 @@ let tools = {
         }
         return null;
     },
+    // 从数组中随机筛选一个
+    radomData: (data) => {
+        let num = Math.floor(Math.random() * data.length);
+        return data[num];
+    },
+    // 根据条件筛选某条参数符合的数组
+    filterData:(data, attr, val)=>{
+        var newData = [];
+        data.map((d)=>{
+            if(d[attr] == val){
+                newData.push(d);
+            }
+        });
+        return newData;
+    }        
 }
