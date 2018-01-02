@@ -119,9 +119,16 @@
         'val': meet
     }, (data) => {
         // 确认参加
-        console.log(data)
         let data_1 = tools.filterData(data.statusList, 'sStatus', 1);
         document.querySelector('.joinNum span').innerHTML = data_1.length;
+
+        // 已请假
+        let data_2 = tools.filterData(data.statusList, 'sLeave', 1);
+        document.querySelector('.leaveNum span').innerHTML = data_2.length;
+
+        // 未反馈
+        let data_3 = tools.filterData(data.statusList, 'sStatus', 0);
+        document.querySelector('.noBackNum span').innerHTML = data_3.length;
     });
 
     // 确认参加按钮

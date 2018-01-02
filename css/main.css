@@ -839,14 +839,6 @@ footer .inputBox button {
     background: #f8f8f8;
 }
 
-.meetPeopleTab .tabMain img {
-    height: 8rem;
-    width: 8rem;
-    display: block;
-    border-radius: 50%;
-    border: 1px solid #cccccc;
-}
-
 .meetPeopleTab {
     height: 100%;
     border-bottom: 1px solid #333333;
@@ -884,7 +876,6 @@ footer .inputBox button {
     color: #ffffff;
 }
 
-.meetPeopleTab .tabMain ul li img,
 .meetPeopleTab .tabMain ul li div {
     display: inline-block;
     vertical-align: top;
@@ -894,11 +885,13 @@ footer .inputBox button {
     font-size: 3.4rem;
     line-height: 5rem;
     font-weight: bold;
+    padding: 0 2rem;
 }
 
 .meetPeopleTab .tabMain ul li div span {
     font-size: 2.4rem;
     line-height: 3rem;
+    padding: 0 2rem;
 }
 
 .meetPeopleTab .tabMain>li[data-index="2"],
@@ -916,6 +909,22 @@ footer .inputBox button {
     padding: 1rem;
     margin: 0;
     border: 0;
+}
+
+.meetPeopleTabLittle .tabMain .pic {
+    height: 8rem;
+    width: 8rem;
+    display: block;
+    border-radius: 50%;
+    line-height: 8rem;
+    text-align: center;
+    color: #ffffff;
+    font-size: 3.2rem;
+}
+
+.meetPeopleTabLittle .tabMain ul li .pic {
+    display: inline-block;
+    vertical-align: top;
 }
 
 .loginBG {
