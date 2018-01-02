@@ -861,8 +861,12 @@ footer .inputBox button {
     height: 100%;
 }
 
-.meetPeopleTab .tabMain li ul.hasFooter {
+.meetPeopleTab .tabMain li ul.hasFooter.hasPadding {
     height: calc( 100% - 8rem - 3rem);
+}
+
+.meetPeopleTab .tabMain li ul.hasFooter {
+    height: calc( 100% - 8rem);
 }
 
 .meetPeopleTab .tabMain ul li {
@@ -1049,9 +1053,6 @@ div.camera button {
     background: transparent;
 }
 
-div.camera #cameraBtn {
+div.camera #cameraBtn {}
 
-}
-
-div.camera #photoBtn {
-}
+div.camera #photoBtn {}

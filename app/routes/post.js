@@ -440,7 +440,7 @@ router.post('/getStatusByOption', function (req, res) {
 router.post('/getStatusList', function (req, res) {
 	let attr = req.body.attr || null;
 	let val = req.body.val || null;
-	if (attr !== null && attr !== 'mAdmin') {
+	if (attr !== null && attr !== 'mName') {
 		res.send(200, {
 			mes: '仅支持通过 mName 搜索。'
 		});

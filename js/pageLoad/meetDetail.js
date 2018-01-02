@@ -113,6 +113,17 @@
         });
     });
 
+    // 更新参与人员数量
+    ajaxTool.getStatusList({
+        'attr': 'mName',
+        'val': meet
+    }, (data) => {
+        // 确认参加
+        console.log(data)
+        let data_1 = tools.filterData(data.statusList, 'sStatus', 1);
+        document.querySelector('.joinNum span').innerHTML = data_1.length;
+    });
+
     // 确认参加按钮
     joinBtn.addEventListener('click', () => {
         ajaxTool.updateStatus({

@@ -7,8 +7,8 @@
     const noSign = document.querySelector('.tabMain li[data-index="3"] ul');
 
     ajaxTool.getStatusList({
-        'attr': name,
-        'val': username
+        'attr': 'mName',
+        'val': meet
     }, (data) => {
         // 确认参加
         let data_1 = tools.filterData(data.statusList, 'sStatus', 1);
@@ -16,12 +16,12 @@
         document.querySelector('.tabMain li[data-index="1"] ul').innerHTML = addDom(data_1);
 
         // 已签到
-        let data_2 = tools.filterData(data.statusList, 'sStatus', 2);
+        let data_2 = tools.filterData(data.statusList, 'sSign', 0);
         document.querySelector('.tabTittle li[data-index="2"] span').innerHTML = data_2.length;
         document.querySelector('.tabMain li[data-index="2"] ul').innerHTML = addDom(data_2);
 
         // 未签到
-        let data_3 = tools.filterData(data.statusList, 'sStatus', 3);
+        let data_3 = tools.filterData(data.statusList, 'sSign', 1);
         document.querySelector('.tabTittle li[data-index="3"] span').innerHTML = data_3.length;
         noSign.innerHTML = addDom(data_3);
 
