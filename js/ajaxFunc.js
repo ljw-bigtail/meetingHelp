@@ -287,5 +287,19 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
-    
+    // 校验二维码
+    checkQR: function (req, callback) {
+        fetch(Url + "/api/checkQR", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
 }

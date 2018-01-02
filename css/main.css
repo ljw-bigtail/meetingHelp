@@ -329,6 +329,10 @@ body>article .btnBox:nth-child(2) ul li:nth-child(2) .pic {
     background: #9C97F0;
 }
 
+body>article .btnBox:nth-child(2) ul li:nth-child(3) .pic {
+    background: rgb(230, 151, 240);
+}
+
 body>article .btnBox:nth-child(3) ul li:nth-child(1) .pic {
     background: #6DBDE5;
 }
