@@ -1,10 +1,11 @@
-(function(){
+(function () {
     // 初始化页面数据
     let username = document.getElementById('username');
     let phone = document.getElementById('phone');
     let email = document.getElementById('email');
     let desc = document.getElementById('desc');
     let department = document.getElementById('department');
+    let logout = document.querySelector('.logout');
 
     username.value = tools.getCookie('username');
     phone.value = tools.getCookie('phone');
@@ -15,12 +16,12 @@
     // 保存数据
     document.querySelector('.save').addEventListener('click', () => {
         // 校验
-        if(phone.value && email.value){
-            if(!tools.isMobile(phone.value)){
+        if (phone.value && email.value) {
+            if (!tools.isMobile(phone.value)) {
                 phone.parentNode.style.outline = '2px dashed red';
                 return false;
             }
-            if(!tools.isEmail(email.value)){
+            if (!tools.isEmail(email.value)) {
                 email.parentNode.style.outline = '2px dashed red';
                 return false;
             }
@@ -47,5 +48,12 @@
     });
     email.addEventListener('focus', () => {
         email.parentNode.style.outline = '0px';
+    });
+
+    logout.addEventListener('click', () => {
+        tools.delCookie('username');
+        tools.delCookie('phone');
+        tools.delCookie('email');
+        window.location.href = '/login.html';
     });
 })()
