@@ -1037,38 +1037,61 @@ body article .meetList h4 {
     text-align: left;
 }
 
+article.cameraBox {
+    position: relative;
+}
+
 article.camera {
     background: url(../img/bg.png) no-repeat center center;
+    filter: blur(4px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
 }
 
 div.camera {
-    position: relative;
-    height: 50%;
+    background: rgba(0, 0, 0, .4);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
 }
 
-div.camera input {
+div.camera #cameraInput {
     display: none;
 }
 
-div.camera button {
+div.camera #cameraBtn {
     display: block;
     width: 20rem;
     height: 20rem;
     border-radius: 50%;
-    border: 1px solid #212125;
+    border: 1px solid #f0f0f0;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -10rem;
     margin-left: -10rem;
-    color: #666666;
+    color: #f0f0f0;
     font-size: 4rem;
     background: transparent;
 }
 
-div.camera #cameraBtn {}
+div.camera #cameraBtn:focus {
+    box-shadow: inset 0px 0px 8px 0px #383838;
+}
 
-div.camera #photoBtn {}
+div.camera #cameraBtn img {
+    width: 6rem;
+    vertical-align: middle;
+}
 
 div.qrcode {
     display: none;
@@ -1092,7 +1115,8 @@ div.qrcode .qrcodeMain p {
 div.qrcode .qrcodeMain img {
     width: 100%;
 }
-div.qrcode .qrCodeClose{
+
+div.qrcode .qrCodeClose {
     border-top: 1px solid #cccccc;
     display: block;
     height: 8rem;
