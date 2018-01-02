@@ -209,46 +209,54 @@ router.post('/addMeet', function (req, res) {
 	// 是否成功保存
 	let sure = 0;
 
-	// 创建二维码
-	let qr_png = qr_image.image(JSON.stringify(req.body), {
-		type: 'png',
-		size: 6
-	});
-	let qr_png_url = URL + '/qr_code/uploads_' + req.body.name + '.png';
-	let qr_pipe = qr_png.pipe(fs.createWriteStream(qr_png_url));
-	qr_pipe.on('error', function (err) {
-		res.send(200, {
-			'mes': err
+	// 创建会议
+	Meet.addMeet(req.body, (mes) => {
+		if (mes.status == "faile") {
+			res.send(200, mes);
+			return false;
+		}
+		// 创建二维码
+		let qr_png = qr_image.image(JSON.stringify(req.body), {
+			type: 'png',
+			size: 6
 		});
-		return false;
-	})
-	qr_pipe.on('finish', function () {
-		var meetData = req.body;
-		Object.assign(meetData, {
-			'mQRcode': qr_png_url
-		})
-		// 创建会议
-		Meet.addMeet(meetData, (mes) => {
-			// 创建参会人员状态
-			req.body.joinList.map((join) => {
-				Status.addStatus({
-					'name': join,
-					'mName': req.body.name
-				}, (req) => {
-					if ('status' == 'faile') {
-						sure += 1;
-					}
-				});
+		let qr_png_url = URL + '/qr_code/uploads_' + req.body.name + '.png';
+		let qr_pipe = qr_png.pipe(fs.createWriteStream(qr_png_url));
+		qr_pipe.on('error', function (err) {
+			res.send(200, {
+				'mes': err
 			});
-			if (sure == 0) {
-				res.send(200, mes);
-			} else {
-				res.send(200, {
-					'status': 'false'
-				})
-			}
+			return false;
+		})
+		qr_pipe.on('finish', function () {
+			var meetData = req.body;
+			Object.assign(meetData, {
+				'mQRcode': qr_png_url
+			})
 		});
-	})
+
+		// 创建参会人员状态
+		req.body.joinList.map((join) => {
+			Status.addStatus({
+				'name': join,
+				'mName': req.body.name
+			}, (req) => {
+				if ('status' == 'faile') {
+					sure += 1;
+				}
+			});
+		});
+		if (sure == 0) {
+			res.send(200, {
+				'status': 'success',
+				'qrCode': qr_png_url
+			});
+		} else {
+			res.send(200, {
+				'status': 'false'
+			})
+		}
+	});
 });
 
 // 获取会议室列表

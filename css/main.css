@@ -1065,3 +1065,26 @@ div.camera button {
 div.camera #cameraBtn {}
 
 div.camera #photoBtn {}
+
+div.qrcode {
+    display: none;
+}
+
+div.qrcode .qrcodeMain {
+    padding: 1.5rem;
+}
+
+div.qrcode .qrcodeMain h3 {
+    font-size: 3rem;
+    text-align: center;
+}
+
+div.qrcode .qrcodeMain p {
+    font-size: 2.4rem;
+    text-align: center;
+    line-height: 3rem;
+}
+
+div.qrcode .qrcodeMain img {
+    width: 100%;
+}

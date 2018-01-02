@@ -147,17 +147,20 @@
             'mNote': canRead.className == 'selected' ? 0 : 1,
             'mNote': autoJoin.className == 'selected' ? 0 : 1
         };
-
+        err.errMesShow('正在创建，请稍后。');
         ajaxTool.addMeet(meetData, (res) => {
             if (res.status == 'success') {
-                err.errMesShow('新建成功，正在跳转至首页', () => {
-                    window.location.href = '/';
-                });
+                err.errMesShow('新建成功，正在跳转。');
+                // 展示生成的二维码（签到用）
+                document.querySelector('#qrCodeImg').setAttribute('src', res.qrCode);
+                document.querySelector('.qrcode').style.display = 'block';
             } else {
-                err.errMesShow('新建失败，请重新来过');
+                if (res.mes.code == 11000) {
+                    err.errMesShow('会议重复，请修改名称。');
+                    return false;
+                }
+                err.errMesShow('新建失败，请重新来过。');
             }
         });
-
     });
-
 })()

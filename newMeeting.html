@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="css/re.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
     <header>
         <button class="back">&lt;</button>
@@ -85,6 +87,21 @@
             <span class="success" id="save">保存</span>
         </div>
     </footer>
+    <div class="tipBox qrcode">
+        <div class="tipMain">
+            <div class="qrcodeMain">
+                <img src="" id="qrCodeImg">
+                <h3>签到用二维码</h3>
+                <p>该二维码只出现一次，请保存或手动截图。</p>
+            </div>
+            <footer class="leaveFooter">
+                <div class="flexBox">
+                    <span class="qrCodeClose">关闭</span>
+                    <span class="qrCodeSave save">保存</span>
+                </div>
+            </footer>
+        </div>
+    </div>
 
     <div id="errMes"></div>
 
@@ -94,4 +111,5 @@
     <script src="js/main.js"></script>
     <script src="js/pageLoad/newMeeting.js"></script>
 </body>
+
 </html>
