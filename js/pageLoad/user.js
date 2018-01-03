@@ -1,69 +1,74 @@
 (function () {
     const err = new Err(errMes);
 
+    let username = tools.getCookie('username');
+    tools.noUser(username);
     tools.titleValue('我的信息');
-    tools.headValue(tools.getCookie('username') + '的信息-' + project_name);
+    tools.headValue(username + '的信息-' + project_name);
 
     // 绑定事件
-    let backList = document.querySelectorAll('.back');
+    const backList = document.querySelectorAll('.back');
     // 设置返回按钮
     events.goBack(backList);
 
     // 初始化页面数据
-    let username = document.getElementById('username');
-    let phone = document.getElementById('phone');
-    let email = document.getElementById('email');
-    let desc = document.getElementById('desc');
-    let department = document.getElementById('department');
-    let logout = document.querySelector('.logout');
+    let phone = tools.getCookie('phone');
+    let email = tools.getCookie('email');
+    let desc = tools.getCookie('desc');
+    let department = tools.getCookie('department');
 
-    const saveDay = 7;
+    const userDom = document.getElementById('username');
+    const phoneDom = document.getElementById('phone');
+    const emailDom = document.getElementById('email');
+    const descDom = document.getElementById('desc');
+    const departmentDom = document.getElementById('department');
+    const logout = document.querySelector('.logout');
 
-    username.value = tools.getCookie('username');
-    phone.value = tools.getCookie('phone');
-    email.value = tools.getCookie('email');
-    desc.value = tools.getCookie('desc');
-    department.value = tools.getCookie('department');
+    userDom.value = username;
+    phoneDom.value = phone;
+    emailDom.value = email;
+    descDom.value = desc;
+    departmentDom.value = department;
 
     // 保存数据
     document.querySelector('.save').addEventListener('click', () => {
         // 校验
-        if (phone.value && email.value) {
-            if (!tools.isMobile(phone.value)) {
-                phone.parentNode.style.outline = '2px dashed red';
+        if (phoneDom.value && emailDom.value) {
+            if (!tools.isMobile(phoneDom.value)) {
+                phoneDom.parentNode.style.outline = '2px dashed red';
                 return false;
             }
-            if (!tools.isEmail(email.value)) {
-                email.parentNode.style.outline = '2px dashed red';
+            if (!tools.isEmail(emailDom.value)) {
+                emailDom.parentNode.style.outline = '2px dashed red';
                 return false;
             }
             // 判断是否修改
-            if (phone.value == tools.getCookie('phone') && email.value == tools.getCookie('email') && desc.value == tools.getCookie('desc')) {
+            if (phoneDom.value == phone && emailDom.value == email && descDom.value == desc) {
                 err.errMesShow('请修改信息后再保存');
             }
             let userData = {
-                'name': username.value,
+                'name': userDom.value,
                 'update': {
-                    'phone': phone.value,
-                    'email': email.value,
-                    'desc': desc.value
+                    'phone': phoneDom.value,
+                    'email': emailDom.value,
+                    'desc': descDom.value
                 }
             }
             //校验成功
             ajaxTool.updateUser(userData, (req) => {
                 //修改cookie中的值
-                tools.setCookie('phone', phone.value, saveDay);
-                tools.setCookie('email', email.value, saveDay);
-                tools.setCookie('desc', desc.value, saveDay);
+                tools.setCookie('phone', phoneDom.value, saveDay);
+                tools.setCookie('email', emailDom.value, saveDay);
+                tools.setCookie('desc', descDom.value, saveDay);
             });
         }
     });
 
-    phone.addEventListener('focus', () => {
-        phone.parentNode.style.outline = '0px';
+    phoneDom.addEventListener('focus', () => {
+        phoneDom.parentNode.style.outline = '0px';
     });
-    email.addEventListener('focus', () => {
-        email.parentNode.style.outline = '0px';
+    emailDom.addEventListener('focus', () => {
+        emailDom.parentNode.style.outline = '0px';
     });
 
     logout.addEventListener('click', () => {

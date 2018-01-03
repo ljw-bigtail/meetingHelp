@@ -2,16 +2,24 @@
     const err = new Err(errMes);
 
     let username = tools.getCookie('username');
-    let meet = tools.getQuery('meet')
-
+    let meet = tools.getQuery('meet');
+    tools.noUser(username);
     tools.headValue(meet + '-参会统计-' + project_name);
     tools.titleValue('参会统计');
 
-    const noSign = document.querySelector('.tabMain li[data-index="3"] ul');
+    const dom_ul_1 = document.querySelector('.tabMain li[data-index="1"] ul');
+    const dom_ul_2 = document.querySelector('.tabMain li[data-index="2"] ul');
+    const dom_ul_3 = document.querySelector('.tabMain li[data-index="3"] ul');
+    const dom_span_1 = document.querySelector('.tabTittle li[data-index="1"] span');
+    const dom_span_2 = document.querySelector('.tabTittle li[data-index="2"] span');
+    const dom_span_3 = document.querySelector('.tabTittle li[data-index="3"] span');
+    const tipsTo = document.querySelector('.tipsTo');
+    let data_1, data_2, data_3;
+
     // 绑定事件
-    let backList = document.querySelectorAll('.back');
-    let mPTabTitle = document.querySelectorAll('.meetPeopleTab .tabMain > li');
-    let mPTabMain = document.querySelectorAll('.meetPeopleTab .tabTittle li');
+    const backList = document.querySelectorAll('.back');
+    const mPTabTitle = document.querySelectorAll('.meetPeopleTab .tabMain > li');
+    const mPTabMain = document.querySelectorAll('.meetPeopleTab .tabTittle li');
     // 设置返回按钮
     events.goBack(backList);
     // 设置Tab
@@ -23,25 +31,24 @@
         'val': meet
     }, (data) => {
         // 确认参加
-        let data_1 = tools.filterData(data.statusList, 'sStatus', 1);
-        document.querySelector('.tabTittle li[data-index="1"] span').innerHTML = data_1.length;
-        document.querySelector('.tabMain li[data-index="1"] ul').innerHTML = addDom(data_1);
+        data_1 = tools.filterData(data.statusList, 'sStatus', 1);
+        dom_span_1.innerHTML = data_1.length;
+        dom_ul_1.innerHTML = addDom(data_1);
 
         // 已签到
-        let data_2 = tools.filterData(data.statusList, 'sSign', 0);
-        document.querySelector('.tabTittle li[data-index="2"] span').innerHTML = data_2.length;
-        document.querySelector('.tabMain li[data-index="2"] ul').innerHTML = addDom(data_2);
+        data_2 = tools.filterData(data.statusList, 'sSign', 0);
+        dom_span_2.innerHTML = data_2.length;
+        dom_ul_2.innerHTML = addDom(data_2);
 
         // 未签到
-        let data_3 = tools.filterData(data.statusList, 'sSign', 1);
-        document.querySelector('.tabTittle li[data-index="3"] span').innerHTML = data_3.length;
-        noSign.innerHTML = addDom(data_3);
-
+        data_3 = tools.filterData(data.statusList, 'sSign', 1);
+        dom_span_3.innerHTML = data_3.length;
+        dom_ul_3.innerHTML = addDom(data_3);
     });
 
     // 提醒签到    
-    document.querySelector('.tipsTo').addEventListener('click', () => {
-        const noSignList = noSign.querySelectorAll('li');
+    tipsTo.addEventListener('click', () => {
+        const noSignList = dom_ul_3.querySelectorAll('li');
         if (noSignList.length == 0) {
             err.errMesShow('参会人员均已签到。');
             return false;

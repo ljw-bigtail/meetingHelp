@@ -1,6 +1,6 @@
 (() => {
-    var user = tools.getCookie('username');
-
+    var username = tools.getCookie('username');
+    tools.noUser(username);
     tools.titleValue('我的纪要');
     tools.headValue('我的纪要列表-' + project_name);
 
@@ -14,9 +14,11 @@
         e.parentNode.style.display = 'none';
     });
     
+    const writeListUl = writeList[0].querySelector('ul');
+
     // 加载会议室列表
     ajaxTool.getwriteList({
-        'user': user
+        'user': username
     }, (data) => {
         var dom = '';
         data.writeList.map((_data) => {
@@ -29,7 +31,7 @@
         });
 
         // 在会议地点中加载
-        document.querySelector('.writeList ul').innerHTML = dom;
+        writeListUl.innerHTML = dom;
 
         //搜索功能实现
         // 重组数组

@@ -5,6 +5,11 @@
     let password = document.querySelector('#password');
     let login = document.querySelector('#login');
 
+    let isRe = tools.getQuery('isRe');
+    if(isRe){
+        err.errMesShow('请登录后再进行操作。');
+    }
+
     tools.headValue('登录-' + project_name);
     tools.titleValue(project_name);
 
@@ -40,11 +45,11 @@
         ajaxTool.checkUser(checkData, (req) => {
             if (req.status == "success") {
                 //存cookie
-                tools.setCookie('username', req.userMes.name, 7);
-                tools.setCookie('phone', req.userMes.phone, 7);
-                tools.setCookie('email', req.userMes.email, 7);
-                tools.setCookie('desc', req.userMes.desc, 7);
-                tools.setCookie('department', req.userMes.dName, 7);
+                tools.setCookie('username', req.userMes.name, saveDay);
+                tools.setCookie('phone', req.userMes.phone, saveDay);
+                tools.setCookie('email', req.userMes.email, saveDay);
+                tools.setCookie('desc', req.userMes.desc, saveDay);
+                tools.setCookie('department', req.userMes.dName, saveDay);
                 // 跳转至主页
                 window.location.pathname = '/index.html';
             }

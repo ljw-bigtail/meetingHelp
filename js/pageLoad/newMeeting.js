@@ -2,8 +2,9 @@
     // 提示信息
     const err = new Err(errMes);
 
+    let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
-
+    tools.noUser(username);
     if(meet){
         tools.titleValue('修改会议信息');
         tools.headValue('正在修改'+meet+'的信息-' + project_name);

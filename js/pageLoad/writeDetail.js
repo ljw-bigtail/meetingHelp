@@ -4,8 +4,8 @@
     // 获取并设置会议室信息
     let note = tools.getQuery('note');
     let isMain = tools.getQuery('isMain');
-    document.querySelector('.noteName').innerHTML = note;
-
+    var username = tools.getCookie('username');
+    tools.noUser(username);
     tools.titleValue('纪要详情');
     tools.headValue(note + '的纪要详情-' + project_name);
 
@@ -14,9 +14,14 @@
     // 设置返回按钮
     events.goBack(backList);
 
-    let publicBtn = document.querySelector('#public');
-    let save = document.querySelector('.save');
-    let textMain = document.querySelector('.textMain textarea');
+    const publicBtn = document.querySelector('#public');
+    const save = document.querySelector('.save');
+    const textMain = document.querySelector('.textMain textarea');
+    const noteName = document.querySelector('.noteName');
+    const writeMainTit = document.querySelector('.writeMain h5');
+    const writeMainTime = document.querySelector('.writeMain .mesPeople span:last-child');
+    
+    noteName.innerHTML = note;
 
     let noteDate = {
         mName: '',
@@ -34,9 +39,9 @@
         Object.assign(noteDate, data);
 
         // 填充数据
-        document.querySelector('.writeMain .mesPeople span:last-child').innerHTML = changeTime(data.meta.updateAt);
+        writeMainTime.innerHTML = changeTime(data.meta.updateAt);
         textMain.value = data.nMes;
-        document.querySelector('.writeMain h5').innerHTML = '<a href="meetDetail.html?meet=' + data.mName + '">' + data.mName + '</a>';
+        writeMainTit.innerHTML = '<a href="meetDetail.html?meet=' + data.mName + '">' + data.mName + '</a>';
 
         // 会议公共纪要
         if (isMain == 'true') {

@@ -1,7 +1,7 @@
 (() => {
     let username = tools.getCookie('username');
     let showEnd = tools.getQuery('end')
-
+    tools.noUser(username);
     if (showEnd == 'true') {
         tools.titleValue('相关会议');
         tools.headValue('相关会议-' + project_name);    
@@ -21,7 +21,6 @@
     });
 
     const btnValue = '取消会议';
-
     const startTit = '<h4>我发起的会议</h4><ul class="startDom">';
     const joinTit = '<h4>我参加的会议</h4><ul class="joinDom">';
     const endTit = '<h4>历史会议</h4><ul class="endfDom">';
@@ -36,7 +35,7 @@
     }, (data) => {
         data.meetList.map((data) => {
             let now = new Date();
-            let start = new Date(data.mStartTime)
+            let start = new Date(data.mStartTime);
 
             // 过期的会议
             if (now > start) {
@@ -51,17 +50,16 @@
                     joinDom += initDom(data);
                 }
             }
-
         });
 
         if (startDom == startTit) {
-            startDom += noMeetDom('没有发起会议。')
+            startDom += noMeetDom('没有发起会议。');
         }
         if (joinDom == joinTit) {
-            joinDom += noMeetDom('暂无其他需要参加会议。')
+            joinDom += noMeetDom('暂无其他需要参加会议。');
         }
         if (endDom == endTit) {
-            endDom += noMeetDom('暂无历史会议。')
+            endDom += noMeetDom('暂无历史会议。');
         }
 
         startDom += '</ul>';
@@ -74,7 +72,6 @@
         } else {
             document.querySelector('.meetList').innerHTML += startDom + joinDom;
         }
-
     });
 
     function noMeetDom(val) {

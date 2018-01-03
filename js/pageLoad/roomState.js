@@ -1,35 +1,43 @@
 (() => {
     // 获取并设置会议室信息
-    var room = tools.getQuery('room');
-
+    let room = tools.getQuery('room');
+    let username = tools.getCookie('username');
+    const roomName = document.querySelector('.roomName');
+    tools.noUser(username);
     tools.titleValue('会议室状态');
     tools.headValue(room + '状态-' + project_name);
+    roomName.innerHTML = room;
 
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     // 设置返回按钮
     events.goBack(backList);
 
-    document.querySelector('.roomName').innerHTML = room;
+    const roomNumber = document.querySelector('.roomNumber');
+    const roomAddress = document.querySelector('.roomAddress');
+    const roomDevice = document.querySelector('.roomDevice');
+    const newMeet = document.querySelector('.newMeet');
 
     ajaxTool.findRoom({
         'attr': 'rName',
         'val': room
     }, function (data) {
-        document.querySelector('.roomNumber').innerHTML = data.rNum;
-        document.querySelector('.roomAddress').innerHTML = data.rPlace;
-        var dom = '';
-        data.rDevice.split('/').map((text) => {
-            dom += '<i>' + text + '</i><br>'
-        });
-        document.querySelector('.roomDevice').innerHTML = dom;
+        roomNumber.innerHTML = data.rNum;
+        roomAddress.innerHTML = data.rPlace;
+        roomDevice.innerHTML = addDom(data.rDevice.split('/'));
     });
 
     //跳转到传递了房间名称的新建会议页面
-    document.querySelector('.newMeet').addEventListener('click', () => {
+    newMeet.addEventListener('click', () => {
         window.location.href = '/newMeeting.html?place=' + room;
     });
 
     // 还需要计算会议室预定信息，后台暂未提供对应的信息和接口
-
+    function addDom(data) {
+        var dom = '';
+        data.map((text) => {
+            dom += '<i>' + text + '</i><br>';
+        });
+        return dom;
+    }
 })()

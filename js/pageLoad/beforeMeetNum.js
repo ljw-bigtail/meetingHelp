@@ -2,10 +2,20 @@
     const err = new Err(errMes);
 
     let username = tools.getCookie('username');
-    let meet = tools.getQuery('meet')
-
+    let meet = tools.getQuery('meet');
+    tools.noUser(username);
     tools.headValue(meet + '-请假统计-' + project_name);
     tools.titleValue('请假统计');
+
+    const dom_ul_1 = document.querySelector('.tabMain li[data-index="1"] ul');
+    const dom_ul_2 = document.querySelector('.tabMain li[data-index="2"] ul');
+    const dom_ul_3 = document.querySelector('.tabMain li[data-index="3"] ul');
+    const dom_span_1 = document.querySelector('.tabTittle li[data-index="1"] span');
+    const dom_span_2 = document.querySelector('.tabTittle li[data-index="2"] span');
+    const dom_span_3 = document.querySelector('.tabTittle li[data-index="3"] span');
+    const pass = document.querySelector('.pass');
+    const noPass = document.querySelector('.noPass');
+    let data_1, data_2, data_3;
 
     // 绑定事件
     let backList = document.querySelectorAll('.back');
@@ -24,24 +34,23 @@
         'val': meet
     }, (data) => {
         // 待审批
-        let data_1 = tools.filterData(data.statusList, 'sLeave', 0);
-        document.querySelector('.tabTittle li[data-index="1"] span').innerHTML = data_1.length;
-        document.querySelector('.tabMain li[data-index="1"] ul').innerHTML = addDom(data_1);
+        data_1 = tools.filterData(data.statusList, 'sLeave', 0);
+        dom_span_1.innerHTML = data_1.length;
+        dom_ul_1.innerHTML = addDom(data_1);
 
         // 已请假
-        let data_2 = tools.filterData(data.statusList, 'sLeave', 1);
-        document.querySelector('.tabTittle li[data-index="2"] span').innerHTML = data_2.length;
-        document.querySelector('.tabMain li[data-index="2"] ul').innerHTML = addDom(data_2);
+        data_2 = tools.filterData(data.statusList, 'sLeave', 1);
+        dom_span_2.innerHTML = data_2.length;
+        dom_ul_2.innerHTML = addDom(data_2);
 
         // 退审
-        let data_3 = tools.filterData(data.statusList, 'sLeave', 2);
-        document.querySelector('.tabTittle li[data-index="3"] span').innerHTML = data_3.length;
-        document.querySelector('.tabMain li[data-index="3"] ul').innerHTML = addDom(data_3);
-
+        data_3 = tools.filterData(data.statusList, 'sLeave', 2);
+        dom_span_3.innerHTML = data_3.length;
+        dom_span_3.innerHTML = addDom(data_3);
     });
 
     // 获取当前需要操作的人员列表
-    document.querySelector('.pass').addEventListener('click', () => {
+    pass.addEventListener('click', () => {
         let userList = getUserList();
         if (userList.length == 0) {
             err.errMesShow('请选择需要修改的用户。');
@@ -67,7 +76,7 @@
         });
     });
 
-    document.querySelector('.noPass').addEventListener('click', () => {
+    noPass.addEventListener('click', () => {
         let userList = getUserList();
         if (userList.length == 0) {
             err.errMesShow('请选择需要修改的用户。');

@@ -82,20 +82,26 @@ let tools = {
     // 设置标题
     titleValue: (value) => {
         let title = document.querySelector('header h1.title') || document.querySelector('header');
-        if(title){
+        if (title) {
             title.innerHTML = value;
-        }else{
+        } else {
             console.error('没有找到标题位');
         }
     },
     // 设置head的标题
     headValue: (value, leaveVal) => {
         document.title = value;
-        window.onblur = function(){
+        window.onblur = function () {
             document.title = leaveVal || leave_title;
         };
-        window.onfocus = function(){
+        window.onfocus = function () {
             document.title = value;
         };
     },
+    // 未获取到用户信息，跳转至登录
+    noUser: (user) => {
+        if (!user) {
+            window.location.href = '/login.html?isRe=true';
+        }
+    }
 }

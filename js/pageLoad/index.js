@@ -5,8 +5,7 @@
     console.log(tools.getCookie('department'));
 
     let username = tools.getCookie('username');
-    console.log(username);
-
+    tools.noUser(username);
     tools.headValue('首页-'+project_name);
     tools.titleValue(project_name);
 

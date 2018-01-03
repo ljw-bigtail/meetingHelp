@@ -9,3 +9,6 @@ const user_avatar_data = ['#F76B8A', '#028090', '#02C39A', '#EC9454', '#849561']
 
 // 离开页面时需要展示的标题
 const leave_title = 'i miss you';
+
+// cookie存储时间，单位天
+const saveDay = 7;

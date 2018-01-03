@@ -3,7 +3,7 @@
 
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
-
+    tools.noUser(username);
     tools.titleValue('会议详情');
     tools.headValue('会议详情-' + project_name);  
 
@@ -40,7 +40,6 @@
     // 加载会议回应状态
     joinNum.href = 'afterMeetNum.html?meet=' + meet;
     leaveNum.href = 'beforeMeetNum.html?meet=' + meet;
-    // noBackNum
 
     // 更新会议相关信息
     ajaxTool.findMeet({

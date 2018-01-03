@@ -1,11 +1,12 @@
 (() => {
+    let username = tools.getCookie('username');
+    tools.titleValue('会议室列表');
+    tools.headValue('会议室列表-' + project_name);  
+    tools.noUser(username);
+
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     let roomList = document.querySelectorAll('.roomList');
-
-    tools.titleValue('会议室列表');
-    tools.headValue('会议室列表-' + project_name);  
-
     // 设置返回按钮
     events.goBack(backList);
     // 删除按钮显示与功能

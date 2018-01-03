@@ -1,18 +1,18 @@
 (() => {
-    // 提示信息
     const err = new Err(errMes);
-    let username = tools.getCookie('username');
 
+    let username = tools.getCookie('username');
+    tools.noUser(username);
     tools.headValue('扫码签到-' + project_name);
     tools.titleValue('扫码签到');
 
-    // 绑定事件,返回 
+    // 绑定事件 
     let backList = document.querySelectorAll('.back');
-    events.goBack(backList);
-
     let cameraBtn = document.querySelector('#cameraBtn');
     let cameraInput = document.querySelector('#cameraInput');
-
+    // 返回按钮
+    events.goBack(backList);
+    // 出发上传文件按钮
     cameraBtn.addEventListener('click', function () {
         cameraInput.click();
     });
