@@ -1,11 +1,14 @@
-(function(){
+(function () {
     console.log(tools.getCookie('phone'));
     console.log(tools.getCookie('email'));
     console.log(tools.getCookie('desc'));
     console.log(tools.getCookie('department'));
-    
+
     let username = tools.getCookie('username');
     console.log(username);
+
+    tools.headValue('首页-'+project_name);
+    tools.titleValue(project_name);
 
     // 加载待进行会议
     ajaxTool.getMeetList({

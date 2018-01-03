@@ -2,6 +2,9 @@
     // 获取并设置会议室信息
     var room = tools.getQuery('room');
 
+    tools.titleValue('会议室状态');
+    tools.headValue(room + '状态-' + project_name);
+
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     // 设置返回按钮

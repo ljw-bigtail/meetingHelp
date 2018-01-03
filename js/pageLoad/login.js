@@ -5,6 +5,9 @@
     let password = document.querySelector('#password');
     let login = document.querySelector('#login');
 
+    tools.headValue('登录-' + project_name);
+    tools.titleValue(project_name);
+
     let usernameValue, passwordValue;
 
     username.addEventListener('keyup', () => {
@@ -29,7 +32,7 @@
 
         // 非空判断
         if (usernameValue == '') {
-            username.style.borderColor = 'red'; 
+            username.style.borderColor = 'red';
             return false;
         }
 

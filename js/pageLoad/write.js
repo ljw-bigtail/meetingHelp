@@ -1,6 +1,9 @@
 (() => {
     var user = tools.getCookie('username');
 
+    tools.titleValue('我的纪要');
+    tools.headValue('我的纪要列表-' + project_name);
+
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     let writeList = document.querySelectorAll('.writeList');

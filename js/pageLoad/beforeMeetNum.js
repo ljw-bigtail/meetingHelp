@@ -4,6 +4,9 @@
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet')
 
+    tools.headValue(meet + '-请假统计-' + project_name);
+    tools.titleValue('请假统计');
+
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     let mPTabTitle = document.querySelectorAll('.meetPeopleTab .tabMain > li');
@@ -102,7 +105,7 @@
     function addDom(data) {
         let userDom = '';
         data.map((data) => {
-            userDom += '<li><div class="pic" style="background:' + tools.radomData(userBgData) + '">' + data.name.split('')[0] + '</div><div><h5>' + data.name + '</h5><span>' + data.sMes + '</span></div></li>';
+            userDom += '<li><div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + data.name.split('')[0] + '</div><div><h5>' + data.name + '</h5><span>' + data.sMes + '</span></div></li>';
         });
         return userDom;
     }

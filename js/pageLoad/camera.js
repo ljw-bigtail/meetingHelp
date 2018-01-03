@@ -3,6 +3,9 @@
     const err = new Err(errMes);
     let username = tools.getCookie('username');
 
+    tools.headValue('扫码签到-' + project_name);
+    tools.titleValue('扫码签到');
+
     // 绑定事件,返回 
     let backList = document.querySelectorAll('.back');
     events.goBack(backList);

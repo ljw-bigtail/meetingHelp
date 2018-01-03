@@ -4,6 +4,9 @@
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
 
+    tools.titleValue('会议详情');
+    tools.headValue('会议详情-' + project_name);  
+
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     // 设置返回按钮
@@ -52,7 +55,7 @@
 
         // 加载发起人
         pic.innerHTML = meetData.mAdmin.split('')[0];
-        pic.style.background = tools.radomData(userBgData);
+        pic.style.background = tools.radomData(user_avatar_data);
         ajaxTool.findUser({
             'attr': 'name',
             'val': meetData.mAdmin
@@ -65,7 +68,7 @@
         // 加载参会人
         let userDom = '';
         meetData.mPeople.split(',').map((data) => {
-            userDom += '<li><div class="pic" style="background:' + tools.radomData(userBgData) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
+            userDom += '<li><div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
         });
         meetPeople.innerHTML = userDom;
 

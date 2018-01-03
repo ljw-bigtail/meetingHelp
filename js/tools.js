@@ -1,6 +1,3 @@
-// 用户头像背景色数组
-const userBgData = ['#F76B8A', '#028090', '#02C39A', '#EC9454', '#849561'];
-
 let tools = {
     // 设置cookie
     setCookie: (c_name, value, expiredays) => {
@@ -73,13 +70,32 @@ let tools = {
         return data[num];
     },
     // 根据条件筛选某条参数符合的数组
-    filterData:(data, attr, val)=>{
+    filterData: (data, attr, val) => {
         var newData = [];
-        data.map((d)=>{
-            if(d[attr] == val){
+        data.map((d) => {
+            if (d[attr] == val) {
                 newData.push(d);
             }
         });
         return newData;
-    }        
+    },
+    // 设置标题
+    titleValue: (value) => {
+        let title = document.querySelector('header h1.title') || document.querySelector('header');
+        if(title){
+            title.innerHTML = value;
+        }else{
+            console.error('没有找到标题位');
+        }
+    },
+    // 设置head的标题
+    headValue: (value, leaveVal) => {
+        document.title = value;
+        window.onblur = function(){
+            document.title = leaveVal || leave_title;
+        };
+        window.onfocus = function(){
+            document.title = value;
+        };
+    },
 }

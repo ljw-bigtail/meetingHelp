@@ -2,6 +2,16 @@
     // 提示信息
     const err = new Err(errMes);
 
+    let meet = tools.getQuery('meet');
+
+    if(meet){
+        tools.titleValue('修改会议信息');
+        tools.headValue('正在修改'+meet+'的信息-' + project_name);
+    }else{
+        tools.titleValue('新建会议');
+        tools.headValue('新建会议-' + project_name);
+    }
+
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     let chooseOneBox = document.querySelectorAll('.chooseBox');

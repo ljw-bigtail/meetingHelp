@@ -4,8 +4,10 @@
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet')
 
-    const noSign = document.querySelector('.tabMain li[data-index="3"] ul');
+    tools.headValue(meet + '-参会统计-' + project_name);
+    tools.titleValue('参会统计');
 
+    const noSign = document.querySelector('.tabMain li[data-index="3"] ul');
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     let mPTabTitle = document.querySelectorAll('.meetPeopleTab .tabMain > li');
@@ -14,7 +16,6 @@
     events.goBack(backList);
     // 设置Tab
     events.runTab(mPTabTitle, mPTabMain);
-    
 
     // 加载数据
     ajaxTool.getStatusList({
@@ -81,7 +82,7 @@
     function addDom(data) {
         let userDom = '';
         data.map((data) => {
-            userDom += '<li><div class="pic" style="background:' + tools.radomData(userBgData) + '">' + data.name.split('')[0] + '</div><span>' + data.name + '</span></li>'
+            userDom += '<li><div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + data.name.split('')[0] + '</div><span>' + data.name + '</span></li>'
         });
         return userDom;
     }

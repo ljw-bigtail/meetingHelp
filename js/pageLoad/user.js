@@ -1,6 +1,14 @@
 (function () {
     const err = new Err(errMes);
 
+    tools.titleValue('我的信息');
+    tools.headValue(tools.getCookie('username') + '的信息-' + project_name);
+
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    // 设置返回按钮
+    events.goBack(backList);
+
     // 初始化页面数据
     let username = document.getElementById('username');
     let phone = document.getElementById('phone');
@@ -30,7 +38,7 @@
                 return false;
             }
             // 判断是否修改
-            if(phone.value == tools.getCookie('phone') && email.value == tools.getCookie('email') && desc.value == tools.getCookie('desc')){
+            if (phone.value == tools.getCookie('phone') && email.value == tools.getCookie('email') && desc.value == tools.getCookie('desc')) {
                 err.errMesShow('请修改信息后再保存');
             }
             let userData = {

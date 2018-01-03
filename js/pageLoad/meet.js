@@ -2,6 +2,14 @@
     let username = tools.getCookie('username');
     let showEnd = tools.getQuery('end')
 
+    if (showEnd == 'true') {
+        tools.titleValue('相关会议');
+        tools.headValue('相关会议-' + project_name);    
+    } else {
+        tools.titleValue('待进行会议');
+        tools.headValue('待进行会议-' + project_name);    
+    }
+
     // 绑定事件
     let backList = document.querySelectorAll('.back');
     let meetList = document.querySelectorAll('.meetList');
