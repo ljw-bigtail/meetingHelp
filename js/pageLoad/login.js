@@ -1,10 +1,11 @@
 (function () {
+    const err = new Err(errMes);
+
     let username = document.querySelector('#username');
     let password = document.querySelector('#password');
     let login = document.querySelector('#login');
 
-    let usernameValue,
-        passwordValue;
+    let usernameValue, passwordValue;
 
     username.addEventListener('keyup', () => {
         username.style.borderColor = '#cccccc';
@@ -21,36 +22,31 @@
         usernameValue = username.value;
         passwordValue = password.value;
         let checkData = {
-            'type':'name',
+            'type': 'name',
             'val': usernameValue,
             'password': passwordValue
         };
-        
+
         // 非空判断
         if (usernameValue == '') {
-            username.style.borderColor = 'red';
+            username.style.borderColor = 'red'; 
             return false;
         }
 
         //密码校验
         ajaxTool.checkUser(checkData, (req) => {
-            if(req.status == "success"){
-                window.location.pathname = '/index.html';
+            if (req.status == "success") {
                 //存cookie
                 tools.setCookie('username', req.userMes.name, 7);
                 tools.setCookie('phone', req.userMes.phone, 7);
                 tools.setCookie('email', req.userMes.email, 7);
                 tools.setCookie('desc', req.userMes.desc, 7);
                 tools.setCookie('department', req.userMes.dName, 7);
+                // 跳转至主页
+                window.location.pathname = '/index.html';
             }
-            return false;
             //验证失败
-            var reqMes = document.querySelector('#reqMes');
-            reqMes.style.display = 'block';                
-            reqMes.innerHTML = req.mes;
-            setTimeout(function(){
-                reqMes.style.display = 'none';
-            } ,3000);
+            err.errMesShow(req.mes);
         });
     });
     // 6ECSwj

@@ -1,6 +1,11 @@
 (() => {
     let errMes = new Err(document.querySelector('#errMes'));
 
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    // 设置返回按钮
+    events.goBack(backList);
+
     // 获取并设置会议室信息
     let note = tools.getQuery('note');
     let isMain = tools.getQuery('isMain');

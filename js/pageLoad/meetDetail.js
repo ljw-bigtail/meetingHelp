@@ -2,7 +2,12 @@
     const err = new Err(errMes);
 
     let username = tools.getCookie('username');
-    let meet = tools.getQuery('meet')
+    let meet = tools.getQuery('meet');
+
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    // 设置返回按钮
+    events.goBack(backList);
 
     // let changeBtn = document.querySelector('.changeBtn');
     let meetTitle = document.querySelector('.meetTitle');
@@ -18,11 +23,11 @@
     let phone = meetAdmin.querySelector('.phone');
     let pushMes = document.querySelector('#pushMes');
     let pushBtn = document.querySelector('.pushBtn');
-    
+
     let joinNum = document.querySelector('.joinNum');
     let leaveNum = document.querySelector('.leaveNum');
     let noBackNum = document.querySelector('.noBackNum');
-    
+
     let joinBtn = document.querySelector('.join');
     let footerBtn = document.querySelector('.meetMain footer')
 
@@ -39,7 +44,6 @@
         'attr': 'mName',
         'val': meet
     }, (meetData) => {
-        // console.log(meetData);
         meetTitle.innerHTML = meetData.mName;
         meetPlace.innerHTML = meetData.mName;
         startDom.innerHTML = meetData.mStartTime;
@@ -53,7 +57,6 @@
             'attr': 'name',
             'val': meetData.mAdmin
         }, (userData) => {
-            // console.log(userData);
             name.innerHTML += userData.name;
             email.innerHTML += userData.email;
             phone.innerHTML += userData.phone;
@@ -71,14 +74,14 @@
         let start = new Date(meetData.mStartTime)
         let end = new Date(meetData.mEndTime)
         if (now < start) {
-            console.log('会议未开')
+            // 会议未开
             footerBtn.style.display = 'block';
 
         } else if (end < now) {
-            console.log('会议开完')
+            // 会议开完
 
         } else {
-            console.log('会议正在开')
+            // 会议正在开
 
         }
 
@@ -166,7 +169,6 @@
         });
         leaveMes.addEventListener('keyup', () => {
             if (leaveMes.value.length <= maxSize.innerHTML - 1) {
-                console.log(leaveMes.value.length)
                 nowSize.innerHTML = leaveMes.value.length + 1;
             } else {
                 leaveMes.value = leaveMes.value.substring(0, 99);
@@ -187,7 +189,6 @@
                     'sMes': leaveMes.value
                 }
             }, (req) => {
-                console.log(req);
                 if (req.status == "success") {
                     window.location.reload();
                 } else {
@@ -241,5 +242,4 @@
         }
     });
 
-    
 })();

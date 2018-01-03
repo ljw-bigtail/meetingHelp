@@ -1,6 +1,12 @@
 (() => {
     // 获取并设置会议室信息
     var room = tools.getQuery('room');
+
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    // 设置返回按钮
+    events.goBack(backList);
+
     document.querySelector('.roomName').innerHTML = room;
 
     ajaxTool.findRoom({

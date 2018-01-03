@@ -1,4 +1,14 @@
 (() => {
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    let roomList = document.querySelectorAll('.roomList');
+    // 设置返回按钮
+    events.goBack(backList);
+    // 删除按钮显示与功能
+    events.showBtnEvent(roomList, (e) => {
+        e.parentNode.style.display = 'none';
+    });
+
     // 加载会议室列表
     ajaxTool.getRoomList((data) => {
         var dom = '';

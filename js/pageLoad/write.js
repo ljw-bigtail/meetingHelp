@@ -1,7 +1,16 @@
 (() => {
     var user = tools.getCookie('username');
-    console.log(user)
 
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    let writeList = document.querySelectorAll('.writeList');
+    // 设置返回按钮
+    events.goBack(backList);
+    // 删除按钮显示与功能
+    events.showBtnEvent(writeList, (e) => {
+        e.parentNode.style.display = 'none';
+    });
+    
     // 加载会议室列表
     ajaxTool.getwriteList({
         'user': user
@@ -30,9 +39,9 @@
         // 筛选信息，修改值时
         searchBtn.addEventListener('keyup', function () {
             haveTextInData(this.value, writeTitleData, function () {
-                hideList(writeList);
+                events.hideList(writeList);
             }, function (isFind) {
-                hideList(writeList);
+                events.hideList(writeList);
                 isFind.map(function (num) {
                     writeList[num].style.display = 'block';
                 });

@@ -121,6 +121,17 @@ footer .flexBox span.warning a {
     color: #ffffff;
 }
 
+footer .flexBox span.wrong {
+    background: rgb(216, 23, 17);
+    color: #ffffff;
+    margin-top: 0;
+    border: none;
+}
+
+footer .flexBox span.wrong a {
+    color: #ffffff;
+}
+
 .userPic li {
     font-size: 2.6rem;
     line-height: 3rem;

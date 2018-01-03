@@ -6,6 +6,17 @@
 
     const noSign = document.querySelector('.tabMain li[data-index="3"] ul');
 
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    let mPTabTitle = document.querySelectorAll('.meetPeopleTab .tabMain > li');
+    let mPTabMain = document.querySelectorAll('.meetPeopleTab .tabTittle li');
+    // 设置返回按钮
+    events.goBack(backList);
+    // 设置Tab
+    events.runTab(mPTabTitle, mPTabMain);
+    
+
+    // 加载数据
     ajaxTool.getStatusList({
         'attr': 'mName',
         'val': meet
@@ -27,8 +38,8 @@
 
     });
 
+    // 提醒签到    
     document.querySelector('.tipsTo').addEventListener('click', () => {
-        console.log('提醒签到');
         const noSignList = noSign.querySelectorAll('li');
         if (noSignList.length == 0) {
             err.errMesShow('参会人员均已签到。');
@@ -38,7 +49,6 @@
         for (var i = 0; i < noSignList.length; i++) {
             userList.push(noSignList[i].querySelector('span').innerHTML);
         }
-        console.log(userList)
         var userMesList = [];
         userList.map((user) => {
             ajaxTool.findUser({
@@ -57,7 +67,7 @@
                         title: '会议签到提醒-来自会议助手',
                         mes: '您的会议已经开始，请不要忘记参加并签到。'
                     }, (req) => {
-                        if(req.status.trim() == '250 Ok: queued as'){
+                        if (req.status.trim() == '250 Ok: queued as') {
                             err.errMesShow('正在通过邮件提醒参会人员。');
                             return false;
                         }

@@ -64,6 +64,7 @@ window.onload = function () {
         });
     });
 
+    // 是否选中状态
     addEventForList(selectChoose, 'click', function (item, index) {
         toggleClass(item.querySelector('div'), 'selected', '');
     })

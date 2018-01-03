@@ -2,6 +2,32 @@
     // 提示信息
     const err = new Err(errMes);
 
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    let chooseOneBox = document.querySelectorAll('.chooseBox');
+    let chooseOneBtnList = document.querySelectorAll('.chooseBox .btn');
+    let chooseListBox = document.querySelectorAll('.chooseList');
+    let chooseListBtnList = document.querySelectorAll('.chooseList .btn');
+    let selectChoose = document.querySelectorAll('.selectBox .choose');
+    // 设置返回按钮
+    events.goBack(backList);
+    // 展开单选盒子
+    events.addEventForList(chooseOneBtnList, 'click', function (item, index) {
+        events.toggleShow(chooseOneBox[index].querySelector('ul'));
+    })
+    // 设置单选
+    events.chooseOne(chooseOneBox);
+    // 展开多选盒子
+    events.addEventForList(chooseListBtnList, 'click', function (item, index) {
+        events.toggleShow(chooseListBox[index].querySelector('ul'));
+    })
+    // 设置多选
+    events.chooseList(chooseListBox);
+    // 是否选中状态
+    events.addEventForList(selectChoose, 'click', function (item, index) {
+        events.toggleClass(item.querySelector('div'), 'selected', '');
+    })
+
     const name = document.querySelector('#name');
     const detail = document.querySelector('#detail');
     const newsPic = document.querySelector('#newsPic');
@@ -16,7 +42,7 @@
     const qrCodeClose = document.querySelector('.qrCodeClose');
     const qrCodeSave = document.querySelector('.qrCodeSave');
     const qrcode = document.querySelector('.qrcode');
-    const now = new Date();
+    let now = new Date();
 
     // 加载会议地点
     ajaxTool.getRoomList((data) => {

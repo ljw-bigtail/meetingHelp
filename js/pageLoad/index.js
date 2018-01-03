@@ -3,9 +3,11 @@
     console.log(tools.getCookie('email'));
     console.log(tools.getCookie('desc'));
     console.log(tools.getCookie('department'));
+    
     let username = tools.getCookie('username');
     console.log(username);
 
+    // 加载待进行会议
     ajaxTool.getMeetList({
         'user': username
     }, (data) => {

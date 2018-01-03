@@ -4,6 +4,18 @@
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet')
 
+    // 绑定事件
+    let backList = document.querySelectorAll('.back');
+    let mPTabTitle = document.querySelectorAll('.meetPeopleTab .tabMain > li');
+    let mPTabMain = document.querySelectorAll('.meetPeopleTab .tabTittle li');
+    let mPMainList = document.querySelectorAll('.meetPeopleSelect .tabMain > li[data-index="1"]');
+    // 设置返回按钮
+    events.goBack(backList);
+    // 设置Tab
+    events.runTab(mPTabTitle, mPTabMain);
+    // 绑定角色选中（多选）
+    events.chooseList(mPMainList);
+
     ajaxTool.getStatusList({
         'attr': 'mName',
         'val': meet
@@ -33,7 +45,7 @@
             return false;
         }
         // 发起请求
-        userList.map((user)=>{
+        userList.map((user) => {
             ajaxTool.updateStatus({
                 'option': {
                     'name': user,
@@ -42,7 +54,7 @@
                 }
             }, (req) => {
                 if (req.status == "success") {
-                    err.errMesShow('批准成功。',()=>{
+                    err.errMesShow('批准成功。', () => {
                         window.location.reload();
                     });
                 } else {
@@ -59,7 +71,7 @@
             return false;
         }
         // 发起请求
-        userList.map((user)=>{
+        userList.map((user) => {
             ajaxTool.updateStatus({
                 'option': {
                     'name': user,
@@ -68,7 +80,7 @@
                 }
             }, (req) => {
                 if (req.status == "success") {
-                    err.errMesShow('驳回成功。',()=>{
+                    err.errMesShow('驳回成功。', () => {
                         window.location.reload();
                     });
                 } else {

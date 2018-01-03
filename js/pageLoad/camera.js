@@ -3,6 +3,10 @@
     const err = new Err(errMes);
     let username = tools.getCookie('username');
 
+    // 绑定事件,返回 
+    let backList = document.querySelectorAll('.back');
+    events.goBack(backList);
+
     let cameraBtn = document.querySelector('#cameraBtn');
     let cameraInput = document.querySelector('#cameraInput');
 
@@ -20,7 +24,7 @@
             let end = new Date(data.mEndTime);
 
             let canSign = 0;
-            
+
             data.mPeople.map((user) => {
                 if (user == username) {
                     canSign += 1;

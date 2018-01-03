@@ -1,4 +1,6 @@
 (function () {
+    const err = new Err(errMes);
+
     // 初始化页面数据
     let username = document.getElementById('username');
     let phone = document.getElementById('phone');
@@ -6,6 +8,8 @@
     let desc = document.getElementById('desc');
     let department = document.getElementById('department');
     let logout = document.querySelector('.logout');
+
+    const saveDay = 7;
 
     username.value = tools.getCookie('username');
     phone.value = tools.getCookie('phone');
@@ -25,6 +29,10 @@
                 email.parentNode.style.outline = '2px dashed red';
                 return false;
             }
+            // 判断是否修改
+            if(phone.value == tools.getCookie('phone') && email.value == tools.getCookie('email') && desc.value == tools.getCookie('desc')){
+                err.errMesShow('请修改信息后再保存');
+            }
             let userData = {
                 'name': username.value,
                 'update': {
@@ -36,9 +44,9 @@
             //校验成功
             ajaxTool.updateUser(userData, (req) => {
                 //修改cookie中的值
-                tools.setCookie('phone', req.userMes.phone, 7);
-                tools.setCookie('email', req.userMes.email, 7);
-                tools.setCookie('desc', req.userMes.desc, 7);
+                tools.setCookie('phone', phone.value, saveDay);
+                tools.setCookie('email', email.value, saveDay);
+                tools.setCookie('desc', desc.value, saveDay);
             });
         }
     });

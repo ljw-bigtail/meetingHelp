@@ -6,7 +6,7 @@ let tools = {
     setCookie: (c_name, value, expiredays) => {
         var exdate = new Date()
         exdate.setDate(exdate.getDate() + expiredays)
-        console.log(c_name, value, exdate)
+        // console.log(c_name, value, exdate)
         document.cookie = c_name + "=" + escape(value) +
             ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
     },
