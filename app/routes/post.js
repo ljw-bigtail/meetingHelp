@@ -539,4 +539,17 @@ router.post('/getMonthData', function (req, res) {
 	});
 });
 
+// 修改会议室
+router.post('/updateRoom', function (req, res) {
+	if (!req.body.rName || !req.body.update) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Room.updateRoom(req.body.rName, req.body.update, (mes) => {
+		res.send(200, mes);
+	})
+});
+
 module.exports = router;

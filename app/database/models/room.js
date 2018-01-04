@@ -4,6 +4,8 @@
 let mongoose = require('../db'),
 	Schema = mongoose.Schema;
 
+let _underscore = require('underscore');
+
 let roomSchema = new Schema({
 	"rName": {
 		unique: true,

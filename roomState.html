@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="css/re.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
     <header>
         <button class="back">&lt;</button>
@@ -15,7 +17,7 @@
     </header>
     <article class="hasFooter">
         <div class="roomState">
-            <h6>会议室预定信息</h6>
+            <!-- <h6>会议室预定信息</h6>
             <div class="mes">
                 <div>
                     <span>09-14 19:00</span>
@@ -23,26 +25,44 @@
                     <span>09-14 21:00</span>
                 </div>
                 <p>预订人：张三（公司内部->西安->开发）</p>
-            </div>
+            </div> -->
             <h6>会议室信息</h6>
             <div class="mes">
                 <div class="top">
                     <span class="roomName"></span>
                 </div>
                 <ul>
-                    <li>可容纳人数：<span class="roomNumber"></span></li>
-                    <li>会议室地址：<span class="roomAddress"></span></li>
-                    <li>会议室设备：<span class="roomDevice"></span></li>
+                    <li>可容纳人数：
+                        <span class="roomNumber"></span>
+                    </li>
+                    <li>会议室地址：
+                        <span class="roomAddress"></span>
+                    </li>
+                    <li>会议室设备：
+                        <span class="roomDevice"></span>
+                    </li>
                 </ul>
+            </div>
+            <div class="changeBox mes">
+                <input class="rName" type="text" placeholder="会议室信息" />
+                <span>请填写会议室信息</span>
+                <input class="rPlace" type="text" placeholder="会议室地址" />
+                <span>请填写会议室地址</span>
+                <input class="rNum" type="text" placeholder="可容纳人数" />
+                <span>请填写可容纳人数</span>
+                <input class="rDevice" type="text" placeholder="会议室设备" />
+                <span>请填写会议室设备,不同设备请用<i>/</i>分隔开。</span>
             </div>
         </div>
     </article>
     <footer>
         <div class="flexBox">
-            <span class="back">返回</span>
+            <span class="back openReBox">返回</span>
             <span class="success newMeet">新建会议</span>
         </div>
     </footer>
+
+    <div id="errMes"></div>
 
     <script src="js/profile.js"></script>
     <script src="js/tools.js"></script>
@@ -52,4 +72,5 @@
     <!-- <script src="js/main.js"></script> -->
     <script src="js/pageLoad/roomState.js"></script>
 </body>
+
 </html>

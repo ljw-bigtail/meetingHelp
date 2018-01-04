@@ -10,7 +10,7 @@ function Err(dom) {
             if(callback){
                 callback();
             }
-        }, 3000);
+        }, 2000);
     }
     this.init = (dom, mes)=>{
         dom.innerHTML = mes;
