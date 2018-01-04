@@ -329,4 +329,19 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    // 新建会议室
+    addRoom: function (req, callback) {
+        fetch(server_url + "/api/delRoom", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
 }

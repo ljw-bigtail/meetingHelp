@@ -422,6 +422,10 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
     text-align: center;
 }
 
+.list ul li .success {
+    background: #0BB908;
+}
+
 body article .roomState h6 {
     font-size: 2.8rem;
     padding: 1.5rem;

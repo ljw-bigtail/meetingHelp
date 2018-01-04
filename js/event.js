@@ -14,7 +14,8 @@ let events = {
                     events.toggleShow(e.toElement.parentNode.parentNode.querySelector('.del'));
                 }
                 // 删除本条,事件代理
-                if (e.target.className == 'del') {
+                console.log(e.target.classList)
+                if (e.target.classList[0] == 'del') {
                     // 删除当前节点，后续操作没有想好,
                     // 回传的参数未定，后续增加。
                     callback && callback(e.toElement);
