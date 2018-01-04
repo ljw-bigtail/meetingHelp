@@ -20,7 +20,7 @@
     const noteName = document.querySelector('.noteName');
     const writeMainTit = document.querySelector('.writeMain h5');
     const writeMainTime = document.querySelector('.writeMain .mesPeople span:last-child');
-    
+
     noteName.innerHTML = note;
 
     let noteDate = {
@@ -44,12 +44,16 @@
         writeMainTit.innerHTML = '<a href="meetDetail.html?meet=' + data.mName + '">' + data.mName + '</a>';
 
         // 会议公共纪要
-        if (isMain == 'true') {
-            publicBtn.style.display = 'block';
-            textMain.disabled = 'disabled';
-        } else {
-            publicBtn.style.display = 'none';
-        }
+        // 还需要增加一个条件：用户不是该meet的管理员
+        ajaxTool.findMeet({
+            'attr': 'mName',
+            'val': noteDate.mName
+        }, (mData) => {
+            if(mData.mAdmin == username || isMain != 'true'){
+                publicBtn.style.display = 'none';
+                textMain.removeAttribute('disabled');
+            }
+        });
     });
 
     // 点击提示
@@ -60,13 +64,15 @@
     // 保存纪要信息
     save.addEventListener('click', function () {
         errMes.errMesShow('正在保存，请稍后...');
-        // 纪要内容不修改，不提交
         if (noteDate.nMes == textMain.value) {
             errMes.errMesShow('纪要内容没有修改。');
             return false;
-        } else {
-            noteDate.nMes = textMain.value;
         }
+        if(textMain.value.length == 0){
+            errMes.errMesShow('请填写后再保存纪要信息。');
+            return false;
+        } 
+        noteDate.nMes = textMain.value;
         // 更新请求
         ajaxTool.updateNote(noteDate, (data) => {
             console.log(data)
