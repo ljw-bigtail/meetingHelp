@@ -515,4 +515,28 @@ router.post('/sendMail', function (req, res) {
 	})
 });
 
+// 获取本年月度数据
+router.post('/getMonthData', function (req, res) {
+	let username = req.body.username || null;
+	if (username == null) {
+		res.send(200, {
+			mes: '请发送用户信息。'
+		});
+		return false;
+	}
+	User.findUserByAttr('name', req.body.username, (req) => {
+		if (req.level !== 0) {
+			res.send(200, {
+				mes: '该账户没有权限。'
+			});
+			return false;
+		}
+		Meet.getMonthData((meetData) => {
+			res.send(200, {
+				'meetData': meetData
+			});
+		})
+	});
+});
+
 module.exports = router;

@@ -12,3 +12,7 @@ const leave_title = 'i miss you';
 
 // cookie存储时间，单位天
 const saveDay = 7;
+
+// admin图标色值
+// const chartColor = null;
+const chartColor = '#E73E51';

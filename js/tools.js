@@ -103,5 +103,35 @@ let tools = {
         if (!user) {
             window.location.href = '/login.html?isRe=true';
         }
-    }
+    },
+    // 通过cookie获取登录时存储的用户数据
+    getUserFormCookie: () => {
+        return {
+            'username': tools.getCookie('username'),
+            'phone': tools.getCookie('phone'),
+            'email': tools.getCookie('email'),
+            'desc': tools.getCookie('desc'),
+            'department': tools.getCookie('department'),
+            'initiate': tools.getCookie('initiate'),
+            'level': tools.getCookie('level'),
+        }
+    },
+    // 根据用户权限修改显示的按钮
+    runUserFunc: (userData, callback1, callback2, callback3, callback4) => {
+        if (userData.level == 0) {
+            // 管理员
+            callback1 && callback1();
+        } else if (userData.level == 1) {
+            // 用户
+            callback2 && callback2();
+        }
+        if (userData.initiate == 0) {
+            // 可以发起会议
+            callback3 && callback3();
+        } else if (userData.initiate == 1) {
+            // 不可以发起会议
+            callback4 && callback4();
+        }
+    },
+
 }

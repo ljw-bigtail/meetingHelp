@@ -71,6 +71,65 @@ meetSchema.pre('save', function (next) {
 
 
 meetSchema.statics = {
+	getMonthData: function (callback) {
+		console.log('----------------------')
+		this.find().exec((err, meetList) => {
+			if (err) {
+				console.log(err);
+			} else {
+				let meetData = [];
+				let meetMonthData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+				let now = new Date();
+				let currentYear = now.getFullYear();
+				meetList.map((mData) => {
+					let thisDate = new Date(mData.mStartTime);
+					let thisYear = thisDate.getFullYear();
+					let thisMonth = thisDate.getMonth();
+					if (currentYear == thisYear) {
+						switch (thisMonth) {
+							case 0:
+								meetMonthData[0] += 1;
+								break;
+							case 1:
+								meetMonthData[1] += 1;
+								break;
+							case 2:
+								meetMonthData[2] += 1;
+								break;
+							case 3:
+								meetMonthData[3] += 1;
+								break;
+							case 4:
+								meetMonthData[4] += 1;
+								break;
+							case 5:
+								meetMonthData[5] += 1;
+								break;
+							case 6:
+								meetMonthData[6] += 1;
+								break;
+							case 7:
+								meetMonthData[7] += 1;
+								break;
+							case 8:
+								meetMonthData[8] += 1;
+								break;
+							case 9:
+								meetMonthData[9] += 1;
+								break;
+							case 10:
+								meetMonthData[10] += 1;
+								break;
+							case 11:
+								meetMonthData[11] += 1;
+								break;
+						}
+					}
+				});
+				callback(meetMonthData);
+			}
+		});
+	},
 	findMeetFromUser: function (val, callback) {
 		this.find().exec((err, meetList) => {
 			if (err) {
@@ -80,7 +139,7 @@ meetSchema.statics = {
 				meetList.map((data) => {
 					let userData = data.mPeople.split(",");
 					userData.map((user) => {
-						if(user == val){
+						if (user == val) {
 							meetData.push(data);
 						}
 					});
@@ -103,7 +162,7 @@ meetSchema.statics = {
 					meetList.map((data) => {
 						let userData = data.mPeople.split(",");
 						userData.map((_user) => {
-							if(_user == user){
+							if (_user == user) {
 								meetData.push(data);
 							}
 						});

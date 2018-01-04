@@ -50,6 +50,8 @@
                 tools.setCookie('email', req.userMes.email, saveDay);
                 tools.setCookie('desc', req.userMes.desc, saveDay);
                 tools.setCookie('department', req.userMes.dName, saveDay);
+                tools.setCookie('initiate', req.userMes.initiate, saveDay);
+                tools.setCookie('level', req.userMes.level, saveDay);
                 // 跳转至主页
                 window.location.pathname = '/index.html';
             }

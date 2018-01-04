@@ -254,6 +254,12 @@ body>article .tip {
     padding: 4rem 0;
 }
 
+body>article .adminTip {
+    padding: 1rem 0;
+    height: calc( 28% - 2rem);
+    background: #4C4F58 !important;
+}
+
 body>article .tip .num {
     font-size: 8rem;
     line-height: 11rem;
@@ -332,27 +338,27 @@ body>footer {
     height: 8rem;
 }
 
-body>article .btnBox:nth-child(2) ul li:nth-child(1) .pic {
+body>article .btnBox:nth-child(3) ul li:nth-child(1) .pic {
     background: #EC8C74;
 }
 
-body>article .btnBox:nth-child(2) ul li:nth-child(2) .pic {
+body>article .btnBox:nth-child(3) ul li:nth-child(2) .pic {
     background: #9C97F0;
 }
 
-body>article .btnBox:nth-child(2) ul li:nth-child(3) .pic {
+body>article .btnBox:nth-child(3) ul li:nth-child(3) .pic {
     background: rgb(230, 151, 240);
 }
 
-body>article .btnBox:nth-child(3) ul li:nth-child(1) .pic {
+body>article .btnBox:nth-child(4) ul li:nth-child(1) .pic {
     background: #6DBDE5;
 }
 
-body>article .btnBox:nth-child(3) ul li:nth-child(2) .pic {
+body>article .btnBox:nth-child(4) ul li:nth-child(2) .pic {
     background: #6DC56E;
 }
 
-body>article .btnBox:nth-child(3) ul li:nth-child(3) .pic {
+body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
     background: #FDA96E;
 }
 

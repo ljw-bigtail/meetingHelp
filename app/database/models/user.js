@@ -61,8 +61,7 @@ userSchema.pre('save', function (next) {
 	//判断是否是新的数据对象，更新创建|更新数据的时间
 	if (this.isNew) {
 		this.meta.createAt = this.meta.updateAt = Date.now()
-	}
-	else {
+	} else {
 		this.meta.updateAt = Date.now()
 	}
 
@@ -84,21 +83,9 @@ userSchema.pre('save', function (next) {
 
 userSchema.statics = {
 	findUserList: function (attr, val, callback) {
-		if(attr && val){
-            this.find({
+		if (attr && val) {
+			this.find({
 				[attr]: val,
-				"level": 1
-            }).sort({
-                "_id": -1
-            }).exec((err, userList) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    callback(userList);
-                }
-            });
-        }else{
-            this.find({
 				"level": 1
 			}).sort({
 				"_id": -1
@@ -109,7 +96,19 @@ userSchema.statics = {
 					callback(userList);
 				}
 			});
-        }
+		} else {
+			this.find({
+				"level": 1
+			}).sort({
+				"_id": -1
+			}).exec((err, userList) => {
+				if (err) {
+					console.log(err);
+				} else {
+					callback(userList);
+				}
+			});
+		}
 	},
 	findUserByAttr: function (attr, val, callback) {
 		this.findOne({
@@ -117,6 +116,7 @@ userSchema.statics = {
 		}).exec((err, user) => {
 			if (err) {
 				console.log(err);
+				callback('faile');				
 			} else {
 				callback(user);
 			}
@@ -163,7 +163,9 @@ userSchema.statics = {
 	},
 	updateUser: function (name, update, callback) {
 		var _this = this;
-		this.findOne({ 'name': name }, function (err, oldUser) {
+		this.findOne({
+			'name': name
+		}, function (err, oldUser) {
 			if (err) {
 				callback({
 					'status': "faile",
@@ -191,7 +193,11 @@ userSchema.statics = {
 				let newUser = _underscore.extend(oldUser, update);
 				newUser.meta.updateAt = Date.now();
 
-				_this.update({ 'name': name }, newUser, { upsert: true }, function (error) {
+				_this.update({
+					'name': name
+				}, newUser, {
+					upsert: true
+				}, function (error) {
 					if (err) {
 						callback({
 							'status': "faile",
@@ -210,7 +216,7 @@ userSchema.statics = {
 	checkpassword: function (attr, val, password, callback) {
 		var _this = this;
 		this.findOne({
-			[attr]:val
+			[attr]: val
 		}, function (err, oldUser) {
 			if (err) {
 				callback({
@@ -218,29 +224,37 @@ userSchema.statics = {
 					'mes': err
 				});
 			} else {
-				if(oldUser == null){
+				if (oldUser == null) {
 					callback({
 						'status': "faile",
 						'mes': '账号错误'
 					});
-				}else{
+				} else {
 					bcrypt.compare(password, oldUser.password, function (err, isMatch) {
 						if (err) {
 							callback({
 								'status': "faile",
-								'mes': err
+								'mes': '校验失败'
 							});
 						} else {
-							if(isMatch){
+							if (isMatch) {
 								callback({
 									'status': "success",
 									'mes': '密码正确',
-									'userMes': oldUser
+									'userMes': {
+										'dName': oldUser.dName,
+										'desc': oldUser.desc,
+										'email': oldUser.email,
+										'initiate': oldUser.initiate,
+										'level': oldUser.level,
+										'name': oldUser.name,
+										'phone': oldUser.phone
+									}
 								});
-							}else{
+							} else {
 								callback({
 									'status': "faile",
-									'mes': '密码错误'						
+									'mes': '密码错误'
 								});
 							}
 						}
