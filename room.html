@@ -13,11 +13,38 @@
         <button class="back">&lt;</button>
         <h1 class="title"></h1>
     </header>
-    <article>
+    <article class="hasFooter">
         <div class="list roomList">
             <ul></ul>
         </div>
+        <div class="tipBox leaveBox">
+            <div class="tipMain">         
+                <div class="leaveMain newMeet">
+                    <h3>填写会议室信息</h3>
+                    <input class="rName" type="text" placeholder="会议室信息" />
+                    <span>请填写会议室信息</span>
+                    <input class="rPlace" type="text" placeholder="会议室地址" />
+                    <span>请填写会议室地址</span>
+                    <input class="rNum" type="text" placeholder="可容纳人数" />
+                    <span>请填写可容纳人数</span>
+                    <input class="rDevice" type="text" placeholder="会议室设备" />
+                    <span>请填写会议室设备,不同设备请用<i>/</i>分隔开。</span>
+                </div>
+                <footer class="leaveFooter">
+                    <div class="flexBox">
+                        <span class="leaveClose">取消</span>
+                        <span class="leaveSave save">确定</span>
+                    </div>
+                </footer>
+            </div>
+        </div>
     </article>
+    <footer>
+        <div class="flexBox">
+            <span class="back">返回</span>
+            <span class="success newRoom">创建会议室</span>
+        </div>
+    </footer>
 
     <div id="errMes"></div>
 

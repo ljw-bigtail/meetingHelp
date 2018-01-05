@@ -75,6 +75,10 @@
         tools.delCookie('username');
         tools.delCookie('phone');
         tools.delCookie('email');
+        tools.delCookie('desc');
+        tools.delCookie('department');
+        tools.delCookie('initiate');
+        tools.delCookie('level');
         window.location.href = '/login.html';
     });
 })()

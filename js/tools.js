@@ -118,17 +118,21 @@ let tools = {
     },
     // 根据用户权限修改显示的按钮
     runUserFunc: (userData, callback1, callback2, callback3, callback4) => {
-        if (userData.level == 0) {
+        let level = userData.level;
+        let initiate = userData.initiate;
+        level -= 0;
+        initiate -= 0;
+        if (level == 0) {
             // 管理员
             callback1 && callback1();
-        } else if (userData.level == 1) {
+        } else if (level == 1) {
             // 用户
             callback2 && callback2();
         }
-        if (userData.initiate == 0) {
+        if (initiate == 0) {
             // 可以发起会议
             callback3 && callback3();
-        } else if (userData.initiate == 1) {
+        } else if (initiate == 1) {
             // 不可以发起会议
             callback4 && callback4();
         }

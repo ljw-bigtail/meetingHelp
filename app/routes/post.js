@@ -194,7 +194,7 @@ router.post('/checkPassword', function (req, res) {
 
 //新增房间，管理员权限
 router.post('/addRoom', function (req, res) {
-	if (!req.body.name || !req.body.email || !req.body.phone || !req.body.password) {
+	if (!req.body.rName || !req.body.rPlace || !req.body.rNum || !req.body.rDevice) {
 		res.send(200, {
 			mes: '参数错误。'
 		});

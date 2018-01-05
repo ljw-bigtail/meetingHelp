@@ -331,7 +331,7 @@ let ajaxTool = {
     },
     // 新建会议室
     addRoom: function (req, callback) {
-        fetch(server_url + "/api/delRoom", {
+        fetch(server_url + "/api/addRoom", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

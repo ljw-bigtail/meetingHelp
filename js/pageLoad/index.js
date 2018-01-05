@@ -9,11 +9,14 @@
     const userTip = document.querySelector('.userTip');
     const adminTip = document.querySelector('.adminTip');
     const addMeetBtn = document.querySelector('.btnBox:nth-child(3) ul li:nth-child(1)');
+    const cameraBtn = document.querySelector('.btnBox:nth-child(3) ul li:nth-child(3)');
 
+    console.log(userData)
     // 根据用户权限修改显示的按钮：管理员，用户，可以发起会议，不可以发起会议
     tools.runUserFunc(userData, () => {
         userTip.style.display = 'none';
         adminTip.style.display = 'block';
+        cameraBtn.style.display = 'none';
         // 一个统计图
         let myChart = echarts.init(document.querySelector('.adminTip'));
         myChart.setOption({
@@ -118,6 +121,7 @@
         });
         return false;
     }, () => {
+        addMeetBtn.style.display = 'inlinr-block';
         return false;
     }, () => {
         addMeetBtn.style.display = 'none';
