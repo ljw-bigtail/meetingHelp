@@ -151,6 +151,21 @@ let ajaxTool = {
             .catch(e => console.log("报错信息：", e))
     },
     //获取会议列表
+    findNoteList: function (req, callback) {
+        fetch(server_url + "/api/findNoteList", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    //获取会议列表
     getMeetList: function (req, callback) {
         fetch(server_url + "/api/getMeetList", {
                 method: "POST",
@@ -344,4 +359,20 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    // 删除note
+    delNote: function (req, callback) {
+        fetch(server_url + "/api/delNote", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
+    
 }

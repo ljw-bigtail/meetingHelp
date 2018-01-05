@@ -326,6 +326,19 @@ router.post('/getwriteList', function (req, res) {
 	});
 });
 
+// 获取纪要信息列表
+router.post('/findNoteList', function (req, res) {
+	Note.findNoteList(req.body.name, (note) => {
+		if (note == null) {
+			res.send(200, {
+				'mes': null
+			});
+		} else {
+			res.send(200, note);
+		}
+	})
+});
+
 // 获取纪要信息
 router.post('/getNoteByAttr', function (req, res) {
 	if (!req.body.option) {
@@ -548,6 +561,19 @@ router.post('/updateRoom', function (req, res) {
 		return false;
 	}
 	Room.updateRoom(req.body.rName, req.body.update, (mes) => {
+		res.send(200, mes);
+	})
+});
+
+// 删除笔记
+router.post('/delNote', function (req, res) {
+	if (!req.body.option) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	Note.delNote(req.body.option, (mes) => {
 		res.send(200, mes);
 	})
 });

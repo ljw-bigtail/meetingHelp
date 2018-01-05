@@ -11,7 +11,6 @@
     const addMeetBtn = document.querySelector('.btnBox:nth-child(3) ul li:nth-child(1)');
     const cameraBtn = document.querySelector('.btnBox:nth-child(3) ul li:nth-child(3)');
 
-    console.log(userData)
     // 根据用户权限修改显示的按钮：管理员，用户，可以发起会议，不可以发起会议
     tools.runUserFunc(userData, () => {
         userTip.style.display = 'none';

@@ -60,6 +60,7 @@ noteSchema.statics = {
 		});
 	},
 	findNoteList: function (name, callback) {
+		console.log("查询："+name)
 		this.find({
 			'name': name
 		}).sort({
@@ -101,11 +102,8 @@ noteSchema.statics = {
 			}
 		})
 	},
-	delNote: function (mName, callback) {
-		this.remove({
-			'nTitle': nTitle,
-			'name': name,
-		}, function (err) {
+	delNote: function (option, callback) {
+		this.remove(option, function (err) {
 			if (err) {
 				callback({
 					'status': "faile",
