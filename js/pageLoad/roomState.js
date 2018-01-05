@@ -43,7 +43,10 @@
         return false;
     }, () => {
 
-    }, () => {}, () => {});
+    }, () => {}, () => {
+        document.querySelector('body>footer').style.display = 'none';
+        document.querySelector('body>article.hasFooter').className = '';        
+    });
 
     // 绑定事件
     let backList = document.querySelectorAll('.back');
