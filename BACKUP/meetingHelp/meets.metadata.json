@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"meetingHelp.meets"},{"v":1,"unique":true,"key":{"mName":1},"name":"mName_1","ns":"meetingHelp.meets","background":true},{"v":1,"unique":true,"key":{"mQRcode":1},"name":"mQRcode_1","ns":"meetingHelp.meets","background":true}]}
