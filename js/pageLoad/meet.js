@@ -1,13 +1,14 @@
 (() => {
-    let username = tools.getCookie('username');
+    let userData = tools.getUserFormCookie();
+    // let username = tools.getCookie('username');
     let showEnd = tools.getQuery('end')
-    tools.noUser(username);
+    tools.noUser(userData.username);
     if (showEnd == 'true') {
         tools.titleValue('相关会议');
-        tools.headValue('相关会议-' + project_name);    
+        tools.headValue('相关会议-' + project_name);
     } else {
         tools.titleValue('待进行会议');
-        tools.headValue('待进行会议-' + project_name);    
+        tools.headValue('待进行会议-' + project_name);
     }
 
     // 绑定事件
@@ -24,54 +25,79 @@
     const startTit = '<h4>我发起的会议</h4><ul class="startDom">';
     const joinTit = '<h4>我参加的会议</h4><ul class="joinDom">';
     const endTit = '<h4>历史会议</h4><ul class="endfDom">';
+    const futureTit = '<h4>新的会议</h4><ul class="endfDom">';
 
     let startDom = startTit;
     let joinDom = joinTit;
     let endDom = endTit;
+    let futureDom = futureTit;
 
-    // 加载会议列表
-    ajaxTool.getMeetList({
-        'user': username
-    }, (data) => {
-        data.meetList.map((data) => {
-            let now = new Date();
-            let start = new Date(data.mStartTime);
-
-            // 过期的会议
-            if (now > start) {
-                endDom += initDom(data);
-            } else {
-                // 待参加的会议
-                if (data.mAdmin == username) {
-                    // 我发起的会议
-                    startDom += initDom(data);
+    // 根据用户权限修改显示的按钮：管理员，用户
+    tools.runUserFunc(userData, () => {
+        // 加载会议列表
+        ajaxTool.getMeetList({}, (data) => {
+            data.meetList.map((data) => {
+                let now = new Date();
+                let start = new Date(data.mStartTime);
+                // 过期的会议
+                if (now > start) {
+                    endDom += initDom(data);
                 } else {
-                    // 我参加的会议
-                    joinDom += initDom(data);
+                    // 待参加的会议
+                    futureDom += initDom(data);
                 }
+            });
+            if (futureDom == futureTit) {
+                futureDom += noMeetDom('暂无新的会议。');
+            }
+            if (endDom == endTit) {
+                endDom += noMeetDom('暂无历史会议。');
+            }
+            startDom += '</ul>';
+            endDom += '</ul>';
+            document.querySelector('.meetList').innerHTML += futureDom + endDom;
+        });
+    }, () => {
+        // 加载会议列表
+        ajaxTool.getMeetList({
+            'user': userData.username
+        }, (data) => {
+            data.meetList.map((data) => {
+                let now = new Date();
+                let start = new Date(data.mStartTime);
+                // 过期的会议
+                if (now > start) {
+                    endDom += initDom(data);
+                } else {
+                    // 待参加的会议
+                    if (data.mAdmin == userData.username) {
+                        // 我发起的会议
+                        startDom += initDom(data);
+                    } else {
+                        // 我参加的会议
+                        joinDom += initDom(data);
+                    }
+                }
+            });
+            if (startDom == startTit) {
+                startDom += noMeetDom('没有发起会议。');
+            }
+            if (joinDom == joinTit) {
+                joinDom += noMeetDom('暂无其他需要参加会议。');
+            }
+            if (endDom == endTit) {
+                endDom += noMeetDom('暂无历史会议。');
+            }
+            startDom += '</ul>';
+            joinDom += '</ul>';
+            endDom += '</ul>';
+            // 在会议列表中加载
+            if (showEnd == 'true') {
+                document.querySelector('.meetList').innerHTML += startDom + joinDom + endDom;
+            } else {
+                document.querySelector('.meetList').innerHTML += startDom + joinDom;
             }
         });
-
-        if (startDom == startTit) {
-            startDom += noMeetDom('没有发起会议。');
-        }
-        if (joinDom == joinTit) {
-            joinDom += noMeetDom('暂无其他需要参加会议。');
-        }
-        if (endDom == endTit) {
-            endDom += noMeetDom('暂无历史会议。');
-        }
-
-        startDom += '</ul>';
-        joinDom += '</ul>';
-        endDom += '</ul>';
-
-        // 在会议列表中加载
-        if (showEnd == 'true') {
-            document.querySelector('.meetList').innerHTML += startDom + joinDom + endDom;
-        } else {
-            document.querySelector('.meetList').innerHTML += startDom + joinDom;
-        }
     });
 
     function noMeetDom(val) {

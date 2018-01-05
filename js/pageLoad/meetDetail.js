@@ -1,11 +1,13 @@
 (() => {
     const err = new Err(errMes);
 
+    let userData = tools.getUserFormCookie();
+
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
     tools.noUser(username);
     tools.titleValue('会议详情');
-    tools.headValue('会议详情-' + project_name);  
+    tools.headValue('会议详情-' + project_name);
 
     // 绑定事件
     let backList = document.querySelectorAll('.back');
@@ -33,6 +35,12 @@
 
     let joinBtn = document.querySelector('.join');
     let footerBtn = document.querySelector('.meetMain footer')
+
+    tools.runUserFunc(userData, () => {
+        footerBtn.style.display = 'none';
+        document.querySelector('body>footer').style.display = 'none';
+        document.querySelector('body>.hasFooter').className = '';
+    });
 
     // 保留会议纪要加载之后的那条信息
     let pushMesValue = '';
@@ -105,16 +113,20 @@
         });
 
         // 判断用户在当前会议的状态
-        ajaxTool.getStatusByOption({
-            option: {
-                'mName': meet,
-                'name': username
-            }
-        }, (statusData) => {
-            if (now < start && statusData.sStatus == 2) {
-                // 参加的,隐藏状态标签
-                footerBtn.style.display = 'block';
-            }
+        tools.runUserFunc(userData, () => {
+            footerBtn.style.display = 'none';
+        }, () => {
+            ajaxTool.getStatusByOption({
+                option: {
+                    'mName': meet,
+                    'name': username
+                }
+            }, (statusData) => {
+                if (now < start && statusData.sStatus == 2) {
+                    // 参加的,隐藏状态标签
+                    footerBtn.style.display = 'block';
+                }
+            });
         });
     });
 

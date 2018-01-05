@@ -390,7 +390,7 @@ router.post('/getMeetList', function (req, res) {
 	let attr = req.body.attr || null;
 	let val = req.body.val || null;
 	let user = req.body.user || null;
-	if (attr !== null && attr !== 'mAdmin') {
+	if (attr && attr !== 'mAdmin') {
 		res.send(200, {
 			mes: '仅支持通过 mAdmin 搜索。'
 		});
