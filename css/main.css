@@ -439,6 +439,7 @@ body article .roomState .mes {
 }
 
 body article .roomState .mes>img {
+    display: none;
     position: absolute;
     top: 2rem;
     right: 2rem;

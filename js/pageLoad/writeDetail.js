@@ -1,5 +1,5 @@
 (() => {
-    let errMes = new Err(document.querySelector('#errMes'));
+    let err = new Err(document.querySelector('#errMes'));
 
     // 获取并设置会议室信息
     let note = tools.getQuery('note');
@@ -14,6 +14,8 @@
     // 设置返回按钮
     events.goBack(backList);
 
+    const mainBox = document.querySelector('body > .hasFooter');
+    const footerBox = document.querySelector('body > footer');
     const publicBtn = document.querySelector('#public');
     const save = document.querySelector('.save');
     const textMain = document.querySelector('.textMain textarea');
@@ -40,7 +42,6 @@
 
         // 填充数据
         writeMainTime.innerHTML = changeTime(data.meta.updateAt);
-        textMain.value = data.nMes;
         writeMainTit.innerHTML = '<a href="meetDetail.html?meet=' + data.mName + '">' + data.mName + '</a>';
 
         // 会议公共纪要
@@ -49,8 +50,29 @@
             'attr': 'mName',
             'val': noteDate.mName
         }, (mData) => {
-            if(mData.mAdmin == username || isMain != 'true'){
-                publicBtn.style.display = 'none';
+            // 如果是公共纪要，icon显示
+            if (isMain == 'true') {
+                publicBtn.style.display = 'block';
+                // 如果是会议管理员的话可以编辑
+                if (mData.mAdmin == username) {
+                    textMain.value = data.nMes;
+                    textMain.removeAttribute('disabled');
+                } else {
+                    // 检查公共纪要的权限
+                    if (mData.mNote == 1) {
+                        err.errMesShow('没有查看公共纪要的权限。', () => {
+                            history.back();
+                        });
+                    } else {
+                        // 只能查看
+                        footerBox.style.display = 'none';
+                        mainBox.className = '';
+                        textMain.value = data.nMes;
+                    }
+                }
+            } else {
+                // 如果是个人纪要，可以编辑
+                textMain.value = data.nMes;
                 textMain.removeAttribute('disabled');
             }
         });
@@ -58,26 +80,26 @@
 
     // 点击提示
     publicBtn.addEventListener('click', function () {
-        errMes.errMesShow('公共纪要，可以查看，不可编辑。');
+        err.errMesShow('公共纪要，可以查看，不可编辑。');
     });
 
     // 保存纪要信息
     save.addEventListener('click', function () {
-        errMes.errMesShow('正在保存，请稍后...');
+        err.errMesShow('正在保存，请稍后...');
         if (noteDate.nMes == textMain.value) {
-            errMes.errMesShow('纪要内容没有修改。');
+            err.errMesShow('纪要内容没有修改。');
             return false;
         }
-        if(textMain.value.length == 0){
-            errMes.errMesShow('请填写后再保存纪要信息。');
+        if (textMain.value.length == 0) {
+            err.errMesShow('请填写后再保存纪要信息。');
             return false;
-        } 
+        }
         noteDate.nMes = textMain.value;
         // 更新请求
         ajaxTool.updateNote(noteDate, (data) => {
             console.log(data)
             if (data.status == 'success') {
-                errMes.errMesShow('修改完成。');
+                err.errMesShow('修改完成。');
             }
         });
     });

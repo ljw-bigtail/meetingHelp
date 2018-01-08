@@ -83,10 +83,47 @@
         let now = new Date();
         let start = new Date(meetData.mStartTime)
         let end = new Date(meetData.mEndTime)
+        // 判断用户在当前会议的状态
         if (now < start) {
             // 会议未开
             footerBtn.style.display = 'block';
-
+            // 自动参加会议
+            tools.runUserFunc(userData, () => {
+                // 管理员不需要签到以及后续操作
+                footerBtn.style.display = 'none';
+            }, () => {
+                ajaxTool.getStatusByOption({
+                    option: {
+                        'mName': meet,
+                        'name': username
+                    }
+                }, (statusData) => {
+                    if (statusData.sStatus == 2) {
+                        // 未反馈
+                        footerBtn.style.display = 'block';
+                        if (meetData.mJoin == 0) {
+                            err.errMesShow('正在自动确认参加会议。', () => {
+                                ajaxTool.updateStatus({
+                                    'option': {
+                                        'name': username,
+                                        'mName': meet,
+                                        'sStatus': 0,
+                                    }
+                                }, (req) => {
+                                    if (req.status == "faile") {
+                                        err.errMesShow('参加失败，请手动参加。');
+                                    } else {
+                                        err.errMesShow('自动签到成功。');
+                                    }
+                                });
+                            });
+                        }
+                    } else {
+                        // 已经反馈
+                        footerBtn.style.display = 'none';
+                    }
+                });
+            });
         } else if (end < now) {
             // 会议开完
 
@@ -110,23 +147,6 @@
             }
             pushMesValue = pushMes.value;
             pushBtn.innerHTML = '发表';
-        });
-
-        // 判断用户在当前会议的状态
-        tools.runUserFunc(userData, () => {
-            footerBtn.style.display = 'none';
-        }, () => {
-            ajaxTool.getStatusByOption({
-                option: {
-                    'mName': meet,
-                    'name': username
-                }
-            }, (statusData) => {
-                if (now < start && statusData.sStatus == 2) {
-                    // 参加的,隐藏状态标签
-                    footerBtn.style.display = 'block';
-                }
-            });
         });
     });
 
@@ -215,8 +235,12 @@
     // 保存\更新纪要信息
     pushBtn.addEventListener('click', () => {
         if (pushBtn.innerHTML == '发表') {
+            let now = new Date();
+            let Timestamp = '' + now.getFullYear() +
+                ((now.getMonth() + 1) / 10 >= 1 ? (now.getMonth() + 1) : ('0' + (now.getMonth() + 1))) +
+                (now.getDate() / 10 >= 1 ? now.getDate() : ('0' + now.getDate()));
             let note = {
-                'nTitle': pushMes.value.substring(0, 15),
+                'nTitle': Timestamp + '-' + pushMes.value.substring(0, 10),
                 'name': name.innerHTML.split('：')[1] == username ? '' : username,
                 'mName': meet,
                 'nMes': pushMes.value
@@ -229,6 +253,10 @@
                 if (req.status == 'success') {
                     err.errMesShow('会议纪要发表成功。');
                 } else {
+                    if (mes.code == 11000) {
+                        err.errMesShow('纪要内容有重复，请修改。');
+                        return false;
+                    }
                     err.errMesShow('请稍后重试，谢谢。');
                 }
             });

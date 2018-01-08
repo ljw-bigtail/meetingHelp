@@ -184,7 +184,7 @@
             'sponsor': sponsor.innerHTML,
             'joinList': joinList,
             'mNote': canRead.className == 'selected' ? 0 : 1,
-            'mNote': autoJoin.className == 'selected' ? 0 : 1
+            'mJoin': autoJoin.className == 'selected' ? 0 : 1
         };
         err.errMesShow('正在创建，请稍后。');
         ajaxTool.addMeet(meetData, (res) => {

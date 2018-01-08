@@ -157,7 +157,7 @@ statusSchema.statics = {
                 if (!canReset) {
                     callback({
                         'status': "faile",
-                        'mes': "信息重复。"
+                        'mes': "状态未更新。"
                     });
                     return false;
                 }

@@ -204,7 +204,9 @@ meetSchema.statics = {
 			"rName": meet.room || '',
 			"mAdmin": meet.sponsor || '',
 			"mPeople": meet.joinList || [],
-			"mQRcode": meet.mQRcode || ''
+			"mQRcode": meet.mQRcode || '',
+			"mJoin": meet.mJoin || '',
+			"mNote": meet.mNote || ''
 		}
 
 		this.create(newMeet, (err) => {
