@@ -13,7 +13,7 @@ let Note = require('../database/models/note');
 let Room = require('../database/models/room');
 let Status = require('../database/models/status');
 
-const URL = 'D:/project/meetingHelp/uploads';
+const URL = 'D:/project/meetingHelp';
 
 
 //初始化数据
@@ -226,7 +226,7 @@ router.post('/addMeet', function (req, res) {
 		type: 'png',
 		size: 6
 	});
-	let qr_png_url = URL + '/qr_code/uploads_' + req.body.name + '.png';
+	let qr_png_url = URL + '/uploads/qr_code/uploads_' + req.body.name + '.png';
 	let qr_pipe = qr_png.pipe(fs.createWriteStream(qr_png_url));
 	qr_pipe.on('error', function (err) {
 		res.send(200, {
@@ -260,7 +260,7 @@ router.post('/addMeet', function (req, res) {
 			if (sure == 0) {
 				res.send(200, {
 					'status': 'success',
-					'qrCode': qr_png_url
+					'qrCode': '/uploads/qr_code/uploads_' + req.body.name + '.png'
 				});
 			} else {
 				res.send(200, {

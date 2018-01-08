@@ -5,10 +5,10 @@
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
     tools.noUser(username);
-    if(meet){
+    if (meet) {
         tools.titleValue('修改会议信息');
-        tools.headValue('正在修改'+meet+'的信息-' + project_name);
-    }else{
+        tools.headValue('正在修改' + meet + '的信息-' + project_name);
+    } else {
         tools.titleValue('新建会议');
         tools.headValue('新建会议-' + project_name);
     }
@@ -189,9 +189,9 @@
         err.errMesShow('正在创建，请稍后。');
         ajaxTool.addMeet(meetData, (res) => {
             if (res.status == 'success') {
-                err.errMesShow('新建成功，正在跳转。');
+                err.errMesShow('新建成功，请保存二维码。');
                 // 展示生成的二维码（签到用）
-                qrcode.querySelector('#qrCodeImg').setAttribute('src', res.qrCode);
+                qrcode.querySelector('#qrCodeImg').src = res.qrCode;
                 qrcode.style.display = 'block';
             } else {
                 if (res.mes.code == 11000) {

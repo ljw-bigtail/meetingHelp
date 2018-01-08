@@ -1171,6 +1171,7 @@ div.qrcode .qrcodeMain p {
 
 div.qrcode .qrcodeMain img {
     width: 100%;
+    min-height: 200px;
 }
 
 div.qrcode .qrCodeClose {
