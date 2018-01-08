@@ -1,4 +1,6 @@
 (() => {
+    const err = new Err(errMes);
+
     let userData = tools.getUserFormCookie();
     // let username = tools.getCookie('username');
     let showEnd = tools.getQuery('end')
@@ -19,6 +21,11 @@
     // 删除按钮显示与功能
     events.showBtnEvent(meetList, (e) => {
         e.parentNode.style.display = 'none';
+        ajaxTool.delMeet({
+            "mName":e.parentNode.querySelector('h3').innerHTML
+        },(req)=>{
+            err.errMesShow(req.mes)
+        });
     });
 
     const btnValue = '取消会议';

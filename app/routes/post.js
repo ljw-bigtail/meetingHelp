@@ -66,7 +66,7 @@ const URL = 'D:/project/meetingHelp';
 router.post('/uploadImg', function (req, res) {
 	//生成multiparty对象，并配置上传目标路径
 	let form = new multiparty.Form({
-		uploadDir: URL
+		uploadDir: URL+'/uploads'
 	});
 	//上传完成后处理
 	form.parse(req, function (err, fields, files) {
@@ -78,7 +78,7 @@ router.post('/uploadImg', function (req, res) {
 		//改写文件名称
 		let inputFile = files.file[0];
 		let uploadedPath = inputFile.path;
-		let dstPath = URL + '/uploads_' + inputFile.originalFilename;
+		let dstPath = URL + '/uploads/uploads_' + inputFile.originalFilename;
 		fs.rename(uploadedPath, dstPath, (err) => {
 			if (err) {
 				console.log('rename error: ' + err);
@@ -268,6 +268,52 @@ router.post('/addMeet', function (req, res) {
 				})
 			}
 		});
+	});
+});
+
+// 删除会议
+router.post('/delMeet', function (req, res) {
+	if (!req.body.mName) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	let isDel = false;
+	// 删除会议
+	Meet.delMeet(req.body.mName, (mes) => {
+		if(mes.status == 'success'){
+			isDel = true;
+		}else{
+			isDel = false;			
+		}
+	})
+	// 删除相关状态
+	Status.delStatus({
+		'mName': req.body.mName
+	}, (_mes) => {
+		if(_mes.status == 'success'){
+			isDel = true;
+		}else{
+			isDel = false;			
+		}
+	})
+	// 删除二维码
+	fs.unlink(URL + '/uploads/qr_code/uploads_' + req.body.mName + '.png',(err)=>{
+		if(err){
+			isDel = false;			
+		}else{
+			isDel = true;
+		}
+		if(isDel){
+			res.send(200, {
+				mes: '删除成功。'
+			});
+		}else{
+			res.send(200, {
+				mes: '删除失败。'
+			});
+		}
 	});
 });
 

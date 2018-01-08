@@ -115,11 +115,8 @@ statusSchema.statics = {
             }
         })
     },
-    delStatus: function (name, mName, callback) {
-        this.remove({
-            'name': name,
-            'mName': mName
-        }, function (err) {
+    delStatus: function (option, callback) {
+        this.remove(option, function (err) {
             if (err) {
                 callback({
                     'status': "faile",
