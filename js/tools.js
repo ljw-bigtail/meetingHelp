@@ -137,5 +137,8 @@ let tools = {
             callback4 && callback4();
         }
     },
-
+    // 根据index值（第几个半点）返回时间段，从0开始
+    getPeriod: (index, joiner) => {
+        return work_time[index] + joiner + work_time[index + 1];
+    }
 }

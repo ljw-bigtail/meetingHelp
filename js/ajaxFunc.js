@@ -389,4 +389,18 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    getRoomAndState: function (option, callback) {
+        fetch(server_url + "/api/getRoomAndState", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(option)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
 }

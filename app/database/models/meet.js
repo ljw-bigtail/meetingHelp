@@ -149,7 +149,7 @@ meetSchema.statics = {
 		});
 	},
 	findMeetList: function (user, attr, val, callback) {
-		if (user || attr || val) {
+		if (attr && val) {
 			this.find({
 				[attr]: val,
 			}).sort({
@@ -158,29 +158,47 @@ meetSchema.statics = {
 				if (err) {
 					console.log(err);
 				} else {
-					let meetData = [];
-					meetList.map((data) => {
-						let userData = data.mPeople.split(",");
-						userData.map((_user) => {
-							if (_user == user) {
-								meetData.push(data);
-							}
+					if (user) {
+						let meetData = [];
+						meetList.map((data) => {
+							let userData = data.mPeople.split(",");
+							userData.map((_user) => {
+								if (_user == user) {
+									meetData.push(data);
+								}
+							});
 						});
-					});
-					callback(meetData);
+						callback(meetData);
+					} else {
+						callback(meetList);
+					}
 				}
 			});
 		} else {
 			// 管理员查找
-			this.find().sort({
-				"_id": -1
-			}).exec((err, meetList) => {
-				if (err) {
-					console.log(err);
-				} else {
-					callback(meetList);
-				}
-			});
+			if (attr && val) {
+				this.find({
+					[attr]: val
+				}).sort({
+					"_id": -1
+				}).exec((err, meetList) => {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(meetList);
+					}
+				});
+			} else {
+				this.find().sort({
+					"_id": -1
+				}).exec((err, meetList) => {
+					if (err) {
+						console.log(err);
+					} else {
+						callback(meetList);
+					}
+				});
+			}
 		}
 	},
 	findMeetByAttr: function (attr, val, callback) {

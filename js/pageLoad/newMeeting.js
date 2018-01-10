@@ -188,18 +188,26 @@
         };
         err.errMesShow('正在创建，请稍后。');
         ajaxTool.addMeet(meetData, (res) => {
-            if (res.status == 'success') {
-                err.errMesShow('新建成功，请保存二维码。');
-                // 展示生成的二维码（签到用）
-                qrcode.querySelector('#qrCodeImg').src = res.qrCode;
-                qrcode.style.display = 'block';
-            } else {
-                if (res.mes.code == 11000) {
-                    err.errMesShow('会议重复，请修改名称。');
-                    return false;
+            // 修改会议室状态
+            ajaxTool.updateRoom({
+                'rName':meetData.room,
+                'update':{
+                    'rStatus':2
                 }
-                err.errMesShow('新建失败，请重新来过。');
-            }
+            },(_res)=>{
+                if (_res.status == 'success' && res.status == 'success') {
+                    err.errMesShow('新建成功，请保存二维码。');
+                    // 展示生成的二维码（签到用）
+                    qrcode.querySelector('#qrCodeImg').src = res.qrCode;
+                    qrcode.style.display = 'block';
+                } else {
+                    if (res.mes.code == 11000) {
+                        err.errMesShow('会议重复，请修改名称。');
+                        return false;
+                    }
+                    err.errMesShow('新建失败，请重新来过。');
+                }
+            });
         });
     });
 

@@ -66,7 +66,7 @@ const URL = 'D:/project/meetingHelp';
 router.post('/uploadImg', function (req, res) {
 	//生成multiparty对象，并配置上传目标路径
 	let form = new multiparty.Form({
-		uploadDir: URL+'/uploads'
+		uploadDir: URL + '/uploads'
 	});
 	//上传完成后处理
 	form.parse(req, function (err, fields, files) {
@@ -282,34 +282,34 @@ router.post('/delMeet', function (req, res) {
 	let isDel = false;
 	// 删除会议
 	Meet.delMeet(req.body.mName, (mes) => {
-		if(mes.status == 'success'){
+		if (mes.status == 'success') {
 			isDel = true;
-		}else{
-			isDel = false;			
+		} else {
+			isDel = false;
 		}
 	})
 	// 删除相关状态
 	Status.delStatus({
 		'mName': req.body.mName
 	}, (_mes) => {
-		if(_mes.status == 'success'){
+		if (_mes.status == 'success') {
 			isDel = true;
-		}else{
-			isDel = false;			
+		} else {
+			isDel = false;
 		}
 	})
 	// 删除二维码
-	fs.unlink(URL + '/uploads/qr_code/uploads_' + req.body.mName + '.png',(err)=>{
-		if(err){
-			isDel = false;			
-		}else{
+	fs.unlink(URL + '/uploads/qr_code/uploads_' + req.body.mName + '.png', (err) => {
+		if (err) {
+			isDel = false;
+		} else {
 			isDel = true;
 		}
-		if(isDel){
+		if (isDel) {
 			res.send(200, {
 				mes: '删除成功。'
 			});
-		}else{
+		} else {
 			res.send(200, {
 				mes: '删除失败。'
 			});
@@ -436,12 +436,12 @@ router.post('/getMeetList', function (req, res) {
 	let attr = req.body.attr || null;
 	let val = req.body.val || null;
 	let user = req.body.user || null;
-	if (attr && attr !== 'mAdmin') {
-		res.send(200, {
-			mes: '仅支持通过 mAdmin 搜索。'
-		});
-		return false;
-	}
+	// if (attr || val) {
+	// 	res.send(200, {
+	// 		mes: '参数不正确。'
+	// 	});
+	// 	return false;
+	// }
 	Meet.findMeetList(user, attr, val, (meetList) => {
 		res.send(200, {
 			'meetList': meetList
@@ -622,6 +622,45 @@ router.post('/delNote', function (req, res) {
 	Note.delNote(req.body.option, (mes) => {
 		res.send(200, mes);
 	})
+});
+
+// 把房间未来状态一起返回
+router.post('/getRoomAndState', function (req, res) {
+	if (!req.body.userLevel || req.body.userLevel != 1) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	let now = new Date();
+	let future = new Date();
+	future.setHours(now.getHours() + req.body.time);
+	let resList = [];
+	Room.findRoomList(null, null, (roomList) => {
+		roomList.map((room) => {
+			let futureNum = 0;
+			// 获取会议室中的会议
+			Meet.findMeetList(null, 'mRoom', room.rName, (meetList) => {
+				meetList.map((meet) => {
+					let myDate = new Date(meet.mStartTime);
+					if (now < myDate && myDate < future) {
+						futureNum++;
+					}
+				});
+			});
+			resList.push({
+				'rName': room.rName,
+				'rPlace': room.rPlace,
+				'rNum': room.rNum,
+				'rDevice': room.rDevice,
+				'rStatus': room.rStatus,
+				'future': futureNum,
+			});
+		});
+		res.send(200, {
+			'roomList': resList
+		});
+	});
 });
 
 module.exports = router;
