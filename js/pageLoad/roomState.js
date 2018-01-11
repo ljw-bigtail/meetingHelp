@@ -27,6 +27,8 @@
     const rNum = document.querySelector('.rNum');
     const rDevice = document.querySelector('.rDevice');
 
+    const roomStateMes = document.querySelector('.roomStateMes');
+
     let roomData = {
         rDevice: '',
         rName: room,
@@ -45,7 +47,7 @@
 
     }, () => {}, () => {
         document.querySelector('body>footer').style.display = 'none';
-        document.querySelector('body>article.hasFooter').className = '';        
+        document.querySelector('body>article.hasFooter').className = '';
     });
 
     // 绑定事件
@@ -69,6 +71,32 @@
         roomData.rDevice = data.rDevice;
         roomData.rNum = data.rNum;
         roomData.rPlace = data.rPlace;
+
+        // 获取会议室占用信息
+        ajaxTool.getMeetList({
+            'attr': 'rName',
+            'val': data.rName
+        }, (req) => {
+            let dom = '';
+            req.meetList.map((meet) => {
+                dom += '<li><div><span>' +
+                    meet.mStartTime.replace(/T/, ' ') + '</span><span>至</span><span>' +
+                    meet.mEndTime.replace(/T/, ' ') + '</span></div><p>预订人：<span class="adminName">' +
+                    meet.mAdmin + '</span></p></li>';
+            });
+            document.querySelector('.roomStateMes').innerHTML = dom;
+        });
+    });
+
+    roomStateMes.addEventListener('click', (e) => {
+        if (e.target.className == 'adminName') {
+            ajaxTool.findUser({
+                'attr': 'name',
+                'val': e.toElement.innerHTML
+            }, (req) => {
+                err.errMesShow(e.toElement.innerHTML + '的联系方式是：' + req.phone || req.email);
+            });
+        }
     });
 
     // 打开设置信息的盒子
@@ -104,12 +132,12 @@
                     'rNum': rNum.value,
                     'rDevice': rDevice.value
                 }
-            },(req)=>{
-                if(req.status !== "success" ){
+            }, (req) => {
+                if (req.status !== "success") {
                     err.errMesShow('修改失败，请稍后重试')
                     return false;
                 }
-                err.errMesShow('修改成功',()=>{
+                err.errMesShow('修改成功', () => {
                     window.location.reload();
                 });
             });

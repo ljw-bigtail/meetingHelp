@@ -454,6 +454,15 @@ body article .roomState .mes p {
     font-size: 2.6rem;
     line-height: 3rem;
     color: #aaaaaa;
+    margin: 0 1rem;
+}
+
+body article .roomState .mes p span{
+    font-size: 2.6rem;
+    line-height: 3rem;
+    color: #aaaaaa;
+    margin: 0 1rem;
+    text-decoration: underline;
 }
 
 body article .roomState .mes span {

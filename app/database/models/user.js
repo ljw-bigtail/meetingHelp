@@ -118,7 +118,14 @@ userSchema.statics = {
 				console.log(err);
 				callback('faile');				
 			} else {
-				callback(user);
+				// callback(user);
+				callback({
+					'name':user.name,
+					'email':user.email,
+					'phone':user.phone,
+					'desc':user.desc,
+					'dName':user.dName
+				});
 			}
 		});
 	},

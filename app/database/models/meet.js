@@ -150,14 +150,18 @@ meetSchema.statics = {
 	},
 	findMeetList: function (user, attr, val, callback) {
 		if (attr && val) {
+			console.log('~~~~~~~~~~~~~~~~~')
+			console.log(user, attr, val)
 			this.find({
-				[attr]: val,
+				[attr]: val
 			}).sort({
 				"_id": -1
 			}).exec((err, meetList) => {
 				if (err) {
 					console.log(err);
 				} else {
+					console.log(meetList);
+					
 					if (user) {
 						let meetData = [];
 						meetList.map((data) => {
@@ -175,30 +179,15 @@ meetSchema.statics = {
 				}
 			});
 		} else {
-			// 管理员查找
-			if (attr && val) {
-				this.find({
-					[attr]: val
-				}).sort({
-					"_id": -1
-				}).exec((err, meetList) => {
-					if (err) {
-						console.log(err);
-					} else {
-						callback(meetList);
-					}
-				});
-			} else {
-				this.find().sort({
-					"_id": -1
-				}).exec((err, meetList) => {
-					if (err) {
-						console.log(err);
-					} else {
-						callback(meetList);
-					}
-				});
-			}
+			this.find().sort({
+				"_id": -1
+			}).exec((err, meetList) => {
+				if (err) {
+					console.log(err);
+				} else {
+					callback(meetList);
+				}
+			});
 		}
 	},
 	findMeetByAttr: function (attr, val, callback) {
