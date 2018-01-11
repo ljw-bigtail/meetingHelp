@@ -150,8 +150,6 @@ meetSchema.statics = {
 	},
 	findMeetList: function (user, attr, val, callback) {
 		if (attr && val) {
-			console.log('~~~~~~~~~~~~~~~~~')
-			console.log(user, attr, val)
 			this.find({
 				[attr]: val
 			}).sort({
