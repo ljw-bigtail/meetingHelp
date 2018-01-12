@@ -158,8 +158,6 @@ meetSchema.statics = {
 				if (err) {
 					console.log(err);
 				} else {
-					console.log(meetList);
-					
 					if (user) {
 						let meetData = [];
 						meetList.map((data) => {

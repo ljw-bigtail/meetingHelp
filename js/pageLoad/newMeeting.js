@@ -53,26 +53,36 @@
     const qrCodeClose = document.querySelector('.qrCodeClose');
     const qrCodeSave = document.querySelector('.qrCodeSave');
     const qrcode = document.querySelector('.qrcode');
+
+    const showRoom = document.querySelector('#showRoom');
+    const chooseRoom = showRoom.querySelector('.chooseRoom');
+    const timeChoose = document.querySelector('#timeChoose');
+    const timeChooseTit = timeChoose.querySelector('.right .title');
+    const timeChooseClock = timeChoose.querySelector('.right .clock');
+
     let now = new Date();
 
-    // 加载会议地点
-    ajaxTool.getRoomList((data) => {
-        var dom = '';
-        data.roomList.map((data) => {
-            dom += '<li>' + data.rName + '</li>';
-        });
-
-        // 在会议地点中加载
-        room.parentElement.querySelector('ul').innerHTML = dom;
-
-        // 根据传递来的参数自动选择当前的会议室地点，然后click
-        var place = tools.getQuery('place');
-        room.parentNode.querySelectorAll('ul li').forEach((e) => {
-            if (e.innerHTML == place) {
-                e.click();
-            }
-        });
+    // 渲染时间dom
+    let timeTitleDom = '';
+    let timeClockDomA = '';
+    let timeClockDomB = '';
+    work_time.map((data, index) => {
+        if (index % 2 == 0) {
+            timeTitleDom += '<li>' + data + '</li>'
+            timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
+        } else {
+            timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
+        }
     });
+    // 渲染时间段--时间dom
+    timeChooseTit.innerHTML = timeTitleDom;
+    // 渲染时间段--时间checkbox
+    timeChooseClock.innerHTML = timeClockDomA + timeClockDomB;
+    // 设置宽度
+    let timeChooseTitWidth = 8 * (work_time.length / 2);
+    timeChooseTit.style.width = timeChooseTitWidth + 'rem';
+    timeChooseClock.style.width = timeChooseTitWidth + 'rem';
+
     // 加载会议人物
     ajaxTool.getUserList((data) => {
         var dom = '';
@@ -85,8 +95,6 @@
         // 在参会人中加载
         join.innerHTML = dom;
     });
-
-    // -----------------------------------
 
     // 获取已经选择的dom的内容
     function getListText(list) {
@@ -117,30 +125,141 @@
         });
     });
 
+
     // 开始时间小于结束时间
-    start.addEventListener('focus', () => {
-        // 开始时间不能小于当前时间
-        start.min = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + 'T' + now.getHours() + ':' + now.getMinutes();
-        // 如果先填写了结束时间，开始时间不能大于结束时间
-        if (end.value) {
-            start.max = end.value;
+    start.addEventListener('change', () => {
+        // 先选择日期，然后通过日期查找会议室的占用状态
+        // 根据会议室占用状态，推荐对应的会议室，然后打开时间表
+        // 选择时间
+        // 保存的时候根据md中的格式来拼接
+
+        // 过去的日期不允许选择
+        let startTime = new Date(start.value);
+        startTime.setHours(0);
+        let yestarday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+        if (startTime <= yestarday) {
+            err.errMesShow('不能选择已经过去的时间，请重新选择');
+            start.value = '';
+            return false;
+        }
+
+        // 加载会议室与会议室今天的占用情况
+        // 需要新增接口，
+        // 传选择的时间
+        // 返回会议室名列表和会议室当天的占用率
+        ajaxTool.getRoomList((data) => {
+            let roomDOM = '';
+            data.roomList.map((data) => {
+                // 选择可用的会议室
+                if (data.rStatus == 1) {
+                    roomDOM += '<li>';
+                    roomDOM += '<input type="radio" name="meeting-room" title="' + data.rName + '"><span>' + data.rName + '</span>';
+                    roomDOM += '<progress value="45" max="100"></progress></li>';
+                    roomDOM += '</li>';
+                }
+            });
+            chooseRoom.innerHTML = roomDOM;
+        });
+
+        ajaxTool.getRoomGap({
+            'date':start.value
+        },(req)=>{
+            console.log(req)
+        });
+
+        showRoom.style.display = 'block';
+
+        // 加载会议列表
+        // let username = tools.getCookie('username');
+        // ajaxTool.getMeetList({
+        //     'user': username
+        // }, (data) => {
+        //     data.meetList.map((data) => {
+        //         console.log(data);
+        //         if (st_time == data.mStartTime.split(" ")[0]) {
+        //             var begin_time = data.mStartTime.split(" ")[1];
+        //             console.log(begin_time);
+        //             var end_time = data.mEndTime.split(" ")[1];
+        //             console.log(end_time);
+        //             timeChoose.querySelectorAll('input').forEach((e) => {
+        //                 if (e.value >= begin_time && e.value < end_time) {
+        //                     e.checked = true;
+        //                     e.disabled = true;
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
+    });
+
+    // 选择会议室
+    chooseRoom.addEventListener('click', (e) => {
+        if (e.target.nodeName == 'SPAN') {
+            let roomSelectRadio = e.target.previousSibling;
+            roomSelectRadio.click();
+            // 根据会议室信息选择当天的时间段
+            showRoom.setAttribute('data-room', roomSelectRadio.getAttribute('title'));
+            timeChoose.style.display = 'block';
+        } else if (e.target.nodeName == 'INPUT') {
+            e.target.click();
+            // 根据会议室信息选择当天的时间段
+            showRoom.setAttribute('data-room', e.target.getAttribute('title'));
+            timeChoose.style.display = 'block';
+        } else if (e.target.nodeName == 'PROGRESS') {
+            let roomSelectRadio = e.target.previousSibling.previousSibling;
+            roomSelectRadio.click();
+            // 根据会议室信息选择当天的时间段
+            showRoom.setAttribute('data-room', roomSelectRadio.getAttribute('title'));
+            timeChoose.style.display = 'block';
         }
     });
 
-    //结束时间大于开始时间
-    end.addEventListener('focus', () => {
-        // 结束时间不能小于当前时间
-        start.min = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + 'T' + now.getHours() + ':' + now.getMinutes();
-        // 如果填写了开始时间,结束时间必须大于开始时间
-        if (start.value) {
-            end.min = start.value;
+    // 筛选出连续的时间段对应的状态
+    function isGap() {
+        // 获取时间
+        let status = [];
+        let timeChooseClockSelect = timeChooseClock.querySelectorAll('li');
+        for (var i = 0; i < timeChooseClockSelect.length; i++) {
+            let chooseOneFromClock = timeChooseClockSelect[i].querySelector('input');
+            if (chooseOneFromClock.checked) {
+                status.push(1);
+            } else {
+                status.push(0);
+            }
         }
-    });
+        // 整理时间段数组，返回值是连贯的
+        let statusA = status.slice(0, status.length / 2);
+        let statusB = status.slice(status.length / 2, status.length);
+        let statusData = [];
+        statusA.map((_data, index) => {
+            statusData.push(statusA[index]);
+            statusData.push(statusB[index]);
+        });
+        // 根据连贯状态判断时间段是否有间断
+        let gapIndex = [];
+        // 间断状态，如果有间断，就为false
+        // 返回选中状态的index值
+        statusData.map((state, index) => {
+            if (state == 1) {
+                gapIndex.push(index);
+            }
+        });
+        return gapIndex;
+    }
 
     // 保存后获取对应位置的信息
     save.addEventListener('click', () => {
         let joinList = getListText(join.querySelectorAll('li.select'));
+        let gapIndex = isGap();
+        let gapState = true;
+        // 查看是否连贯
+        for (let i = 0; i < gapIndex.length; i++) {
+            if (gapIndex[i + 1] - gapIndex[i] > 1) {
+                gapState = false;
+            }
+        }
 
+        // 数据正确性判断
         if (save.className == 'stop') {
             err.errMesShow('请等待上传完成');
             return false;
@@ -153,6 +272,10 @@
             err.errMesShow('请输入会议详情');
             return false;
         };
+        if (!gapState) {
+            err.errMesShow('时间段需要连续选择');
+            return false;
+        }
         if (start.value == '') {
             err.errMesShow('请选择开始时间');
             return false;
@@ -178,23 +301,24 @@
             'name': name.value,
             'detail': detail.value,
             'uploadImg': uploadImg.getAttribute('src'),
-            'start': start.value,
-            'end': end.value,
-            'room': room.innerHTML,
+            'start': start.value + 'T' + work_time[gapIndex[0]],
+            'end': start.value + 'T' + work_time[(gapIndex[gapIndex.length - 1] + 1)],
+            'room': showRoom.getAttribute('data-room'),
             'sponsor': sponsor.innerHTML,
             'joinList': joinList,
             'mNote': canRead.className == 'selected' ? 0 : 1,
             'mJoin': autoJoin.className == 'selected' ? 0 : 1
         };
+
         err.errMesShow('正在创建，请稍后。');
         ajaxTool.addMeet(meetData, (res) => {
             // 修改会议室状态
             ajaxTool.updateRoom({
-                'rName':meetData.room,
-                'update':{
-                    'rStatus':2
+                'rName': meetData.room,
+                'update': {
+                    'rStatus': 2
                 }
-            },(_res)=>{
+            }, (_res) => {
                 if (_res.status == 'success' && res.status == 'success') {
                     err.errMesShow('新建成功，请保存二维码。');
                     // 展示生成的二维码（签到用）

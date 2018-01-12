@@ -33,18 +33,28 @@
             </ul>
             <ul class="newBox">
                 <li class="inputBox">
-                    <span>开始时间</span>
-                    <input type="datetime-local" name="" id="start">
+                    <span>会议日期</span>
+                    <input type="date" name="" id="start" min='2018/1/12'>
                 </li>
-                <li class="inputBox">
-                    <span>结束时间</span>
-                    <input type="datetime-local" name="" id="end">
+                <li id="showRoom">
+                    <span>会议室</span>
+                    <ul class="chooseRoom"></ul>
                 </li>
-                <li class="chooseBox">
-                    <span>会议地点</span>
-                    <span class="val" id="room">请选择</span>
-                    <span class="btn">&gt;</span>
-                    <ul></ul>
+                <li id="timeChoose">
+                    <span>时间段</span>
+                    <ul class="left">
+                        <li>时间</li>
+                        <li>半点</li>
+                        <li>整点</li>
+                    </ul>
+                    <ul class="right">
+                        <li>
+                            <ul class="title"></ul>
+                        </li>
+                        <li>
+                            <ul class="clock"></ul>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             <ul class="newBox">

@@ -457,7 +457,7 @@ body article .roomState .mes p {
     margin: 0 1rem;
 }
 
-body article .roomState .mes p span{
+body article .roomState .mes p span {
     font-size: 2.6rem;
     line-height: 3rem;
     color: #aaaaaa;
@@ -1235,4 +1235,90 @@ body article .newMeet input {
     height: 5rem;
     line-height: 5rem;
     border: 1px solid #cccccc;
+}
+
+#showRoom {
+    display: none;
+}
+
+#showRoom ul {
+    display: inline-block;
+    width: calc(100% - 12rem);
+}
+
+#showRoom>span {
+    vertical-align: top;
+    font-size: 3rem;
+}
+
+#showRoom ul li {
+    font-size: 3rem;
+    height: 5rem;
+    line-height: 5rem;
+}
+#showRoom ul li:last-child {
+    border-bottom: 0;
+}
+
+#showRoom ul li input {
+    width: 2rem;
+}
+
+#showRoom ul li progress {
+    height: 3rem;
+    vertical-align: middle;
+}
+
+#timeChoose {
+    display: none;
+    padding-bottom: 0;
+}
+
+#timeChoose span {
+    display: block;
+}
+
+#timeChoose ul {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#timeChoose ul.left {
+    width: 8rem;
+}
+
+#timeChoose ul.left li {
+    font-size: 3rem;
+    line-height: 4rem;
+    background: #6DC56E;
+    color: #ffffff;
+    text-align: center;
+}
+
+#timeChoose ul.right {
+    width: calc(100% - 8rem);
+    overflow-x: auto;
+}
+
+#timeChoose ul.right>li {
+    width: 100%;
+    padding: 0;
+    border: 0;
+}
+
+#timeChoose ul.right li ul {
+    width: auto;
+}
+
+#timeChoose ul.right li ul li {
+    font-size: 3rem;
+    display: inline-block;
+    width: 8rem;
+    line-height: 4rem;
+    text-align: center;
+}
+
+#timeChoose ul.right li ul li input {
+    width: 2rem;
+    height: 2rem;
 }

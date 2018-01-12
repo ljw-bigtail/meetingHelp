@@ -663,4 +663,52 @@ router.post('/getRoomAndState', function (req, res) {
 	});
 });
 
+// 计算会议室在某天的占用率
+router.post('/getRoomGap', function (req, res) {
+	if (!req.body.date) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	let date = new Date(req.body.date);
+	let resList = [];
+	Room.findRoomList(null, null, (roomList) => {
+		roomList.map((room, roomIndex) => {
+			resList.push({
+				'rName': room.rName,
+				'utilization': 0,
+			});
+			// 获取会议室中的会议
+			Meet.findMeetList(null, 'rName', room.rName, (meetList) => {
+				meetList.map((meet) => {
+					// 根据时间筛选出来对应的会议，拿到对应的时间，算一下百分比
+					let start = new Date(meet.mStartTime);
+					let end = new Date(meet.mEndTime);
+					if (start.getFullYear() == date.getFullYear() && start.getMonth() == date.getMonth() && start.getDate() == date.getDate()) {
+						resList[roomIndex].utilization += (end - start);
+					}
+				});
+
+				console.log('$$$$$$$$$$$$$$$$')
+				console.log(resList)
+				console.log('$$$$$$$$$$$$$$$$')
+				
+			});
+
+			console.log('&&&&&&&&&&&&&&&&')
+			console.log(resList)
+			console.log('&&&&&&&&&&&&&&&&')
+
+		});
+		console.log('~~~~~~~~~~~~~~~~')
+		console.log(resList)
+		console.log('~~~~~~~~~~~~~~~~')
+		// 	res.send(200, {
+		// 		'roomList': resList
+		// 	});
+	});
+});
+
+
 module.exports = router;
