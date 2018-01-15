@@ -72,8 +72,8 @@
                     });
                     ajaxTool.sendMail({
                         email: emailString,
-                        title: '会议签到提醒-来自会议助手',
-                        mes: '您的会议已经开始，请不要忘记参加并签到。'
+                        title: email_title,
+                        mes: email_mes
                     }, (req) => {
                         if (req.status.trim() == '250 Ok: queued as') {
                             err.errMesShow('正在通过邮件提醒参会人员。');

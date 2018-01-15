@@ -584,6 +584,7 @@ router.post('/getMonthData', function (req, res) {
 		return false;
 	}
 	User.findUserByAttr('name', req.body.username, (req) => {
+		console.log(req)
 		if (req.level !== 0) {
 			res.send(200, {
 				mes: '该账户没有权限。'

@@ -124,7 +124,8 @@ userSchema.statics = {
 					'email':user.email,
 					'phone':user.phone,
 					'desc':user.desc,
-					'dName':user.dName
+					'dName':user.dName,
+					'level':user.level,
 				});
 			}
 		});

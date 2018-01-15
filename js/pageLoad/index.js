@@ -61,7 +61,6 @@
             }],
             'yAxis': [{
                 'type': 'value',
-                'max': 4,
                 'axisLine': {
                     'lineStyle': {
                         'color': '#f0f0f0'
@@ -74,13 +73,13 @@
                 'stack': '总量',
                 'areaStyle': {
                     'normal': {
-                        'color': chartColor
+                        'color': chart_color
                     }
                 },
                 'itemStyle': {
                     'normal': {
                         'lineStyle': {
-                            'color': chartColor
+                            'color': chart_color
                         }
                     }
                 },

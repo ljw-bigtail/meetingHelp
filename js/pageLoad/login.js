@@ -45,13 +45,13 @@
         ajaxTool.checkUser(checkData, (req) => {
             if (req.status == "success") {
                 //存cookie
-                tools.setCookie('username', req.userMes.name, saveDay);
-                tools.setCookie('phone', req.userMes.phone, saveDay);
-                tools.setCookie('email', req.userMes.email, saveDay);
-                tools.setCookie('desc', req.userMes.desc, saveDay);
-                tools.setCookie('department', req.userMes.dName, saveDay);
-                tools.setCookie('initiate', req.userMes.initiate, saveDay);
-                tools.setCookie('level', req.userMes.level, saveDay);
+                tools.setCookie('username', req.userMes.name, save_day);
+                tools.setCookie('phone', req.userMes.phone, save_day);
+                tools.setCookie('email', req.userMes.email, save_day);
+                tools.setCookie('desc', req.userMes.desc, save_day);
+                tools.setCookie('department', req.userMes.dName, save_day);
+                tools.setCookie('initiate', req.userMes.initiate, save_day);
+                tools.setCookie('level', req.userMes.level, save_day);
                 // 跳转至主页
                 window.location.pathname = '/index.html';
             }

@@ -11,11 +11,11 @@ const user_avatar_data = ['#F76B8A', '#028090', '#02C39A', '#EC9454', '#849561']
 const leave_title = 'i miss you';
 
 // cookie存储时间，单位天
-const saveDay = 7;
+const save_day = 1;
 
 // admin图标色值
-// const chartColor = null;
-const chartColor = '#E73E51';
+// const chart_color = null;
+const chart_color = '#E73E51';
 
 // 工作时间段
 const work_time = [
@@ -37,3 +37,7 @@ const work_time = [
 
 // 会议室未来几小时的状态
 const room_future_status = 3;
+
+// 邮件提醒信息
+const email_title = '会议签到提醒-来自会议助手';
+const email_mes = '您的会议已经开始，请不要忘记参加并签到。';

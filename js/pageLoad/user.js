@@ -57,9 +57,9 @@
             //校验成功
             ajaxTool.updateUser(userData, (req) => {
                 //修改cookie中的值
-                tools.setCookie('phone', phoneDom.value, saveDay);
-                tools.setCookie('email', emailDom.value, saveDay);
-                tools.setCookie('desc', descDom.value, saveDay);
+                tools.setCookie('phone', phoneDom.value, save_day);
+                tools.setCookie('email', emailDom.value, save_day);
+                tools.setCookie('desc', descDom.value, save_day);
             });
         }
     });
