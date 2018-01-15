@@ -63,25 +63,38 @@
     let now = new Date();
 
     // 渲染时间dom
-    let timeTitleDom = '';
-    let timeClockDomA = '';
-    let timeClockDomB = '';
-    work_time.map((data, index) => {
-        if (index % 2 == 0) {
-            timeTitleDom += '<li>' + data + '</li>'
-            timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
-        } else {
-            timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
-        }
-    });
-    // 渲染时间段--时间dom
-    timeChooseTit.innerHTML = timeTitleDom;
-    // 渲染时间段--时间checkbox
-    timeChooseClock.innerHTML = timeClockDomA + timeClockDomB;
-    // 设置宽度
-    let timeChooseTitWidth = 8 * (work_time.length / 2);
-    timeChooseTit.style.width = timeChooseTitWidth + 'rem';
-    timeChooseClock.style.width = timeChooseTitWidth + 'rem';
+    function addTimeBox(stateData) {
+        console.log('1')
+        let timeTitleDom = '';
+        let timeClockDomA = '';
+        let timeClockDomB = '';
+        work_time.map((data, index) => {
+            if (index % 2 == 0) {
+                timeTitleDom += '<li>' + data + '</li>'
+                if (stateData[index] == 1) {
+                    // 判定为被选中的
+                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"></li>'
+                } else {
+                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" ></li>'
+                }
+            } else {
+                if (stateData[index] == 1) {
+                    // 判定为被选中的
+                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"></li>'
+                } else {
+                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
+                }
+            }
+        });
+        // 渲染时间段--时间dom
+        timeChooseTit.innerHTML = timeTitleDom;
+        // 渲染时间段--时间checkbox
+        timeChooseClock.innerHTML = timeClockDomA + timeClockDomB;
+        // 设置宽度
+        let timeChooseTitWidth = 8 * (work_time.length / 2);
+        timeChooseTit.style.width = timeChooseTitWidth + 'rem';
+        timeChooseClock.style.width = timeChooseTitWidth + 'rem';
+    }
 
     // 加载会议人物
     ajaxTool.getUserList((data) => {
@@ -125,6 +138,10 @@
         });
     });
 
+    // 一天中的工时
+    let time0 = work_time[work_time.length - 1].split(':')[0] - 0;
+    let time1 = work_time[0].split(':')[0] - 0;
+    let timeLength = time0 - time1 + 1;
 
     // 开始时间小于结束时间
     start.addEventListener('change', () => {
@@ -143,74 +160,79 @@
             return false;
         }
 
-        // 加载会议室与会议室今天的占用情况
-        // 需要新增接口，
-        // 传选择的时间
-        // 返回会议室名列表和会议室当天的占用率
-        ajaxTool.getRoomList((data) => {
+        ajaxTool.getRoomGap({
+            'date': start.value
+        }, (req) => {
+            // 渲染会议室状态表
             let roomDOM = '';
-            data.roomList.map((data) => {
-                // 选择可用的会议室
-                if (data.rStatus == 1) {
-                    roomDOM += '<li>';
-                    roomDOM += '<input type="radio" name="meeting-room" title="' + data.rName + '"><span>' + data.rName + '</span>';
-                    roomDOM += '<progress value="45" max="100"></progress></li>';
-                    roomDOM += '</li>';
-                }
+            req.reqData.map((data) => {
+                let timeDate = data.utilization.split('&');
+                let utilization = 0;
+                timeDate.map((data, index) => {
+                    let startTime,
+                        endTime;
+                    if (data != '' && index % 2 == 0) {
+                        startTime = data.split('T')[1].split(':');
+                        endTime = timeDate[index + 1].split('T')[1].split(':');
+                        utilization += endTime[0] - startTime[0] + (endTime[1] - startTime[1]) / 60;
+                    }
+                });
+                roomDOM += '<li>';
+                roomDOM += '<input type="radio" name="meeting-room" title="' + data.rName + '" data-time="' + data.utilization + '"><span>' + data.rName + '</span>';
+                roomDOM += '<progress value="' + (utilization / timeLength * 100) + '" max="100"></progress></li>';
+                roomDOM += '</li>';
             });
             chooseRoom.innerHTML = roomDOM;
         });
 
-        ajaxTool.getRoomGap({
-            'date':start.value
-        },(req)=>{
-            console.log(req)
-        });
-
         showRoom.style.display = 'block';
-
-        // 加载会议列表
-        // let username = tools.getCookie('username');
-        // ajaxTool.getMeetList({
-        //     'user': username
-        // }, (data) => {
-        //     data.meetList.map((data) => {
-        //         console.log(data);
-        //         if (st_time == data.mStartTime.split(" ")[0]) {
-        //             var begin_time = data.mStartTime.split(" ")[1];
-        //             console.log(begin_time);
-        //             var end_time = data.mEndTime.split(" ")[1];
-        //             console.log(end_time);
-        //             timeChoose.querySelectorAll('input').forEach((e) => {
-        //                 if (e.value >= begin_time && e.value < end_time) {
-        //                     e.checked = true;
-        //                     e.disabled = true;
-        //                 }
-        //             });
-        //         }
-        //     });
-        // });
     });
+
+    function getStateByTime(roomSelectRadio) {
+        // 根据返回的时间段，计算出对应的时间状态数组
+        let data = roomSelectRadio.getAttribute('data-time');
+        let timeDate = data.split('&');
+        let timeState = new Array(work_time.length);
+        timeState.fill(0);
+        timeDate.map((data, index) => {
+            let Time = data.split('T')[1];
+            if (index == timeDate.length - 1) {
+                return false;
+            }
+            work_time.map((time, _index) => {
+                if (Time == time) {
+                    timeState[_index] = 1;
+                }
+            });
+        });
+        timeState.map((data, index) => {
+            if (data == 1) {
+                if (timeState[index + 1] == 1) {
+                    timeState[index + 1] = 0;
+                } else {
+                    timeState[index + 1] = 1;
+                }
+            }
+        });
+        return timeState;
+    }
 
     // 选择会议室
     chooseRoom.addEventListener('click', (e) => {
+        let roomSelectRadio;
         if (e.target.nodeName == 'SPAN') {
-            let roomSelectRadio = e.target.previousSibling;
+            roomSelectRadio = e.target.previousSibling;
             roomSelectRadio.click();
+        } else if (e.target.nodeName == 'INPUT') {
+            roomSelectRadio = e.target;
             // 根据会议室信息选择当天的时间段
             showRoom.setAttribute('data-room', roomSelectRadio.getAttribute('title'));
-            timeChoose.style.display = 'block';
-        } else if (e.target.nodeName == 'INPUT') {
-            e.target.click();
-            // 根据会议室信息选择当天的时间段
-            showRoom.setAttribute('data-room', e.target.getAttribute('title'));
+            // 根据状态渲染dom，刷新时间选择器的dom,根据占据时间
+            addTimeBox(getStateByTime(roomSelectRadio));
             timeChoose.style.display = 'block';
         } else if (e.target.nodeName == 'PROGRESS') {
-            let roomSelectRadio = e.target.previousSibling.previousSibling;
+            roomSelectRadio = e.target.previousSibling.previousSibling;
             roomSelectRadio.click();
-            // 根据会议室信息选择当天的时间段
-            showRoom.setAttribute('data-room', roomSelectRadio.getAttribute('title'));
-            timeChoose.style.display = 'block';
         }
     });
 

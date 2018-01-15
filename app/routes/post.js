@@ -672,43 +672,56 @@ router.post('/getRoomGap', function (req, res) {
 		return false;
 	}
 	let date = new Date(req.body.date);
-	let resList = [];
-	Room.findRoomList(null, null, (roomList) => {
-		roomList.map((room, roomIndex) => {
-			resList.push({
-				'rName': room.rName,
-				'utilization': 0,
-			});
-			// 获取会议室中的会议
-			Meet.findMeetList(null, 'rName', room.rName, (meetList) => {
-				meetList.map((meet) => {
-					// 根据时间筛选出来对应的会议，拿到对应的时间，算一下百分比
-					let start = new Date(meet.mStartTime);
-					let end = new Date(meet.mEndTime);
-					if (start.getFullYear() == date.getFullYear() && start.getMonth() == date.getMonth() && start.getDate() == date.getDate()) {
-						resList[roomIndex].utilization += (end - start);
-					}
+	let roomMeet = [];
+	let reqData = [];
+	// 获取会议室中的会议，计算出一个房间对应的utilization值，根据时间来计算
+
+	Meet.findMeetList(null, null, null, (meetList) => {
+		// 根据会议室
+		meetList.map((meet, index) => {
+			// 先根据rName返回二维数组
+			if (isIn(meet.rName, roomMeet) > -1) {
+				roomMeet[isIn(meet.rName, roomMeet)].push({
+					rName: meet.rName,
+					meet: meet
 				});
-
-				console.log('$$$$$$$$$$$$$$$$')
-				console.log(resList)
-				console.log('$$$$$$$$$$$$$$$$')
-				
-			});
-
-			console.log('&&&&&&&&&&&&&&&&')
-			console.log(resList)
-			console.log('&&&&&&&&&&&&&&&&')
-
+			} else {
+				roomMeet.push([{
+					rName: meet.rName,
+					meet: meet
+				}]);
+			}
 		});
-		console.log('~~~~~~~~~~~~~~~~')
-		console.log(resList)
-		console.log('~~~~~~~~~~~~~~~~')
-		// 	res.send(200, {
-		// 		'roomList': resList
-		// 	});
-	});
-});
 
+		// 根据筛选出来的会议室--会议数组，根据时间判断对应的index中有多长时间
+		for (let i = 0; i < roomMeet.length; i++) {
+			reqData.push({
+				'rName': roomMeet[i][0].rName,
+				'utilization': '',
+			})
+			for (let j = 0; j < roomMeet[i].length; j++) {
+				let start = new Date(roomMeet[i][j].meet.mStartTime);
+				let end = new Date(roomMeet[i][j].meet.mEndTime);
+				if (start.getFullYear() == date.getFullYear() && start.getMonth() == date.getMonth() && start.getDate() == date.getDate()) {
+					reqData[i].utilization += roomMeet[i][j].meet.mStartTime + '&';
+					reqData[i].utilization += roomMeet[i][j].meet.mEndTime + '&';
+				}
+			}
+		}
+		res.send(200, {
+			'reqData': reqData
+		});
+	});
+
+	function isIn(rName, list) {
+		var state = -1;
+		list.map((data, index) => {
+			if (rName == data[0].rName) {
+				state = index;
+			}
+		});
+		return state;
+	}
+});
 
 module.exports = router;
