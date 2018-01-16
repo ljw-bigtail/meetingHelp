@@ -476,6 +476,20 @@ router.post('/updateNote', function (req, res) {
 	})
 });
 
+//更新会议信息
+router.post('/updateMeet', function (req, res) {
+	if (!req.body.option || !req.body.mName) {
+		res.send(200, {
+			'status': "faile",
+			'mes': '参数错误。'
+		});
+		return false;
+	}
+	Meet.updateMeet(req.body.mName, req.body.option, (mes) => {
+		res.send(200, mes);
+	})
+});
+
 // 新建状态
 router.post('/addStatus', function (req, res) {
 	if (!req.body.name || !req.body.mName) {

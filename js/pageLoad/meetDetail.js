@@ -14,7 +14,7 @@
     // 设置返回按钮
     events.goBack(backList);
 
-    // let changeBtn = document.querySelector('.changeBtn');
+    let changeBtn = document.querySelector('.changeBtn');
     let meetTitle = document.querySelector('.meetTitle');
     let meetPlace = document.querySelector('.meetPlace');
     let startDom = document.querySelector('.start');
@@ -55,10 +55,11 @@
         'val': meet
     }, (meetData) => {
         meetTitle.innerHTML = meetData.mName;
-        meetPlace.innerHTML = meetData.mName;
-        startDom.innerHTML = meetData.mStartTime;
-        endDom.innerHTML = meetData.mEndTime;
+        meetPlace.innerHTML = meetData.rName;
+        startDom.innerHTML = meetData.mStartTime.replace(/T/, '  ');
+        endDom.innerHTML = meetData.mEndTime.replace(/T/, '  ');
         mDesc.innerHTML = meetData.mDesc;
+        changeBtn.setAttribute('href', 'newMeeting.html?meet=' + meetData.mName)
 
         // 加载发起人
         pic.innerHTML = meetData.mAdmin.split('')[0];
@@ -159,8 +160,8 @@
         let data_1 = tools.filterData(data.statusList, 'sStatus', 1);
         document.querySelector('.joinNum span').innerHTML = data_1.length;
 
-        // 已请假
-        let data_2 = tools.filterData(data.statusList, 'sLeave', 1);
+        // 已请假，待审批的
+        let data_2 = tools.filterData(data.statusList, 'sLeave', 0);
         document.querySelector('.leaveNum span').innerHTML = data_2.length;
 
         // 未反馈

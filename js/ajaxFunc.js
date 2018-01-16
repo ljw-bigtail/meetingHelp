@@ -434,4 +434,19 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    //更新会议信息
+    updateMeet: function (req, callback) {
+        fetch(server_url + "/api/updateMeet", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(req)
+            })
+            .then(response => response.json())
+            .then(data => {
+                callback(data)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
 }

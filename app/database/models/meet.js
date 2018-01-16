@@ -4,6 +4,8 @@
 let mongoose = require('../db'),
 	Schema = mongoose.Schema;
 
+let _underscore = require('underscore');
+
 let meetSchema = new Schema({
 	"mName": {
 		unique: true,
@@ -192,6 +194,7 @@ meetSchema.statics = {
 		}).exec((err, meet) => {
 			if (err) {
 				console.log(err);
+				callback(err);
 			} else {
 				callback(meet);
 			}
@@ -270,22 +273,23 @@ meetSchema.statics = {
 					return false;
 				}
 
-				let newUser = _underscore.extend(oldMeet, update);
-				newUser.meta.updateAt = Date.now();
-
+				let newMeet = _underscore.extend(oldMeet, update);
+				newMeet.meta.updateAt = Date.now();
+				
 				_this.update({
 					'mName': mName
-				}, newUser, {
+				}, newMeet, {
 					upsert: true
-				}, function (error) {
-					if (err) {
+				}, function (error, data) {
+					if (error) {
 						callback({
 							'status': "faile",
-							'mes': err
+							'mes': '保存失败。'
 						});
 					} else {
 						callback({
 							'status': "success",
+							'mes': data
 						});
 					}
 				});

@@ -62,40 +62,6 @@
 
     let now = new Date();
 
-    // 渲染时间dom
-    function addTimeBox(stateData) {
-        console.log('1')
-        let timeTitleDom = '';
-        let timeClockDomA = '';
-        let timeClockDomB = '';
-        work_time.map((data, index) => {
-            if (index % 2 == 0) {
-                timeTitleDom += '<li>' + data + '</li>'
-                if (stateData[index] == 1) {
-                    // 判定为被选中的
-                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"></li>'
-                } else {
-                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" ></li>'
-                }
-            } else {
-                if (stateData[index] == 1) {
-                    // 判定为被选中的
-                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"></li>'
-                } else {
-                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
-                }
-            }
-        });
-        // 渲染时间段--时间dom
-        timeChooseTit.innerHTML = timeTitleDom;
-        // 渲染时间段--时间checkbox
-        timeChooseClock.innerHTML = timeClockDomA + timeClockDomB;
-        // 设置宽度
-        let timeChooseTitWidth = 8 * (work_time.length / 2);
-        timeChooseTit.style.width = timeChooseTitWidth + 'rem';
-        timeChooseClock.style.width = timeChooseTitWidth + 'rem';
-    }
-
     // 加载会议人物
     ajaxTool.getUserList((data) => {
         var dom = '';
@@ -107,16 +73,37 @@
         sponsor.parentElement.querySelector('ul').innerHTML = dom;
         // 在参会人中加载
         join.innerHTML = dom;
-    });
 
-    // 获取已经选择的dom的内容
-    function getListText(list) {
-        var data = [];
-        list.forEach(element => {
-            data.push(element.innerHTML);
-        });
-        return data;
-    }
+        // 根据meet来做修改会议信息时的效果
+        if (meet) {
+            ajaxTool.findMeet({
+                'attr': 'mName',
+                'val': meet
+            }, (req) => {
+                name.value = req.mName;
+                detail.value = req.mDesc;
+                newsPic.value = req.mFile;
+                start.value = req.mStartTime.split('T')[0];
+                // 构造change事件对象
+                let event = new UIEvent('change');
+                // 触发input的change事件
+                start.dispatchEvent(event);
+                chooseOneBox[0].style.display = 'none';
+                let userListBox = join.querySelectorAll('li');
+                req.mPeople.split(',').map((data) => {
+                    for (let i = 0; i < userListBox.length - 1; i++) {
+                        if (userListBox[i].innerHTML == data) {
+                            userListBox[i].click();
+                        }
+                    }
+                });
+                canRead.className = req.mNote == 1 ? 'selected' : '';
+                autoJoin.className = req.mJoin == 1 ? 'selected' : '';
+                save.innerHTML = '保存';
+                chooseListBtnList[0].click();
+            });
+        }
+    });
 
     // 上传文件
     // 问题：live server后，上传文件后会刷新页面
@@ -188,35 +175,6 @@
         showRoom.style.display = 'block';
     });
 
-    function getStateByTime(roomSelectRadio) {
-        // 根据返回的时间段，计算出对应的时间状态数组
-        let data = roomSelectRadio.getAttribute('data-time');
-        let timeDate = data.split('&');
-        let timeState = new Array(work_time.length);
-        timeState.fill(0);
-        timeDate.map((data, index) => {
-            let Time = data.split('T')[1];
-            if (index == timeDate.length - 1) {
-                return false;
-            }
-            work_time.map((time, _index) => {
-                if (Time == time) {
-                    timeState[_index] = 1;
-                }
-            });
-        });
-        timeState.map((data, index) => {
-            if (data == 1) {
-                if (timeState[index + 1] == 1) {
-                    timeState[index + 1] = 0;
-                } else {
-                    timeState[index + 1] = 1;
-                }
-            }
-        });
-        return timeState;
-    }
-
     // 选择会议室
     chooseRoom.addEventListener('click', (e) => {
         let roomSelectRadio;
@@ -236,39 +194,6 @@
         }
     });
 
-    // 筛选出连续的时间段对应的状态
-    function isGap() {
-        // 获取时间
-        let status = [];
-        let timeChooseClockSelect = timeChooseClock.querySelectorAll('li');
-        for (var i = 0; i < timeChooseClockSelect.length; i++) {
-            let chooseOneFromClock = timeChooseClockSelect[i].querySelector('input');
-            if (chooseOneFromClock.checked) {
-                status.push(1);
-            } else {
-                status.push(0);
-            }
-        }
-        // 整理时间段数组，返回值是连贯的
-        let statusA = status.slice(0, status.length / 2);
-        let statusB = status.slice(status.length / 2, status.length);
-        let statusData = [];
-        statusA.map((_data, index) => {
-            statusData.push(statusA[index]);
-            statusData.push(statusB[index]);
-        });
-        // 根据连贯状态判断时间段是否有间断
-        let gapIndex = [];
-        // 间断状态，如果有间断，就为false
-        // 返回选中状态的index值
-        statusData.map((state, index) => {
-            if (state == 1) {
-                gapIndex.push(index);
-            }
-        });
-        return gapIndex;
-    }
-
     // 保存后获取对应位置的信息
     save.addEventListener('click', () => {
         let joinList = getListText(join.querySelectorAll('li.select'));
@@ -279,6 +204,35 @@
             if (gapIndex[i + 1] - gapIndex[i] > 1) {
                 gapState = false;
             }
+        }
+
+        if (save.innerHTML = '保存') {
+            if (timeChooseClock.innerHTML == '') {
+                err.errMesShow('请选择会议室与会议时间再保存。')
+                return false;
+            }
+            let changeMeet = {
+                'mName': name.value,
+                'mDesc': detail.value,
+                'mFile': uploadImg.getAttribute('src'),
+                'mStartTime': start.value + 'T' + work_time[gapIndex[0]],
+                'mEndTime': start.value + 'T' + work_time[(gapIndex[gapIndex.length - 1] + 1)],
+                'rName': showRoom.getAttribute('data-room'),
+                'mPeople': joinList,
+                'mNote': canRead.className == 'selected' ? 0 : 1,
+                'mJoin': autoJoin.className == 'selected' ? 0 : 1
+            };
+            ajaxTool.updateMeet({
+                'mName': changeMeet.mName,
+                'option': changeMeet
+            }, (req) => {
+                if (req.status = "success") {
+                    err.errMesShow('修改信息成功');
+                    return false;
+                }
+                err.errMesShow(req.mes);
+            });
+            return false;
         }
 
         // 数据正确性判断
@@ -360,4 +314,109 @@
     qrCodeClose.addEventListener('click', () => {
         window.location.href = '/';
     });
+
+    // 获取已经选择的dom的内容
+    function getListText(list) {
+        var data = [];
+        list.forEach(element => {
+            data.push(element.innerHTML);
+        });
+        return data;
+    }
+
+    // 筛选出连续的时间段对应的状态
+    function isGap() {
+        // 获取时间
+        let status = [];
+        let timeChooseClockSelect = timeChooseClock.querySelectorAll('li');
+        for (var i = 0; i < timeChooseClockSelect.length; i++) {
+            let chooseOneFromClock = timeChooseClockSelect[i].querySelector('input');
+            if (chooseOneFromClock.checked) {
+                status.push(1);
+            } else {
+                status.push(0);
+            }
+        }
+        // 整理时间段数组，返回值是连贯的
+        let statusA = status.slice(0, status.length / 2);
+        let statusB = status.slice(status.length / 2, status.length);
+        let statusData = [];
+        statusA.map((_data, index) => {
+            statusData.push(statusA[index]);
+            statusData.push(statusB[index]);
+        });
+        // 根据连贯状态判断时间段是否有间断
+        let gapIndex = [];
+        // 间断状态，如果有间断，就为false
+        // 返回选中状态的index值
+        statusData.map((state, index) => {
+            if (state == 1) {
+                gapIndex.push(index);
+            }
+        });
+        return gapIndex;
+    }
+
+    function getStateByTime(roomSelectRadio) {
+        // 根据返回的时间段，计算出对应的时间状态数组
+        let data = roomSelectRadio.getAttribute('data-time');
+        let timeDate = data.split('&');
+        let timeState = new Array(work_time.length);
+        timeState.fill(0);
+        timeDate.map((data, index) => {
+            let Time = data.split('T')[1];
+            if (index == timeDate.length - 1) {
+                return false;
+            }
+            work_time.map((time, _index) => {
+                if (Time == time) {
+                    timeState[_index] = 1;
+                }
+            });
+        });
+        timeState.map((data, index) => {
+            if (data == 1) {
+                if (timeState[index + 1] == 1) {
+                    timeState[index + 1] = 0;
+                } else {
+                    timeState[index + 1] = 1;
+                }
+            }
+        });
+        return timeState;
+    }
+
+    // 渲染时间dom
+    function addTimeBox(stateData) {
+        console.log('1')
+        let timeTitleDom = '';
+        let timeClockDomA = '';
+        let timeClockDomB = '';
+        work_time.map((data, index) => {
+            if (index % 2 == 0) {
+                timeTitleDom += '<li>' + data + '</li>'
+                if (stateData[index] == 1) {
+                    // 判定为被选中的
+                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"></li>'
+                } else {
+                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" ></li>'
+                }
+            } else {
+                if (stateData[index] == 1) {
+                    // 判定为被选中的
+                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"></li>'
+                } else {
+                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
+                }
+            }
+        });
+        // 渲染时间段--时间dom
+        timeChooseTit.innerHTML = timeTitleDom;
+        // 渲染时间段--时间checkbox
+        timeChooseClock.innerHTML = timeClockDomA + timeClockDomB;
+        // 设置宽度
+        let timeChooseTitWidth = 8 * (work_time.length / 2);
+        timeChooseTit.style.width = timeChooseTitWidth + 'rem';
+        timeChooseClock.style.width = timeChooseTitWidth + 'rem';
+    }
 })()
