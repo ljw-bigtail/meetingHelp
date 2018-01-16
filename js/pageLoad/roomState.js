@@ -28,6 +28,7 @@
     const rDevice = document.querySelector('.rDevice');
 
     const roomStateMes = document.querySelector('.roomStateMes');
+    const roomMesShow = document.querySelectorAll('.roomState .mes')[1];
 
     let roomData = {
         rDevice: '',
@@ -79,12 +80,16 @@
         }, (req) => {
             let dom = '';
             req.meetList.map((meet) => {
-                dom += '<li><div><span>' +
-                    meet.mStartTime.replace(/T/, ' ') + '</span><span>至</span><span>' +
-                    meet.mEndTime.replace(/T/, ' ') + '</span></div><p>预订人：<span class="adminName">' +
-                    meet.mAdmin + '</span></p></li>';
+                let date = new Date(meet.mStartTime);
+                let now = new Date();
+                if (now < date) {
+                    dom += '<li><div><span>' +
+                        meet.mStartTime.replace(/T/, ' ') + '</span><span>至</span><span>' +
+                        meet.mEndTime.replace(/T/, ' ') + '</span></div><p>预订人：<span class="adminName">' +
+                        meet.mAdmin + '</span></p></li>';
+                }
             });
-            document.querySelector('.roomStateMes').innerHTML = dom;
+            document.querySelector('.roomStateMes').innerHTML = dom || '<li><span>会议室暂无预定</span></li>';
         });
     });
 
@@ -103,11 +108,13 @@
     openReBox.addEventListener('click', () => {
         if (openReBox.innerHTML == '修改会议室信息') {
             changeBox.style.display = 'block';
+            roomMesShow.style.display = 'none';
             openReBox.innerHTML = '取消修改';
             return false;
         }
         if (openReBox.innerHTML == '取消修改') {
             changeBox.style.display = 'none';
+            roomMesShow.style.display = 'block';
             openReBox.innerHTML = '修改会议室信息';
             return false;
         }

@@ -627,7 +627,7 @@ router.post('/delNote', function (req, res) {
 
 // 把房间未来状态一起返回
 router.post('/getRoomAndState', function (req, res) {
-	if (!req.body.userLevel || req.body.userLevel != 1) {
+	if (!req.body.userLevel) {
 		res.send(200, {
 			mes: '参数错误。'
 		});
