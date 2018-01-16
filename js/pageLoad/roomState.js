@@ -40,12 +40,13 @@
 
     // 根据用户权限修改显示的按钮：管理员，用户，可以发起会议，不可以发起会议
     tools.runUserFunc(userData, () => {
-        newMeet.innerHTML = '提交';
+        newMeet.innerHTML = '删除';
+        newMeet.className = 'wrong newMeet';
         openReBox.innerHTML = '修改会议室信息';
         openReBox.className = 'openReBox';
         return false;
     }, () => {
-
+        newMeet.innerHTML == '新建会议';
     }, () => {}, () => {
         document.querySelector('body>footer').style.display = 'none';
         document.querySelector('body>article.hasFooter').className = '';
@@ -110,24 +111,40 @@
             changeBox.style.display = 'block';
             roomMesShow.style.display = 'none';
             openReBox.innerHTML = '取消修改';
+            newMeet.innerHTML = '提交';
+            newMeet.className = 'success newMeet';
             return false;
         }
         if (openReBox.innerHTML == '取消修改') {
             changeBox.style.display = 'none';
             roomMesShow.style.display = 'block';
             openReBox.innerHTML = '修改会议室信息';
+            newMeet.innerHTML = '删除';
+            newMeet.className = 'wrong newMeet';
             return false;
         }
     });
 
     // 跳转到传递了房间名称的新建会议页面
     newMeet.addEventListener('click', () => {
+        if (newMeet.innerHTML == '删除') {
+            ajaxTool.delRoom({
+                'level': userData.level,
+                'room': room
+            }, (req) => {
+                if (req.status == "success") {
+                    err.errMesShow('删除成功')
+                    return false;
+                }
+                err.errMesShow(req.mes);
+            });
+        }
         if (newMeet.innerHTML == '新建会议') {
             window.location.href = '/newMeeting.html?place=' + room;
             return false;
         }
-        let isChange = roomData.rName == rName.value && roomData.rDevice == rDevice.value && roomData.rNum == rNum.value && roomData.rPlace == rPlace.value;
         if (newMeet.innerHTML == '提交') {
+            let isChange = roomData.rName == rName.value && roomData.rDevice == rDevice.value && roomData.rNum == rNum.value && roomData.rPlace == rPlace.value;
             if (openReBox.innerHTML == '修改会议室信息' || isChange) {
                 err.errMesShow('请修改会议室信息后再提交。')
                 return false;

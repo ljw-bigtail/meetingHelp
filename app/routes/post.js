@@ -625,6 +625,25 @@ router.post('/delNote', function (req, res) {
 	})
 });
 
+// 删除会议室
+router.post('/delRoom', function (req, res) {
+	if (!req.body.rName) {
+		res.send(200, {
+			mes: '参数错误。'
+		});
+		return false;
+	}
+	if (req.body.level != 0) {
+		res.send(200, {
+			mes: '权限不够。'
+		});
+		return false;
+	}
+	Room.delRoom(req.body.rName, (mes) => {
+		res.send(200, mes);
+	})
+});
+
 // 把房间未来状态一起返回
 router.post('/getRoomAndState', function (req, res) {
 	if (!req.body.userLevel) {

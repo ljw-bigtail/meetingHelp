@@ -113,7 +113,7 @@
                                     if (req.status == "faile") {
                                         err.errMesShow('参加失败，请手动参加。');
                                     } else {
-                                        err.errMesShow('自动签到成功。');
+                                        err.errMesShow('自动参加成功。');
                                     }
                                 });
                             });

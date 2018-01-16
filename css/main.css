@@ -1225,7 +1225,8 @@ body article .newMeet span i {
     color: #ffffff;
     padding: 0 1rem;
     margin: 0 1rem;
-    min-width: 4rem;
+    min-width: 2rem;
+    text-align: center;
     display: inline-block;
     border-radius: 1rem;
 }

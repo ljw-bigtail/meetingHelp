@@ -1,5 +1,6 @@
 (() => {
     let err = new Err(document.querySelector('#errMes'));
+    let userData = tools.getUserFormCookie();
 
     // 获取并设置会议室信息
     let note = tools.getQuery('note');
@@ -50,30 +51,38 @@
             'attr': 'mName',
             'val': noteDate.mName
         }, (mData) => {
-            // 如果是公共纪要，icon显示
-            if (isMain == 'true') {
+            // 如果管理员怎样都行
+            if (userData.level == 0) {
                 publicBtn.style.display = 'block';
-                // 如果是会议管理员的话可以编辑
-                if (mData.mAdmin == username) {
-                    textMain.value = data.nMes;
-                    textMain.removeAttribute('disabled');
-                } else {
-                    // 检查公共纪要的权限
-                    if (mData.mNote == 1) {
-                        err.errMesShow('没有查看公共纪要的权限。', () => {
-                            history.back();
-                        });
-                    } else {
-                        // 只能查看
-                        footerBox.style.display = 'none';
-                        mainBox.className = '';
-                        textMain.value = data.nMes;
-                    }
-                }
-            } else {
-                // 如果是个人纪要，可以编辑
                 textMain.value = data.nMes;
                 textMain.removeAttribute('disabled');
+            } else if (userData.level == 1) {
+                // 如果是公共纪要，icon显示
+                if (isMain == 'true') {
+                    publicBtn.style.display = 'block';
+                    // 如果是会议管理员的话可以编辑
+                    if (mData.mAdmin == username) {
+                        textMain.value = data.nMes;
+                        textMain.removeAttribute('disabled');
+                    } else {
+                        // 检查公共纪要的权限
+                        if (mData.mNote == 1) {
+                            err.errMesShow('没有查看公共纪要的权限。', () => {
+                                history.back();
+                            });
+                        } else {
+                            // 只能查看
+                            footerBox.style.display = 'none';
+                            mainBox.className = '';
+                            textMain.value = data.nMes;
+                        }
+                    }
+                } else {
+                    // 如果是个人纪要，可以编辑
+                    publicBtn.style.display = 'none';
+                    textMain.value = data.nMes;
+                    textMain.removeAttribute('disabled');
+                }
             }
         });
     });

@@ -4,7 +4,7 @@
 
     tools.titleValue('会议室列表');
     tools.headValue('会议室列表-' + project_name);
-    
+
     const err = new Err(errMes);
 
     // 绑定事件
@@ -24,7 +24,6 @@
             updateData.rStatus = 1;
         }
         // 需要判断会议室当前是否占用
-
         ajaxTool.updateRoom({
             'rName': e.parentNode.querySelector('h3').innerHTML,
             'update': updateData
@@ -84,16 +83,32 @@
         'time': room_future_status
     }, (data) => {
         let dom = '';
-        data.roomList.map((data) => {
-            dom += '<li><div class="main"><div class="mes"><a href="roomState.html?room=' +
-                data.rName + '"><h3>' +
-                data.rName + '</h3><div class="mesPeople"><img src="img/01.png" alt=""><span>' +
-                data.rNum + '人</span><img src="img/02.png" alt=""><span>' +
-                data.rDevice + '</span></div>' + '<div class="mesTime">' +
-                futureMes(data) + '</div></a></div><span class="showBtn">&gt;' + '</span></div><div class="' +
-                (data.rStatus == 0 ? 'del success' : 'del') + '" style="display: none;">' +
-                (data.rStatus == 0 ? '启用' : '禁用') + '</div></li>';
-        });
+        if (userData.level == 0) {
+            // 管理员显示    
+            data.roomList.map((data) => {
+                dom += '<li><div class="main"><div class="mes"><a href="roomState.html?room=' +
+                    data.rName + '"><h3>' +
+                    data.rName + '</h3><div class="mesPeople"><img src="img/01.png" alt=""><span>' +
+                    data.rNum + '人</span><img src="img/02.png" alt=""><span>' +
+                    data.rDevice + '</span></div>' + '<div class="mesTime">' +
+                    futureMes(data) + '</div></a></div><span class="showBtn">&gt;' + '</span></div><div class="' +
+                    (data.rStatus == 0 ? 'del success' : 'del') + '" style="display: none;">' +
+                    (data.rStatus == 0 ? '启用' : '禁用') + '</div></li>';
+            });
+        } else if (userData.level == 1) {
+            // 用户不显示删除按钮
+            data.roomList.map((data) => {
+                dom += '<li><div class="main"><div class="mes"><a href="roomState.html?room=' +
+                    data.rName + '"><h3>' +
+                    data.rName + '</h3><div class="mesPeople"><img src="img/01.png" alt=""><span>' +
+                    data.rNum + '人</span><img src="img/02.png" alt=""><span>' +
+                    data.rDevice + '</span></div>' + '<div class="mesTime">' +
+                    futureMes(data) + '</div></a></div><span>&gt;' + '</span></div></li>';
+            });
+        } else {
+            err.errMesShow('权限问题，请联系管理员')
+        }
+
         // 在会议地点中加载
         document.querySelector('.roomList ul').innerHTML = dom;
     });

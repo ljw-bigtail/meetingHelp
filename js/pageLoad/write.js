@@ -15,8 +15,7 @@
     // 删除按钮显示与功能
     events.showBtnEvent(writeList, (e) => {
         // 判断权限：公共的不能随便删，可以删自己的
-        tools.runUserFunc(userData, () => {
-        }, () => {
+        tools.runUserFunc(userData, () => {}, () => {
             if (e.parentNode.querySelector('.mesIsPub span').innerHTML == '公共纪要') {
                 err.errMesShow('没有权限，请联系管理员');
                 return false;
@@ -120,7 +119,8 @@
                 '</h3><div class="mesPeople"><img src="img/03.png" alt=""><span>' +
                 changeTime(_data.meta.updateAt) + '</span></div><div class="mesIsPub"><img src="img/public1.png" alt=""><span>' +
                 (_data.name == '' ? '公共纪要' : '我的纪要') + '</span></div></a></div>' +
-                '<span class="showBtn">&gt;</span></div><div class="del">删除，不可逆</div></li>'
+                (_data.name == '' && userData.level == 1 ? '<span>&gt;</span></div>' : '<span class="showBtn">&gt;</span></div><div class="del">删除，不可逆</div>') +
+                '</li>'
         });
         return dom;
     }
