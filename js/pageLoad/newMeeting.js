@@ -1,6 +1,7 @@
 (function () {
     // 提示信息
     const err = new Err(errMes);
+    const tipBox = new Err(canNext);
 
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
@@ -146,12 +147,11 @@
             start.value = '';
             return false;
         }
-
         ajaxTool.getRoomGap({
             'date': start.value
         }, (req) => {
             // 渲染会议室状态表
-            let roomDOM = '';
+            let roomDOM = '<li class="title"><span>会议室名称</span><span>会议室当天占用率</span></li>';
             req.reqData.map((data) => {
                 let timeDate = data.utilization.split('&');
                 let utilization = 0;
@@ -171,7 +171,6 @@
             });
             chooseRoom.innerHTML = roomDOM;
         });
-
         showRoom.style.display = 'block';
     });
 
@@ -194,6 +193,22 @@
         }
     });
 
+    // 给选择的时间点增加对应链接
+    timeChooseClock.addEventListener('click', (e) => {
+        if (e.target.tagName == 'SPAN') {
+            let roomList = chooseRoom.querySelectorAll('input');
+            let selectRoomVal = '';
+            for (let i = 0; i < roomList.length - 1; i++) {
+                if (roomList[i].checked) {
+                    selectRoomVal = roomList[i].getAttribute('title');
+                }
+            }
+            tipBox.tipShow('点击确认后可以查看对应会议室信息与具体会议的联系人信息。',(selectRoomVal)=>{
+                window.location.href = '/roomState.html?room=' + selectRoomVal;
+            });
+        }
+    });
+
     // 保存后获取对应位置的信息
     save.addEventListener('click', () => {
         let joinList = getListText(join.querySelectorAll('li.select'));
@@ -206,7 +221,7 @@
             }
         }
 
-        if (save.innerHTML = '保存') {
+        if (save.innerHTML == '保存') {
             if (timeChooseClock.innerHTML == '') {
                 err.errMesShow('请选择会议室与会议时间再保存。')
                 return false;
@@ -256,14 +271,14 @@
             err.errMesShow('请选择开始时间');
             return false;
         };
-        if (end.value == '') {
-            err.errMesShow('请选择结束时间');
-            return false;
-        };
-        if (room.innerHTML == '请选择') {
-            err.errMesShow('请选择会议地点');
-            return false;
-        }
+        // if (end.value == '') {
+        //     err.errMesShow('请选择结束时间');
+        //     return false;
+        // };
+        // if (room.innerHTML == '请选择') {
+        //     err.errMesShow('请选择会议地点');
+        //     return false;
+        // }
         if (sponsor.innerHTML == '请选择') {
             err.errMesShow('请选择发起人');
             return false;
@@ -331,7 +346,9 @@
         let timeChooseClockSelect = timeChooseClock.querySelectorAll('li');
         for (var i = 0; i < timeChooseClockSelect.length; i++) {
             let chooseOneFromClock = timeChooseClockSelect[i].querySelector('input');
-            if (chooseOneFromClock.checked) {
+            console.log(chooseOneFromClock.getAttribute('disabled'))
+            console.log(true && chooseOneFromClock.getAttribute('disabled'))
+            if (chooseOneFromClock.checked && chooseOneFromClock.getAttribute('disabled')) {
                 status.push(1);
             } else {
                 status.push(0);
@@ -388,7 +405,6 @@
 
     // 渲染时间dom
     function addTimeBox(stateData) {
-        console.log('1')
         let timeTitleDom = '';
         let timeClockDomA = '';
         let timeClockDomB = '';
@@ -397,14 +413,14 @@
                 timeTitleDom += '<li>' + data + '</li>'
                 if (stateData[index] == 1) {
                     // 判定为被选中的
-                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"></li>'
+                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"><span></span></li>'
                 } else {
                     timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" ></li>'
                 }
             } else {
                 if (stateData[index] == 1) {
                     // 判定为被选中的
-                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"></li>'
+                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"><span></span></li>'
                 } else {
                     timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
                 }

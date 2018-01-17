@@ -183,6 +183,40 @@ div.errMes {
     animation: 3s showErr;
 }
 
+div#canNext {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .3);
+}
+
+#canNext .nextBox {
+    position: absolute;
+    top: 50%;
+    margin-top: -14rem;
+    left: 50%;
+    margin-left: -24rem;
+    height: 28rem;
+    width: 48rem;
+    background: #ffffff;
+    border-radius: 2rem;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+#canNext .nextBox .mesMain {
+    height: 18rem;
+    margin: 1rem;
+    font-size: 3rem;
+    line-height: 4rem;
+    overflow-y: scroll;
+}
+#canNext .nextBox footer {
+    border-top: 1px solid #ccc;
+}
 
 /* ------------------------------------------- */
 
@@ -1259,6 +1293,25 @@ body article .newMeet input {
     height: 5rem;
     line-height: 5rem;
 }
+
+#showRoom ul li.title {
+    padding: 0;
+}
+
+#showRoom ul li.title span {
+    background: #6DC56E;
+    color: #fff;
+    text-align: center;
+}
+
+#showRoom ul li.title span:first-child {
+    width: 92px;
+}
+
+#showRoom ul li.title span:last-child {
+    width: calc(100% - 92px);
+}
+
 #showRoom ul li:last-child {
     border-bottom: 0;
 }
@@ -1319,9 +1372,20 @@ body article .newMeet input {
     width: 8rem;
     line-height: 4rem;
     text-align: center;
+    position: relative;
 }
 
 #timeChoose ul.right li ul li input {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+#timeChoose ul.right li ul li input+span {
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -1.5rem;
+    margin-top: -1.5rem;
 }

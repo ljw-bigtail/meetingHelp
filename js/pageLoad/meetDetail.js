@@ -1,5 +1,6 @@
 (() => {
     const err = new Err(errMes);
+    const tipBox = new Err(canNext);
 
     let userData = tools.getUserFormCookie();
 
@@ -147,7 +148,7 @@
                 return false;
             }
             pushMesValue = pushMes.value;
-            pushBtn.innerHTML = '发表';
+            pushBtn.innerHTML = '发表纪要';
         });
     });
 
@@ -171,18 +172,20 @@
 
     // 确认参加按钮
     joinBtn.addEventListener('click', () => {
-        ajaxTool.updateStatus({
-            'option': {
-                'name': username,
-                'mName': meet,
-                'sStatus': 0,
-            }
-        }, (req) => {
-            if (req.status == "success") {
-                window.location.reload();
-            } else {
-                err.errMesShow('参加失败，请稍后重试。');
-            }
+        tipBox.tipShow('确认参加？不可以反悔哦！', (selectRoomVal) => {
+            ajaxTool.updateStatus({
+                'option': {
+                    'name': username,
+                    'mName': meet,
+                    'sStatus': 0,
+                }
+            }, (req) => {
+                if (req.status == "success") {
+                    window.location.reload();
+                } else {
+                    err.errMesShow('参加失败，请稍后重试。');
+                }
+            });
         });
     });
 
@@ -235,7 +238,7 @@
 
     // 保存\更新纪要信息
     pushBtn.addEventListener('click', () => {
-        if (pushBtn.innerHTML == '发表') {
+        if (pushBtn.innerHTML == '发表纪要') {
             let now = new Date();
             let Timestamp = '' + now.getFullYear() +
                 ((now.getMonth() + 1) / 10 >= 1 ? (now.getMonth() + 1) : ('0' + (now.getMonth() + 1))) +

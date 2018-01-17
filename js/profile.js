@@ -17,6 +17,9 @@ const save_day = 1;
 // const chart_color = null;
 const chart_color = '#E73E51';
 
+// 一天内有会议的提醒背景色值
+const tip_mes_image = 'radial-gradient(circle closest-corner at 92% 16%, rgb(243, 52, 52) 20%, rgba(255, 0, 0, 0) 40%, rgb(76, 79, 88) 95%)';
+
 // 工作时间段
 const work_time = [
     '08:00', '08:30',

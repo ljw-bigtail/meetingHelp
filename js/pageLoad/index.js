@@ -85,8 +85,8 @@
                 },
                 'data': []
             }]
-        }); 
-        myChart.showLoading(); 
+        });
+        myChart.showLoading();
         // 加载统计图数据
         ajaxTool.getMonthData({
             'username': userData.username
@@ -96,7 +96,7 @@
                 'series': [{
                     'data': data.meetData
                 }]
-            }); 
+            });
         });
         return false;
     }, () => {
@@ -106,15 +106,25 @@
         ajaxTool.getMeetList({
             'user': userData.username
         }, (data) => {
-            var num = 0;
+            let num = 0;
+            let futureMeet = 0;
+            let now = new Date();
+            let tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
             data.meetList.map((data) => {
-                let now = new Date();
                 let start = new Date(data.mStartTime)
                 // 未过期的会议
                 if (now < start) {
                     num++;
+                    if (start < tomorrow) {
+                        // 一天内的会议
+                        futureMeet++;
+                    }
                 }
             });
+            if (futureMeet > 0) {
+                document.querySelector('.userTip').style.backgroundImage = tip_mes_image;
+            }
             document.querySelector('.num').innerHTML = num;
         });
         return false;

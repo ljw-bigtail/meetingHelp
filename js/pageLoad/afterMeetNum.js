@@ -36,12 +36,12 @@
         dom_ul_1.innerHTML = addDom(data_1);
 
         // 已签到
-        data_2 = tools.filterData(data.statusList, 'sSign', 0);
+        data_2 = tools.filterData(data_1, 'sSign', 0);
         dom_span_2.innerHTML = data_2.length;
         dom_ul_2.innerHTML = addDom(data_2);
 
         // 未签到
-        data_3 = tools.filterData(data.statusList, 'sSign', 1);
+        data_3 = tools.filterData(data_1, 'sSign', 1);
         dom_span_3.innerHTML = data_3.length;
         dom_ul_3.innerHTML = addDom(data_3);
     });
