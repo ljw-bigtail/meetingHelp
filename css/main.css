@@ -73,6 +73,7 @@ input:focus {
     font-size: 2.6rem;
     border: 0;
     padding: 1rem;
+    height: 3rem;
     text-align: center;
 }
 
@@ -214,9 +215,151 @@ div#canNext {
     line-height: 4rem;
     overflow-y: scroll;
 }
+
 #canNext .nextBox footer {
     border-top: 1px solid #ccc;
 }
+
+#user {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(200, 200, 200, .6);
+    font-size: 0;
+}
+#user div.search{
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 10rem - 4rem - 4rem - 2px);
+}
+#user div.yes{
+    display: inline-block;
+    vertical-align: middle;
+    width: 10rem;
+    margin-right: 2rem;
+    font-size: 3rem;
+    background: #0BB908;
+    color: #ffffff;
+    height: 5rem;
+    line-height: 5rem;
+    text-align: center;
+    border-radius: 1rem;
+}
+#user div.userSelect {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    background: #ffffff;
+}
+
+#user ul.userSelect {
+    width: calc(5 * 13rem);
+    font-size: 0;
+    height: 6rem;
+}
+
+#user div.userSelect::-webkit-scrollbar {
+    height: 4px;
+    background-color: #F5F5F5;
+}
+
+#user div.userSelect::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: #F5F5F5;
+}
+
+#user div.userSelect::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: #ccc;
+}
+
+#user .userSelect li {
+    display: inline-block;
+    height: 4rem;
+    width: 4rem;
+    margin: 1rem .5rem;
+}
+
+#user .userSelect li .pic {
+    height: calc(100% - 1rem);
+    width: calc(100% - 1rem);
+    font-size: 3rem;
+    overflow: hidden;
+    line-height: 3rem;
+    text-align: center;
+    padding: .5rem;
+    color: #ffffff;
+}
+#user div.userLits {
+    height: calc(100% - 12rem - 1px);    
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-top: 1px;
+}
+#user ul.userLits {
+    padding-bottom: 2rem;
+}
+#user .userLits .title{
+    background: transparent;
+    font-size: 3rem;
+    color: #3f3f3f;
+    padding: 1rem;
+}
+#user .userLits .list{
+    background: #fff;
+}
+#user .userLits .list li{
+    height: 8rem;
+    line-height: 8rem;
+    font-size: 0;
+    border-bottom: 1px solid #ccc;
+}
+#user .userLits .list li i{
+    display: inline-block;
+    vertical-align: middle;
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    color: #ffffff;
+    margin: 0 2rem;
+    border: 1px solid #ccc;
+    font-size: 2rem;
+    border-radius: 50%;
+    font-family: serif;
+    font-weight: bold;
+}
+#user .userLits .list li i.select{
+    background: #0BB908;
+    width: calc(3rem + 2px);
+    border:0;
+}
+
+#user .userLits .list li .pic{
+    display: inline-block;    
+    vertical-align: middle;
+    font-size: 3rem;
+    margin: 0 1rem;
+    height:5rem;
+    width: 5rem;
+    overflow: hidden;
+    line-height: 5rem;
+    text-align: center;
+    padding: .5rem;
+    color: #ffffff;
+}
+#user .userLits .list li span{
+    display: inline-block;    
+    vertical-align: middle;
+    font-size: 3rem;    
+    padding: 0 2rem;
+    width: calc(100% - 7rem - 2px - 8rem - 4rem);
+    color: #3f3f3f;
+}
+
 
 /* ------------------------------------------- */
 

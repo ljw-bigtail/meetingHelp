@@ -15,6 +15,12 @@
     }
 
     // 绑定事件
+    const userBox = document.querySelector('#user');
+    const userBoxSearch = userBox.querySelector('.search .searchBtn');
+    const userBoxYes = userBox.querySelector('.yes');
+    const userBoxSelect = userBox.querySelector('ul.userSelect');
+    const userBoxLits = userBox.querySelector('div.userLits');
+
     let backList = document.querySelectorAll('.back');
     let chooseOneBox = document.querySelectorAll('.chooseBox');
     let chooseOneBtnList = document.querySelectorAll('.chooseBox .btn');
@@ -25,13 +31,47 @@
     events.goBack(backList);
     // 展开单选盒子
     events.addEventForList(chooseOneBtnList, 'click', function (item, index) {
-        events.toggleShow(chooseOneBox[index].querySelector('ul'));
+        // 初始化用户表
+        userBoxLits.querySelectorAll('i').forEach((e) => {
+            if (e.className == 'select') {
+                e.click();
+            }
+        });
+
+        userBox.style.display = 'block';
+        userBox.setAttribute('data-where', item.parentElement.className);
+
+        let userData = item.parentElement.querySelector('.val').innerHTML.split(',');
+        if (userData[0] != '请选择') {
+            // 渲染选择的user
+            userData.map((user) => {
+                userBoxLits.querySelectorAll('i').forEach((e) => {
+                    if (e.getAttribute('data-name') == user) {
+                        e.click();
+                    }
+                });
+            });
+        }
     })
     // 设置单选
     events.chooseOne(chooseOneBox);
     // 展开多选盒子
     events.addEventForList(chooseListBtnList, 'click', function (item, index) {
-        events.toggleShow(chooseListBox[index].querySelector('ul'));
+        // 初始化用户表
+        userBoxLits.querySelectorAll('i').forEach((e) => {
+            if (e.className == 'select') {
+                e.click();
+            }
+        });
+
+        userBox.style.display = 'block';
+        userBox.setAttribute('data-where', item.parentElement.className);
+
+        let userData = item.parentElement.querySelector('.val').innerHTML.split(',');
+        if (userData[0] != '请选择') {
+            // 渲染选择的user
+            clickUser(userData)
+        }
     })
     // 设置多选
     events.chooseList(chooseListBox);
@@ -63,17 +103,108 @@
 
     let now = new Date();
 
+    function isIn(name, list) {
+        let state = -1;
+        list.map((data, index) => {
+            if (name == data[0].name) {
+                state = index;
+            }
+        });
+        return state;
+    }
+
+    // 修改数组格式
+    function getNewData(data) {
+        let userData = [];
+        data.map((data, index) => {
+            // 先根据name返回二维数组
+            if (isIn(name, userData) > -1) {
+                userData[isIn(name, userData)].push({
+                    'first': data.name.split('')[0],
+                    'user': data
+                });
+            } else {
+                userData.push([{
+                    'first': data.name.split('')[0],
+                    'user': data
+                }]);
+            }
+        });
+        return userData
+    }
+
+    // 加载用户列表
+    function initUser(dom, _data, stateData) {
+        let sData = stateData || [];
+        let userDom = '<ul class="userLits">';
+        _data.map((data) => {
+            userDom += '<li><div class="title">' + data[0].first + '</div><ul class="list">';
+            data.map((user) => {
+                userDom += '<li class="userLine"><i data-name="' + user.user.name + '">√</i>';
+                userDom += '<div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + user.user.name.split('')[0] + '</div>';
+                userDom += '<span>' + user.user.name + '</span></li>';
+            });
+            userDom += '</ul></li>';
+        });
+        userDom += '</ul>';
+        dom.innerHTML = userDom;
+    }
+
+    // 查询Data中是否有text
+    function haveTextInData(text, Data, callback1, callback2) {
+        let reg = new RegExp(text, 'g');
+        let findData = [];
+        Data.map(function (value, index) {
+            if (value.name.match(reg)) {
+                findData.push(value)
+            }
+        });
+        if (findData.length == 0) {
+            // 没找到
+            callback1();
+        } else {
+            // 找到的数组           
+            callback2(findData);
+        }
+    }
+
+    // 根据data点击表格
+    function clickUser(data) {
+        data.map((user) => {
+            userBoxLits.querySelectorAll('i').forEach((e) => {
+                if (e.getAttribute('data-name') == user) {
+                    e.click();
+                }
+            });
+        });
+    }
+
     // 加载会议人物
     ajaxTool.getUserList((data) => {
-        var dom = '';
+        let dom = '';
         data.userList.map((data) => {
             dom += '<li>' + data.name + '</li>';
         });
-
         // 在发起人中加载
         sponsor.parentElement.querySelector('ul').innerHTML = dom;
         // 在参会人中加载
         join.innerHTML = dom;
+
+        // 在userBox中加载列表
+        let userData = getNewData(data.userList);
+        initUser(userBoxLits, userData);
+
+        // 页面内搜索
+        userBoxSearch.addEventListener('keyup', function () {
+            haveTextInData(this.value, data.userList, function () {
+                userBoxLits.innerHTML = '<li><li>';
+            }, function (userData) {
+                let newData = getNewData(userData);
+                let stateUserData = userBoxYes.getAttribute('data-user');
+                initUser(userBoxLits, newData, stateUserData.split(','));
+                clickUser(userBoxYes.getAttribute('data-user').split(','))
+            });
+        });
 
         // 根据meet来做修改会议信息时的效果
         if (meet) {
@@ -106,6 +237,41 @@
         }
     });
 
+    // 选择用户的事件，代理
+    userBoxLits.addEventListener('click', (e) => {
+        // 选择li
+        let liDom = e.toElement.tagName == 'LI';
+        let spanDom = e.toElement.tagName == 'SPAN';
+        let iDom = e.toElement.tagName == 'I';
+        let divDom = e.toElement.tagName == 'DIV' && e.toElement.className == 'pic';
+        if (liDom) {
+            events.toggleClass(e.target.querySelector('i'), '', 'select');
+        }
+        if (spanDom || iDom || divDom) {
+            events.toggleClass(e.target.parentNode.querySelector('i'), '', 'select');
+        }
+        // 生成选择的user并渲染
+        let picData = [];
+        let userData = [];
+        userBoxLits.querySelectorAll('.userLine').forEach((e) => {
+            if (e.querySelector('i').className == 'select') {
+                picData.push(e.querySelector('.pic').outerHTML);
+                userData.push(e.querySelector('span').innerHTML);
+            }
+        });
+        userBoxSelect.innerHTML = '';
+        userBoxYes.setAttribute('data-user', userData);
+        picData.map((dom) => {
+            userBoxSelect.innerHTML += '<li>' + dom + '</li>';
+        });
+    });
+
+    // 确定并返回用户数组
+    userBoxYes.addEventListener('click', (e) => {
+        userBox.style.display = 'none';
+        document.querySelector('.' + userBox.getAttribute('data-where') + ' .val').innerHTML = userBoxYes.getAttribute('data-user');
+    });
+
     // 上传文件
     // 问题：live server后，上传文件后会刷新页面
     const upLoadPicBtn = document.querySelector('#upLoadPicBtn');
@@ -120,7 +286,6 @@
         ajaxTool.uploadImg(newsPic, (req) => {
             uploadImg.src = 'http://192.168.199.206:5500/uploads/' + req.filePath;
             // alert("上传完毕！");
-
             // 开启保存功能
             save.className = 'success';
         });
@@ -203,7 +368,7 @@
                     selectRoomVal = roomList[i].getAttribute('title');
                 }
             }
-            tipBox.tipShow('点击确认后可以查看对应会议室信息与具体会议的联系人信息。',(selectRoomVal)=>{
+            tipBox.tipShow('点击确认后可以查看对应会议室信息与具体会议的联系人信息。', (selectRoomVal) => {
                 window.location.href = '/roomState.html?room=' + selectRoomVal;
             });
         }
@@ -346,8 +511,8 @@
         let timeChooseClockSelect = timeChooseClock.querySelectorAll('li');
         for (var i = 0; i < timeChooseClockSelect.length; i++) {
             let chooseOneFromClock = timeChooseClockSelect[i].querySelector('input');
-            console.log(chooseOneFromClock.getAttribute('disabled'))
-            console.log(true && chooseOneFromClock.getAttribute('disabled'))
+            // console.log(chooseOneFromClock.getAttribute('disabled'))
+            // console.log(true && chooseOneFromClock.getAttribute('disabled'))
             if (chooseOneFromClock.checked && chooseOneFromClock.getAttribute('disabled')) {
                 status.push(1);
             } else {
