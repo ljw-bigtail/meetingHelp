@@ -54,7 +54,7 @@
         }
     })
     // 设置单选
-    events.chooseOne(chooseOneBox);
+    // events.chooseOne(chooseOneBox);
     // 展开多选盒子
     events.addEventForList(chooseListBtnList, 'click', function (item, index) {
         // 初始化用户表
@@ -74,7 +74,7 @@
         }
     })
     // 设置多选
-    events.chooseList(chooseListBox);
+    // events.chooseList(chooseListBox);
     // 是否选中状态
     events.addEventForList(selectChoose, 'click', function (item, index) {
         events.toggleClass(item.querySelector('div'), 'selected', '');
@@ -181,15 +181,6 @@
 
     // 加载会议人物
     ajaxTool.getUserList((data) => {
-        let dom = '';
-        data.userList.map((data) => {
-            dom += '<li>' + data.name + '</li>';
-        });
-        // 在发起人中加载
-        sponsor.parentElement.querySelector('ul').innerHTML = dom;
-        // 在参会人中加载
-        join.innerHTML = dom;
-
         // 在userBox中加载列表
         let userData = getNewData(data.userList);
         initUser(userBoxLits, userData);
@@ -221,18 +212,10 @@
                 // 触发input的change事件
                 start.dispatchEvent(event);
                 chooseOneBox[0].style.display = 'none';
-                let userListBox = join.querySelectorAll('li');
-                req.mPeople.split(',').map((data) => {
-                    for (let i = 0; i < userListBox.length - 1; i++) {
-                        if (userListBox[i].innerHTML == data) {
-                            userListBox[i].click();
-                        }
-                    }
-                });
+                join.innerHTML = req.mPeople;
                 canRead.className = req.mNote == 1 ? 'selected' : '';
                 autoJoin.className = req.mJoin == 1 ? 'selected' : '';
                 save.innerHTML = '保存';
-                chooseListBtnList[0].click();
             });
         }
     });
@@ -376,7 +359,6 @@
 
     // 保存后获取对应位置的信息
     save.addEventListener('click', () => {
-        let joinList = getListText(join.querySelectorAll('li.select'));
         let gapIndex = isGap();
         let gapState = true;
         // 查看是否连贯
@@ -398,7 +380,7 @@
                 'mStartTime': start.value + 'T' + work_time[gapIndex[0]],
                 'mEndTime': start.value + 'T' + work_time[(gapIndex[gapIndex.length - 1] + 1)],
                 'rName': showRoom.getAttribute('data-room'),
-                'mPeople': joinList,
+                'mPeople': join.innerHTML,
                 'mNote': canRead.className == 'selected' ? 0 : 1,
                 'mJoin': autoJoin.className == 'selected' ? 0 : 1
             };
@@ -444,11 +426,11 @@
         //     err.errMesShow('请选择会议地点');
         //     return false;
         // }
-        if (sponsor.innerHTML == '请选择') {
+        if (sponsor.innerHTML == '请选择' || sponsor.innerHTML == '') {
             err.errMesShow('请选择发起人');
             return false;
         }
-        if (joinList.length == 0) {
+        if (join.innerHTML == '请选择' || sponsor.innerHTML == '') {
             err.errMesShow('请选择参会人');
             return false;
         }
@@ -461,7 +443,7 @@
             'end': start.value + 'T' + work_time[(gapIndex[gapIndex.length - 1] + 1)],
             'room': showRoom.getAttribute('data-room'),
             'sponsor': sponsor.innerHTML,
-            'joinList': joinList,
+            'joinList': join.innerHTML,
             'mNote': canRead.className == 'selected' ? 0 : 1,
             'mJoin': autoJoin.className == 'selected' ? 0 : 1
         };
@@ -494,15 +476,6 @@
     qrCodeClose.addEventListener('click', () => {
         window.location.href = '/';
     });
-
-    // 获取已经选择的dom的内容
-    function getListText(list) {
-        var data = [];
-        list.forEach(element => {
-            data.push(element.innerHTML);
-        });
-        return data;
-    }
 
     // 筛选出连续的时间段对应的状态
     function isGap() {

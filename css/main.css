@@ -227,7 +227,7 @@ div#canNext {
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba(200, 200, 200, .6);
+    background: rgba(200, 200, 200, .8);
     font-size: 0;
 }
 #user div.search{
