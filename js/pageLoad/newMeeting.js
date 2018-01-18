@@ -5,6 +5,7 @@
 
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
+    let place = tools.getQuery('place');
     tools.noUser(username);
     if (meet) {
         tools.titleValue('修改会议信息');
@@ -179,6 +180,14 @@
         });
     }
 
+    // 触发input的change事件
+    function changeDom(dom) {
+        // 构造change事件对象
+        let event = new UIEvent('change');
+        // 触发input的change事件
+        dom.dispatchEvent(event);
+    }
+
     // 加载会议人物
     ajaxTool.getUserList((data) => {
         // 在userBox中加载列表
@@ -207,10 +216,7 @@
                 detail.value = req.mDesc;
                 newsPic.value = req.mFile;
                 start.value = req.mStartTime.split('T')[0];
-                // 构造change事件对象
-                let event = new UIEvent('change');
-                // 触发input的change事件
-                start.dispatchEvent(event);
+                changeDom(start);
                 chooseOneBox[0].style.display = 'none';
                 join.innerHTML = req.mPeople;
                 canRead.className = req.mNote == 1 ? 'selected' : '';
@@ -299,6 +305,7 @@
             'date': start.value
         }, (req) => {
             // 渲染会议室状态表
+
             let roomDOM = '<li class="title"><span>会议室名称</span><span>会议室当天占用率</span></li>';
             req.reqData.map((data) => {
                 let timeDate = data.utilization.split('&');
@@ -313,7 +320,11 @@
                     }
                 });
                 roomDOM += '<li>';
-                roomDOM += '<input type="radio" name="meeting-room" title="' + data.rName + '" data-time="' + data.utilization + '"><span>' + data.rName + '</span>';
+                if (place && place == data.rName) {
+                    roomDOM += '<input type="radio" checked name="meeting-room" title="' + data.rName + '" data-time="' + data.utilization + '"><span>' + data.rName + '</span>';
+                } else {
+                    roomDOM += '<input type="radio" name="meeting-room" title="' + data.rName + '" data-time="' + data.utilization + '"><span>' + data.rName + '</span>';
+                }
                 roomDOM += '<progress value="' + (utilization / timeLength * 100) + '" max="100"></progress></li>';
                 roomDOM += '</li>';
             });
@@ -360,6 +371,7 @@
     // 保存后获取对应位置的信息
     save.addEventListener('click', () => {
         let gapIndex = isGap();
+        console.log(gapIndex)
         let gapState = true;
         // 查看是否连贯
         for (let i = 0; i < gapIndex.length; i++) {
@@ -422,10 +434,10 @@
         //     err.errMesShow('请选择结束时间');
         //     return false;
         // };
-        // if (room.innerHTML == '请选择') {
-        //     err.errMesShow('请选择会议地点');
-        //     return false;
-        // }
+        if (!showRoom.getAttribute('data-room')) {
+            err.errMesShow('请选择会议地点');
+            return false;
+        }
         if (sponsor.innerHTML == '请选择' || sponsor.innerHTML == '') {
             err.errMesShow('请选择发起人');
             return false;
@@ -434,6 +446,7 @@
             err.errMesShow('请选择参会人');
             return false;
         }
+
 
         var meetData = {
             'name': name.value,
@@ -449,6 +462,7 @@
         };
 
         err.errMesShow('正在创建，请稍后。');
+        // debugger;
         ajaxTool.addMeet(meetData, (res) => {
             // 修改会议室状态
             ajaxTool.updateRoom({
@@ -457,6 +471,9 @@
                     'rStatus': 2
                 }
             }, (_res) => {
+                console.log(_res)
+                console.log(res)
+                // debugger;
                 if (_res.status == 'success' && res.status == 'success') {
                     err.errMesShow('新建成功，请保存二维码。');
                     // 展示生成的二维码（签到用）
@@ -477,6 +494,17 @@
         window.location.href = '/';
     });
 
+    // 根据会议室名称出发事件
+    if (place) {
+        let month = now.getMonth() + 1;
+        let monthStr = '';
+        if (month / 10 < 1) {
+            monthStr = '0' + month;
+        }
+        start.value = now.getFullYear() + '-' + monthStr + '-' + (now.getDate() + 1);
+        changeDom(start);
+    }
+
     // 筛选出连续的时间段对应的状态
     function isGap() {
         // 获取时间
@@ -486,12 +514,13 @@
             let chooseOneFromClock = timeChooseClockSelect[i].querySelector('input');
             // console.log(chooseOneFromClock.getAttribute('disabled'))
             // console.log(true && chooseOneFromClock.getAttribute('disabled'))
-            if (chooseOneFromClock.checked && chooseOneFromClock.getAttribute('disabled')) {
+            if (chooseOneFromClock.checked || chooseOneFromClock.getAttribute('disabled')) {
                 status.push(1);
             } else {
                 status.push(0);
             }
         }
+
         // 整理时间段数组，返回值是连贯的
         let statusA = status.slice(0, status.length / 2);
         let statusB = status.slice(status.length / 2, status.length);
@@ -504,6 +533,7 @@
         let gapIndex = [];
         // 间断状态，如果有间断，就为false
         // 返回选中状态的index值
+
         statusData.map((state, index) => {
             if (state == 1) {
                 gapIndex.push(index);

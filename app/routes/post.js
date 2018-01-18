@@ -220,7 +220,7 @@ router.post('/addMeet', function (req, res) {
 		'mName': req.body.name,
 		'mStartTime': req.body.start,
 		'mEndTime': req.body.end,
-		'mPeople': req.body.joinList
+		'mPeople': req.body.joinList.split(',')
 	}
 	let qr_png = qr_image.image(encodeURI(JSON.stringify(saveData)), {
 		type: 'png',
@@ -247,7 +247,7 @@ router.post('/addMeet', function (req, res) {
 				return false;
 			}
 			// 创建参会人员状态
-			req.body.joinList.map((join) => {
+			req.body.joinList.split(',').map((join) => {
 				Status.addStatus({
 					'name': join,
 					'mName': req.body.name
@@ -709,7 +709,6 @@ router.post('/getRoomGap', function (req, res) {
 	let roomMeet = [];
 	let reqData = [];
 	// 获取会议室中的会议，计算出一个房间对应的utilization值，根据时间来计算
-
 	Meet.findMeetList(null, null, null, (meetList) => {
 		// 根据会议室
 		meetList.map((meet, index) => {

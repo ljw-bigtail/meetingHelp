@@ -46,7 +46,8 @@
         openReBox.className = 'openReBox';
         return false;
     }, () => {
-        newMeet.innerHTML == '新建会议';
+        newMeet.innerHTML = '新建会议';
+        return false;
     }, () => {}, () => {
         document.querySelector('body>footer').style.display = 'none';
         document.querySelector('body>article.hasFooter').className = '';
