@@ -213,10 +213,13 @@
                 'val': meet
             }, (req) => {
                 name.value = req.mName;
+                name.disabled = 'true';
                 detail.value = req.mDesc;
-                newsPic.value = req.mFile;
-                start.value = req.mStartTime.split('T')[0];
-                changeDom(start);
+                document.querySelector('.inputBox').style.display = 'none';
+                document.querySelectorAll('.new .newBox')[1].style.display = 'none';
+                // newsPic.value = req.mFile;
+                // start.value = req.mStartTime.split('T')[0];
+                // changeDom(start);
                 chooseOneBox[0].style.display = 'none';
                 join.innerHTML = req.mPeople;
                 canRead.className = req.mNote == 1 ? 'selected' : '';
@@ -381,26 +384,17 @@
         }
 
         if (save.innerHTML == '保存') {
-            if (timeChooseClock.innerHTML == '') {
-                err.errMesShow('请选择会议室与会议时间再保存。')
-                return false;
-            }
             let changeMeet = {
-                'mName': name.value,
                 'mDesc': detail.value,
-                'mFile': uploadImg.getAttribute('src'),
-                'mStartTime': start.value + 'T' + work_time[gapIndex[0]],
-                'mEndTime': start.value + 'T' + work_time[(gapIndex[gapIndex.length - 1] + 1)],
-                'rName': showRoom.getAttribute('data-room'),
                 'mPeople': join.innerHTML,
                 'mNote': canRead.className == 'selected' ? 0 : 1,
                 'mJoin': autoJoin.className == 'selected' ? 0 : 1
             };
             ajaxTool.updateMeet({
-                'mName': changeMeet.mName,
+                'mName': name.value,
                 'option': changeMeet
             }, (req) => {
-                if (req.status = "success") {
+                if (req.status == "success") {
                     err.errMesShow('修改信息成功');
                     return false;
                 }

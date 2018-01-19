@@ -35,9 +35,12 @@
     let noBackNum = document.querySelector('.noBackNum');
 
     let joinBtn = document.querySelector('.join');
-    let footerBtn = document.querySelector('.meetMain footer')
+    let footerBtn = document.querySelector('.meetMain footer');
+
+    let qrBox = document.querySelector('#qrBox');
 
     tools.runUserFunc(userData, () => {
+        // 管理员
         footerBtn.style.display = 'none';
         document.querySelector('body>footer').style.display = 'none';
         document.querySelector('body>.hasFooter').className = '';
@@ -48,7 +51,6 @@
 
     // 加载会议回应状态
     joinNum.href = 'afterMeetNum.html?meet=' + meet;
-    leaveNum.href = 'beforeMeetNum.html?meet=' + meet;
 
     // 更新会议相关信息
     ajaxTool.findMeet({
@@ -81,51 +83,69 @@
         });
         meetPeople.innerHTML = userDom;
 
+        // 加载二维码
+        qrBox.querySelector('span').innerHTML = project_name + '感谢您的使用';
+
         // 根据状态改变现实效果
         let now = new Date();
         let start = new Date(meetData.mStartTime)
         let end = new Date(meetData.mEndTime)
+
+        tools.runUserFunc(userData, () => {
+            // 管理员不需要签到以及后续操作
+        }, () => {
+            // 加载会议管理员
+            if (userData.username == meetData.mAdmin) {
+                leaveNum.href = 'beforeMeetNum.html?meet=' + meet;
+                qrBox.querySelector('img').src = '/uploads/' + meetData.mQRcode.split('uploads/')[1];
+            } else {
+                leaveNum.href = 'JavaScript:void(0)';
+                qrBox.querySelector('img').src = '/img/noQr.png';
+            }
+
+            // 自动参加会议
+            ajaxTool.getStatusByOption({
+                option: {
+                    'mName': meet,
+                    'name': username
+                }
+            }, (statusData) => {
+                if (statusData.status == "faile" || statusData.sStatus != 2) {
+                    // 第一个是接口没有查到
+                    // 后面是已经反馈，请假、退审之类的
+                    footerBtn.style.display = 'none';
+                    return false;
+                }
+                if (meetData.mJoin == 1) {
+                    // 如果是关闭自动参加会议
+                    footerBtn.style.display = 'block';
+                    return false;
+                }
+                // 未反馈
+                err.errMesShow('正在自动确认参加会议。', () => {
+                    ajaxTool.updateStatus({
+                        'option': {
+                            'name': username,
+                            'mName': meet,
+                            'sStatus': 0,
+                        }
+                    }, (req) => {
+                        if (req.status == "faile") {
+                            err.errMesShow('参加失败，请手动参加。');
+                        } else {
+                            err.errMesShow('自动参加成功。', () => {
+                                window.location.reload();
+                            });
+                        }
+                    });
+                });
+            });
+        });
+
         // 判断用户在当前会议的状态
         if (now < start) {
             // 会议未开
-            footerBtn.style.display = 'block';
-            // 自动参加会议
-            tools.runUserFunc(userData, () => {
-                // 管理员不需要签到以及后续操作
-                footerBtn.style.display = 'none';
-            }, () => {
-                ajaxTool.getStatusByOption({
-                    option: {
-                        'mName': meet,
-                        'name': username
-                    }
-                }, (statusData) => {
-                    if (statusData.sStatus == 2) {
-                        // 未反馈
-                        footerBtn.style.display = 'block';
-                        if (meetData.mJoin == 0) {
-                            err.errMesShow('正在自动确认参加会议。', () => {
-                                ajaxTool.updateStatus({
-                                    'option': {
-                                        'name': username,
-                                        'mName': meet,
-                                        'sStatus': 0,
-                                    }
-                                }, (req) => {
-                                    if (req.status == "faile") {
-                                        err.errMesShow('参加失败，请手动参加。');
-                                    } else {
-                                        err.errMesShow('自动参加成功。');
-                                    }
-                                });
-                            });
-                        }
-                    } else {
-                        // 已经反馈
-                        footerBtn.style.display = 'none';
-                    }
-                });
-            });
+
         } else if (end < now) {
             // 会议开完
 
@@ -152,21 +172,34 @@
         });
     });
 
+    // 展示二维码
+    document.querySelector('.openQr').addEventListener('click', () => {
+        qrBox.style.display = 'block';
+    });
+
+    qrBox.addEventListener('click', () => {
+        qrBox.style.display = 'none';
+    });
+
     // 更新参与人员数量
     ajaxTool.getStatusList({
         'attr': 'mName',
         'val': meet
     }, (data) => {
         // 确认参加
-        let data_1 = tools.filterData(data.statusList, 'sStatus', 1);
+        // 条件：参加
+        let data_1 = tools.filterData(data.statusList, 'sStatus', 0);
         document.querySelector('.joinNum span').innerHTML = data_1.length;
 
         // 已请假，待审批的
-        let data_2 = tools.filterData(data.statusList, 'sLeave', 0);
+        // 条件：请假
+        let data_2 = tools.filterData(data.statusList, 'sStatus', 1);
+        // data_2 = tools.filterData(data_2, 'sLeave', 0);
         document.querySelector('.leaveNum span').innerHTML = data_2.length;
 
         // 未反馈
-        let data_3 = tools.filterData(data.statusList, 'sStatus', 0);
+        // 条件
+        let data_3 = tools.filterData(data.statusList, 'sStatus', 2);
         document.querySelector('.noBackNum span').innerHTML = data_3.length;
     });
 

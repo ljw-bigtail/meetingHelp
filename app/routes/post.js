@@ -247,7 +247,9 @@ router.post('/addMeet', function (req, res) {
 				return false;
 			}
 			// 创建参会人员状态
-			req.body.joinList.split(',').map((join) => {
+			let peopleData = req.body.joinList.split(',');
+			peopleData.push(req.body.sponsor);
+			peopleData.map((join) => {
 				Status.addStatus({
 					'name': join,
 					'mName': req.body.name
@@ -741,10 +743,33 @@ router.post('/getRoomGap', function (req, res) {
 				}
 			}
 		}
-		res.send(200, {
-			'reqData': reqData
+
+		//把筛选出的会议室数据跟room表中对比，防止新建会议室没有信息
+		Room.findRoomList(null,null,(roomList)=>{
+			roomList.map((room)=>{
+				if(isInList(room.rName, reqData)){
+					reqData.push({
+						'rName': room.rName,
+						'utilization': '',
+					});
+				}
+			});
+			res.send(200, {
+				'reqData': reqData
+			});
 		});
+
 	});
+
+	function isInList(rName, list) {
+		var state = true;
+		list.map((data, index) => {
+			if (rName == data.rName) {
+				state = false;
+			}
+		});
+		return state;
+	}
 
 	function isIn(rName, list) {
 		var state = -1;

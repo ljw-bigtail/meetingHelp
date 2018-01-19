@@ -16,6 +16,17 @@
     const tipsTo = document.querySelector('.tipsTo');
     let data_1, data_2, data_3;
 
+    ajaxTool.findMeet({
+        'attr': 'mName',
+        'val': meet
+    }, (meetData) => {
+        // 放置没有权限的审批请假
+        if (username != meetData.mAdmin) {
+            document.querySelector('.tabMain li[data-index="3"]').removeChild(document.querySelector('footer'));
+            dom_ul_3.className = 'userPic';
+        }
+    });
+
     // 绑定事件
     const backList = document.querySelectorAll('.back');
     const mPTabTitle = document.querySelectorAll('.meetPeopleTab .tabMain > li');
@@ -31,18 +42,18 @@
         'val': meet
     }, (data) => {
         // 确认参加
-        data_1 = tools.filterData(data.statusList, 'sStatus', 1);
-        dom_span_1.innerHTML = data_1.length;
+        data_1 = tools.filterData(data.statusList, 'sStatus', 0);
+        dom_span_1.innerHTML = data_1.length || 0;
         dom_ul_1.innerHTML = addDom(data_1);
 
         // 已签到
         data_2 = tools.filterData(data_1, 'sSign', 0);
-        dom_span_2.innerHTML = data_2.length;
+        dom_span_2.innerHTML = data_2.length || 0;
         dom_ul_2.innerHTML = addDom(data_2);
 
         // 未签到
         data_3 = tools.filterData(data_1, 'sSign', 1);
-        dom_span_3.innerHTML = data_3.length;
+        dom_span_3.innerHTML = data_3.length || 0;
         dom_ul_3.innerHTML = addDom(data_3);
     });
 

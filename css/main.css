@@ -230,12 +230,14 @@ div#canNext {
     background: rgba(200, 200, 200, .8);
     font-size: 0;
 }
-#user div.search{
+
+#user div.search {
     display: inline-block;
     vertical-align: middle;
     width: calc(100% - 10rem - 4rem - 4rem - 2px);
 }
-#user div.yes{
+
+#user div.yes {
     display: inline-block;
     vertical-align: middle;
     width: 10rem;
@@ -248,6 +250,7 @@ div#canNext {
     text-align: center;
     border-radius: 1rem;
 }
+
 #user div.userSelect {
     width: 100%;
     overflow-x: scroll;
@@ -293,31 +296,37 @@ div#canNext {
     padding: .5rem;
     color: #ffffff;
 }
+
 #user div.userLits {
-    height: calc(100% - 12rem - 1px);    
+    height: calc(100% - 12rem - 1px);
     overflow-x: hidden;
     overflow-y: scroll;
     margin-top: 1px;
 }
+
 #user ul.userLits {
     padding-bottom: 2rem;
 }
-#user .userLits .title{
+
+#user .userLits .title {
     background: transparent;
     font-size: 3rem;
     color: #3f3f3f;
     padding: 1rem;
 }
-#user .userLits .list{
+
+#user .userLits .list {
     background: #fff;
 }
-#user .userLits .list li{
+
+#user .userLits .list li {
     height: 8rem;
     line-height: 8rem;
     font-size: 0;
     border-bottom: 1px solid #ccc;
 }
-#user .userLits .list li i{
+
+#user .userLits .list li i {
     display: inline-block;
     vertical-align: middle;
     width: 3rem;
@@ -332,18 +341,19 @@ div#canNext {
     font-family: serif;
     font-weight: bold;
 }
-#user .userLits .list li i.select{
+
+#user .userLits .list li i.select {
     background: #0BB908;
     width: calc(3rem + 2px);
-    border:0;
+    border: 0;
 }
 
-#user .userLits .list li .pic{
-    display: inline-block;    
+#user .userLits .list li .pic {
+    display: inline-block;
     vertical-align: middle;
     font-size: 3rem;
     margin: 0 1rem;
-    height:5rem;
+    height: 5rem;
     width: 5rem;
     overflow: hidden;
     line-height: 5rem;
@@ -351,10 +361,11 @@ div#canNext {
     padding: .5rem;
     color: #ffffff;
 }
-#user .userLits .list li span{
-    display: inline-block;    
+
+#user .userLits .list li span {
+    display: inline-block;
     vertical-align: middle;
-    font-size: 3rem;    
+    font-size: 3rem;
     padding: 0 2rem;
     width: calc(100% - 7rem - 2px - 8rem - 4rem);
     color: #3f3f3f;
@@ -613,6 +624,55 @@ body article .roomState .mes {
     background: #ffffff;
     padding: 1.5rem;
     position: relative;
+}
+
+body article .roomState .mes .openQr{
+    display: block;
+    background: #0BB908;
+    color: #ffffff;
+    height: 6rem;
+    width: 20rem;
+    line-height: 6rem;
+    border-radius: 3rem;
+    border: 0;
+    margin: 0 auto;
+}
+
+#qrBox {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+}
+
+#qrBox h1 {
+    font-size: 5rem;
+    text-align: center;
+    margin: 20rem 0 2rem;
+    font-weight: bold;
+    color: #3f3f3f;
+}
+
+#qrBox img {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+}
+
+#qrBox span {
+    background: url(../../favicon.ico) no-repeat;
+    display: block;
+    height: 6rem;
+    line-height: 6rem;
+    position: absolute;
+    bottom: 10rem;
+    right: 2rem;
+    text-align: right;
+    font-size: 3rem;
+    padding-left: 6rem;
 }
 
 body article .roomState .mes>img {
@@ -1419,15 +1479,17 @@ body article .newMeet input {
 
 #showRoom {
     display: none;
+    max-height: 30rem;
+    overflow-y: scroll;
 }
 
 #showRoom ul {
     display: inline-block;
     width: calc(100% - 12rem);
+    vertical-align: top;
 }
 
 #showRoom>span {
-    vertical-align: top;
     font-size: 3rem;
 }
 
@@ -1448,11 +1510,11 @@ body article .newMeet input {
 }
 
 #showRoom ul li.title span:first-child {
-    width: 92px;
+    width: 25rem;
 }
 
 #showRoom ul li.title span:last-child {
-    width: calc(100% - 92px);
+    width: calc(100% - 25rem);
 }
 
 #showRoom ul li:last-child {
@@ -1461,10 +1523,19 @@ body article .newMeet input {
 
 #showRoom ul li input {
     width: 2rem;
+    margin: 0 .5rem;
+}
+
+#showRoom ul li span {
+    width: calc(25rem - 3rem);
+    height: 5rem;
+    overflow-x: scroll;
 }
 
 #showRoom ul li progress {
     height: 3rem;
+    width: calc(100% - 25rem - 4rem);
+    margin: 0 2rem;
     vertical-align: middle;
 }
 

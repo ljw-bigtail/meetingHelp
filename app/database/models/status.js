@@ -82,14 +82,20 @@ statusSchema.statics = {
     },
     findStatusOne: function (option, callback) {
         this.findOne(option).exec((err, status) => {
+            console.log(err, status)
             if (err) {
-                console.log(err);
                 callback({
                     'status': "faile",
                     'mes': err
                 });
             } else {
-                callback(status);
+                if(status){
+                    callback(status);
+                }else{
+                    callback({
+                        'status': "faile"
+                    });
+                }
             }
         });
     },

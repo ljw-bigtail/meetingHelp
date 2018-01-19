@@ -7,6 +7,17 @@
     tools.headValue(meet + '-请假统计-' + project_name);
     tools.titleValue('请假统计');
 
+    // if(username == )
+    ajaxTool.findMeet({
+        'attr': 'mName',
+        'val': meet
+    }, (meetData) => {
+        // 放置没有权限的审批请假
+        if (username != meetData.mAdmin) {
+            window.location.href = '/';
+        }
+    });
+
     const dom_ul_1 = document.querySelector('.tabMain li[data-index="1"] ul');
     const dom_ul_2 = document.querySelector('.tabMain li[data-index="2"] ul');
     const dom_ul_3 = document.querySelector('.tabMain li[data-index="3"] ul');
@@ -33,20 +44,26 @@
         'attr': 'mName',
         'val': meet
     }, (data) => {
+        // 请假
+        dataLeave = tools.filterData(data.statusList, 'sStatus', 1);
+
         // 待审批
-        data_1 = tools.filterData(data.statusList, 'sLeave', 0);
-        dom_span_1.innerHTML = data_1.length;
+        // 条件：请假、待审批
+        data_1 = tools.filterData(dataLeave, 'sLeave', 0);
+        dom_span_1.innerHTML = data_1.length || 0;
         dom_ul_1.innerHTML = addDom(data_1);
 
         // 已请假
-        data_2 = tools.filterData(data.statusList, 'sLeave', 1);
-        dom_span_2.innerHTML = data_2.length;
+        // 请假、已审批
+        data_2 = tools.filterData(dataLeave, 'sLeave', 1);
+        dom_span_2.innerHTML = data_2.length || 0;
         dom_ul_2.innerHTML = addDom(data_2);
 
         // 退审
-        data_3 = tools.filterData(data.statusList, 'sLeave', 2);
-        dom_span_3.innerHTML = data_3.length;
-        dom_span_3.innerHTML = addDom(data_3);
+        // 请假、退审
+        data_3 = tools.filterData(dataLeave, 'sLeave', 2);
+        dom_span_3.innerHTML = data_3.length || 0;
+        dom_ul_3.innerHTML = addDom(data_3);
     });
 
     // 获取当前需要操作的人员列表
