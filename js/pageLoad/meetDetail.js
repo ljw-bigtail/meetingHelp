@@ -96,9 +96,11 @@
         }, () => {
             // 加载会议管理员
             if (userData.username == meetData.mAdmin) {
+                changeBtn.style.display = 'none';
                 leaveNum.href = 'beforeMeetNum.html?meet=' + meet;
                 qrBox.querySelector('img').src = '/uploads/' + meetData.mQRcode.split('uploads/')[1];
             } else {
+                changeBtn.style.display = 'block';
                 leaveNum.href = 'JavaScript:void(0)';
                 qrBox.querySelector('img').src = '/img/noQr.png';
             }
@@ -321,4 +323,12 @@
         }
     });
 
+    // 点击输入框放大
+    pushMes.addEventListener('focus',()=>{
+        console.log('add')
+        pushMes.className = 'writeIn';
+    });
+    pushMes.addEventListener('blur',()=>{
+        pushMes.className = '';
+    });
 })();
