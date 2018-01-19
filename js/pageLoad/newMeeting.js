@@ -308,7 +308,6 @@
             'date': start.value
         }, (req) => {
             // 渲染会议室状态表
-
             let roomDOM = '<li class="title"><span>会议室名称</span><span>会议室当天占用率</span></li>';
             req.reqData.map((data) => {
                 let timeDate = data.utilization.split('&');
@@ -347,7 +346,7 @@
             // 根据会议室信息选择当天的时间段
             showRoom.setAttribute('data-room', roomSelectRadio.getAttribute('title'));
             // 根据状态渲染dom，刷新时间选择器的dom,根据占据时间
-            addTimeBox(getStateByTime(roomSelectRadio));
+            addTimeBox(getStateByTime(roomSelectRadio), start.value.split('-')[2]);
             timeChoose.style.display = 'block';
         } else if (e.target.nodeName == 'PROGRESS') {
             roomSelectRadio = e.target.previousSibling.previousSibling;
@@ -361,6 +360,7 @@
             let roomList = chooseRoom.querySelectorAll('input');
             let selectRoomVal = '';
             for (let i = 0; i < roomList.length - 1; i++) {
+                console.log(roomList[i].checked)
                 if (roomList[i].checked) {
                     selectRoomVal = roomList[i].getAttribute('title');
                 }
@@ -374,7 +374,6 @@
     // 保存后获取对应位置的信息
     save.addEventListener('click', () => {
         let gapIndex = isGap();
-        console.log(gapIndex)
         let gapState = true;
         // 查看是否连贯
         for (let i = 0; i < gapIndex.length; i++) {
@@ -566,25 +565,37 @@
     }
 
     // 渲染时间dom
-    function addTimeBox(stateData) {
+    function addTimeBox(stateData, valDate) {
         let timeTitleDom = '';
         let timeClockDomA = '';
         let timeClockDomB = '';
         work_time.map((data, index) => {
+            let checkDom = '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"><span></span></li>';
+            let disableDom = '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled"></li>';
+            let normalDom = '<li><input type="checkbox" name="08" value="' + data + '" ></li>';
+            // 是不是今天现在之前的时间
+            let isFuture = data.split(':')[0] - 0 <= now.getHours() && valDate - 0 == now.getDate();
             if (index % 2 == 0) {
                 timeTitleDom += '<li>' + data + '</li>'
+                // 根据已选择的会议判定为被选中的
                 if (stateData[index] == 1) {
-                    // 判定为被选中的
-                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"><span></span></li>'
+                    timeClockDomA += checkDom;
                 } else {
-                    timeClockDomA += '<li><input type="checkbox" name="08" value="' + data + '" ></li>'
+                    if (isFuture) {
+                        timeClockDomA += disableDom;
+                    } else {
+                        timeClockDomA += normalDom;
+                    }
                 }
             } else {
                 if (stateData[index] == 1) {
-                    // 判定为被选中的
-                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"><span></span></li>'
+                    timeClockDomB += checkDom;
                 } else {
-                    timeClockDomB += '<li><input type="checkbox" name="08" value="' + data + '"></li>'
+                    if (isFuture) {
+                        timeClockDomB += disableDom;
+                    } else {
+                        timeClockDomB += normalDom;
+                    }
                 }
             }
         });
