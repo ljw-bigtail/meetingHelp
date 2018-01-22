@@ -28,8 +28,9 @@
     let email = meetAdmin.querySelector('.email');
     let phone = meetAdmin.querySelector('.phone');
     let pushMes = document.querySelector('#pushMes');
+    let fileDownload = document.querySelector('#fileDownload');
     let pushBtn = document.querySelector('.pushBtn');
-
+    
     let joinNum = document.querySelector('.joinNum');
     let leaveNum = document.querySelector('.leaveNum');
     let noBackNum = document.querySelector('.noBackNum');
@@ -62,6 +63,11 @@
         startDom.innerHTML = meetData.mStartTime.replace(/T/, '  ');
         endDom.innerHTML = meetData.mEndTime.replace(/T/, '  ');
         mDesc.innerHTML = meetData.mDesc;
+        if(meetData.mFile){
+            fileDownload.setAttribute('href', meetData.mFile);
+            fileDownload.style.color = '#5176AB';
+        }
+
         changeBtn.setAttribute('href', 'newMeeting.html?meet=' + meetData.mName)
 
         // 加载发起人
@@ -324,11 +330,11 @@
     });
 
     // 点击输入框放大
-    pushMes.addEventListener('focus',()=>{
+    pushMes.addEventListener('focus', () => {
         console.log('add')
         pushMes.className = 'writeIn';
     });
-    pushMes.addEventListener('blur',()=>{
+    pushMes.addEventListener('blur', () => {
         pushMes.className = '';
     });
 })();

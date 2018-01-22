@@ -626,6 +626,13 @@ body article .roomState .mes {
     position: relative;
 }
 
+body article .roomState #fileDownload{
+    font-size: 3rem;
+    line-height: 4rem;
+    color: #3f3f3f;
+    text-decoration: underline;
+}
+
 body article .roomState .mes .openQr {
     display: block;
     background: #0BB908;
@@ -1472,6 +1479,7 @@ body article .newMeet span {
     display: block;
     color: #3f3f3f;
     line-height: 4rem;
+    text-align: right;
 }
 
 body article .newMeet span::before {
