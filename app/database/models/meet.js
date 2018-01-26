@@ -210,15 +210,17 @@ meetSchema.statics = {
 		let newMeet = {
 			"mName": meet.name || '',
 			"mDesc": meet.detail || '',
-			"mFile": meet.uploadImg || '',
+			"mFile": meet.uploadImg || [''],
 			"mStartTime": meet.start || '',
 			"mEndTime": meet.end || '',
 			"rName": meet.room || '',
 			"mAdmin": meet.sponsor || '',
 			"mPeople": meet.joinList || [],
 			"mQRcode": meet.mQRcode || '',
-			"mJoin": meet.mJoin || '',
-			"mNote": meet.mNote || ''
+			"mJoin": meet.mJoin,
+			"mNote": meet.mNote,
+			'mApplicant': meet.mApplicant,
+			'mRecorder': meet.mRecorder
 		}
 
 		this.create(newMeet, (err) => {
@@ -281,7 +283,7 @@ meetSchema.statics = {
 
 				let newMeet = _underscore.extend(oldMeet, update);
 				newMeet.meta.updateAt = Date.now();
-				
+
 				_this.update({
 					'mName': mName
 				}, newMeet, {

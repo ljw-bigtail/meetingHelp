@@ -3,6 +3,7 @@
     const err = new Err(errMes);
     const tipBox = new Err(canNext);
 
+    let userCookie = tools.getUserFormCookie();
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
     let place = tools.getQuery('place');
@@ -23,56 +24,38 @@
     const userBoxLits = userBox.querySelector('div.userLits');
 
     let backList = document.querySelectorAll('.back');
-    let chooseOneBox = document.querySelectorAll('.chooseBox');
-    let chooseOneBtnList = document.querySelectorAll('.chooseBox .btn');
+    // let chooseOneBox = document.querySelectorAll('.chooseBox');
+    // let chooseOneBtnList = document.querySelectorAll('.chooseBox .btn');
     let chooseListBox = document.querySelectorAll('.chooseList');
     let chooseListBtnList = document.querySelectorAll('.chooseList .btn');
     let selectChoose = document.querySelectorAll('.selectBox .choose');
     // 设置返回按钮
     events.goBack(backList);
-    // 展开单选盒子
-    events.addEventForList(chooseOneBtnList, 'click', function (item, index) {
-        // 初始化用户表
-        userBoxLits.querySelectorAll('i').forEach((e) => {
-            if (e.className == 'select') {
-                e.click();
-            }
-        });
-
-        userBox.style.display = 'block';
-        userBox.setAttribute('data-where', item.parentElement.className);
-
-        let userData = item.parentElement.querySelector('.val').innerHTML.split(',');
-        if (userData[0] != '请选择') {
-            // 渲染选择的user
-            userData.map((user) => {
-                userBoxLits.querySelectorAll('i').forEach((e) => {
-                    if (e.getAttribute('data-name') == user) {
-                        e.click();
-                    }
-                });
-            });
-        }
-    })
-    // 设置单选
-    // events.chooseOne(chooseOneBox);
     // 展开多选盒子
     events.addEventForList(chooseListBtnList, 'click', function (item, index) {
-        // 初始化用户表
+        let thisId = item.parentElement.querySelector('.val').getAttribute('id')
+        // 初始化用户表的选中状态
         userBoxLits.querySelectorAll('i').forEach((e) => {
             if (e.className == 'select') {
                 e.click();
             }
         });
 
-        userBox.style.display = 'block';
-        userBox.setAttribute('data-where', item.parentElement.className);
+        // 寻位标记
+        userBox.setAttribute('data-where', thisId);
+        // 类型标记
+        userBox.setAttribute('data-type', item.getAttribute('data-type'));
 
+        // 渲染选择的user
         let userData = item.parentElement.querySelector('.val').innerHTML.split(',');
+        console.log(userData)
         if (userData[0] != '请选择') {
-            // 渲染选择的user
             clickUser(userData)
+        } else {
+            clickUser([])
         }
+
+        userBox.style.display = 'block';
     })
     // 设置多选
     // events.chooseList(chooseListBox);
@@ -164,13 +147,26 @@
             // 没找到
             callback1();
         } else {
-            // 找到的数组           
+            // 找到的数组
             callback2(findData);
         }
     }
 
     // 根据data点击表格
     function clickUser(data) {
+        if (data.length == 0) {
+            if (user.getAttribute('data-type') == 'one') {
+                userBoxLits.querySelectorAll('ul li .title')[0].click();
+            } else {
+                userBoxLits.querySelectorAll('i').forEach((e) => {
+                    // 单选的取消全选
+                    if (e.className == 'select') {
+                        e.click();
+                    }
+                });
+            }
+            return false;
+        }
         data.map((user) => {
             userBoxLits.querySelectorAll('i').forEach((e) => {
                 if (e.getAttribute('data-name') == user) {
@@ -220,7 +216,8 @@
                 // newsPic.value = req.mFile;
                 // start.value = req.mStartTime.split('T')[0];
                 // changeDom(start);
-                chooseOneBox[0].style.display = 'none';
+                // 不允许修改管理员
+                chooseListBox[0].style.display = 'none';
                 join.innerHTML = req.mPeople;
                 canRead.className = req.mNote == 1 ? 'selected' : '';
                 autoJoin.className = req.mJoin == 1 ? 'selected' : '';
@@ -236,6 +233,13 @@
         let spanDom = e.toElement.tagName == 'SPAN';
         let iDom = e.toElement.tagName == 'I';
         let divDom = e.toElement.tagName == 'DIV' && e.toElement.className == 'pic';
+        // 单选
+        if (user.getAttribute('data-type') == 'one') {
+            userBoxLits.querySelectorAll('.userLine i').forEach((e) => {
+                e.className = '';
+            });
+        }
+        // 选择的两种情况
         if (liDom) {
             events.toggleClass(e.target.querySelector('i'), '', 'select');
         }
@@ -261,7 +265,7 @@
     // 确定并返回用户数组
     userBoxYes.addEventListener('click', (e) => {
         userBox.style.display = 'none';
-        document.querySelector('.' + userBox.getAttribute('data-where') + ' .val').innerHTML = userBoxYes.getAttribute('data-user');
+        document.querySelector('#' + userBox.getAttribute('data-where')).innerHTML = userBoxYes.getAttribute('data-user') || '请选择';
     });
 
     // 上传文件
@@ -423,20 +427,20 @@
             err.errMesShow('请选择开始时间');
             return false;
         };
-        // if (end.value == '') {
-        //     err.errMesShow('请选择结束时间');
-        //     return false;
-        // };
         if (!showRoom.getAttribute('data-room')) {
             err.errMesShow('请选择会议地点');
             return false;
         }
         if (sponsor.innerHTML == '请选择' || sponsor.innerHTML == '') {
-            err.errMesShow('请选择发起人');
+            err.errMesShow('请选择管理员');
+            return false;
+        }
+        if (write.innerHTML == '请选择' || write.innerHTML == '') {
+            err.errMesShow('请选择记录员');
             return false;
         }
         if (join.innerHTML == '请选择' || sponsor.innerHTML == '') {
-            err.errMesShow('请选择参会人');
+            err.errMesShow('请选择参会者');
             return false;
         }
 
@@ -449,37 +453,30 @@
             'end': start.value + 'T' + work_time[(gapIndex[gapIndex.length - 1] + 1)],
             'room': showRoom.getAttribute('data-room'),
             'sponsor': sponsor.innerHTML,
-            'joinList': join.innerHTML,
+            'joinList': join.innerHTML.split(','),
             'mNote': canRead.className == 'selected' ? 0 : 1,
-            'mJoin': autoJoin.className == 'selected' ? 0 : 1
+            'mJoin': autoJoin.className == 'selected' ? 0 : 1,
+            'mApplicant': userCookie.username,
+            'mRecorder': write.innerHTML
         };
-
         err.errMesShow('正在创建，请稍后。');
-        // debugger;
         ajaxTool.addMeet(meetData, (res) => {
-            // 修改会议室状态
-            ajaxTool.updateRoom({
-                'rName': meetData.room,
-                'update': {
-                    'rStatus': 2
+            // 不需要修改会议室状态
+            console.log(_res)
+            console.log(res)
+            // debugger;
+            if (res.status == 'success') {
+                err.errMesShow('新建成功，请保存二维码。');
+                // 展示生成的二维码（签到用）
+                qrcode.querySelector('#qrCodeImg').src = res.qrCode;
+                qrcode.style.display = 'block';
+            } else {
+                if (res.mes.code == 11000) {
+                    err.errMesShow('会议重复，请修改名称。');
+                    return false;
                 }
-            }, (_res) => {
-                console.log(_res)
-                console.log(res)
-                // debugger;
-                if (_res.status == 'success' && res.status == 'success') {
-                    err.errMesShow('新建成功，请保存二维码。');
-                    // 展示生成的二维码（签到用）
-                    qrcode.querySelector('#qrCodeImg').src = res.qrCode;
-                    qrcode.style.display = 'block';
-                } else {
-                    if (res.mes.code == 11000) {
-                        err.errMesShow('会议重复，请修改名称。');
-                        return false;
-                    }
-                    err.errMesShow('新建失败，请重新来过。');
-                }
-            });
+                err.errMesShow('新建失败，请重新来过。');
+            }
         });
     });
 
@@ -505,9 +502,7 @@
         let timeChooseClockSelect = timeChooseClock.querySelectorAll('li');
         for (var i = 0; i < timeChooseClockSelect.length; i++) {
             let chooseOneFromClock = timeChooseClockSelect[i].querySelector('input');
-            // console.log(chooseOneFromClock.getAttribute('disabled'))
-            // console.log(true && chooseOneFromClock.getAttribute('disabled'))
-            if (chooseOneFromClock.checked || chooseOneFromClock.getAttribute('disabled')) {
+            if (chooseOneFromClock.checked) {
                 status.push(1);
             } else {
                 status.push(0);

@@ -89,7 +89,6 @@ let events = {
     },
     //切换class
     toggleClass: (dom, oldClassName, newClassName) => {
-        console.log(dom.className)
         if (dom.className == newClassName) {
             dom.className = oldClassName;
         } else {

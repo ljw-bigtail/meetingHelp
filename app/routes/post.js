@@ -220,7 +220,7 @@ router.post('/addMeet', function (req, res) {
 		'mName': req.body.name,
 		'mStartTime': req.body.start,
 		'mEndTime': req.body.end,
-		'mPeople': req.body.joinList.split(',')
+		'mPeople': req.body.joinList
 	}
 	let qr_png = qr_image.image(encodeURI(JSON.stringify(saveData)), {
 		type: 'png',
@@ -241,13 +241,12 @@ router.post('/addMeet', function (req, res) {
 			'mQRcode': qr_png_url
 		});
 		Meet.addMeet(meetData, (mes) => {
-			console.log(mes)
 			if (mes.status == "faile") {
 				res.send(200, mes);
 				return false;
 			}
 			// 创建参会人员状态
-			let peopleData = req.body.joinList.split(',');
+			let peopleData = req.body.joinList;
 			peopleData.push(req.body.sponsor);
 			peopleData.map((join) => {
 				Status.addStatus({
