@@ -20,6 +20,9 @@ let noteSchema = new Schema({
 	"nMes": {
 		type: String
 	},
+	"isPush": {
+		type: Boolean
+	},
 	"meta": {
 		createAt: {
 			type: Date,

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <!-- <script src="js/echarts.common.min.js"></script> -->
     <script src="js/echarts.min.js"></script>
 </head>
+
 <body>
     <header>
         <button class="back"></button>
@@ -34,7 +36,7 @@
                             <img src="img/6.png" alt="">
                         </div>
                         <h5>新建会议</h5>
-                    </a>                    
+                    </a>
                 </li>
                 <li>
                     <a href="room.html">
@@ -42,7 +44,7 @@
                             <img src="img/3.png" alt="">
                         </div>
                         <h5>会议室</h5>
-                    </a>                    
+                    </a>
                 </li>
                 <li>
                     <a href="camera.html">
@@ -50,7 +52,7 @@
                             <img src="img/7.png" alt="">
                         </div>
                         <h5>扫码签到</h5>
-                    </a>                    
+                    </a>
                 </li>
             </ul>
         </article>
@@ -62,10 +64,10 @@
                 <li>
                     <a href="write.html">
                         <div class="pic">
-                            <img src="img/4.png" alt="">                            
+                            <img src="img/4.png" alt="">
                         </div>
                         <h5>会议纪要</h5>
-                    </a>                    
+                    </a>
                 </li>
                 <li>
                     <a href="meet.html?end=true">
@@ -73,7 +75,7 @@
                             <img src="img/1.png" alt="">
                         </div>
                         <h5>会议详情</h5>
-                    </a>                    
+                    </a>
                 </li>
                 <li>
                     <a href="user.html">
@@ -81,9 +83,53 @@
                             <img src="img/5.png" alt="">
                         </div>
                         <h5>个人设置</h5>
-                    </a>                    
+                    </a>
                 </li>
             </ul>
+        </article>
+        <article class="btnBox">
+            <herder class="btnTitle">
+                <h3>新建</h3>
+            </herder>
+            <ul>
+                <li>
+                    <a href='javascript:void(0)' class="addUser">
+                        <div class="pic">
+                            <img src="img/4.png" alt="">
+                        </div>
+                        <h5>新建用户</h5>
+                    </a>
+                </li>
+            </ul>
+            <div class="tipBox leaveBox">
+                <div class="tipMain">
+                    <div class="leaveMain newMeet">
+                        <h3>填写用户信息<i>默认密码为111111</i></h3>
+                        <input class="name" type="text" placeholder="用户名称" />
+                        <span>请填写用户名称，后续不可以修改</span>
+                        <input class="email" type="text" placeholder="邮箱" />
+                        <span>请填写用户邮箱</span>
+                        <input class="phone" type="text" placeholder="手机号" />
+                        <span>请填写用户手机号</span>
+                        <input class="dName" type="text" placeholder="部门" />
+                        <span>请填写用户部门</span>
+                        <div class="selectBox">
+                            <span>有无创建会议权限</span>
+                            <div class="choose">
+                                <div class="selected" id="haveNew">
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="leaveFooter">
+                        <div class="flexBox">
+                            <span class="leaveClose">取消</span>
+                            <span class="leaveSave save">确定</span>
+                        </div>
+                    </footer>
+                </div>
+            </div>
         </article>
     </article>
 
@@ -97,4 +143,5 @@
     <!-- <script src="js/main.js"></script> -->
     <script src="js/pageLoad/index.js"></script>
 </body>
+
 </html>

@@ -371,6 +371,50 @@ div#canNext {
     color: #3f3f3f;
 }
 
+.selectBox{
+    font-size: 0;
+}
+.selectBox span {
+    display: inline-block;
+    width: 30rem;
+    font-size: 2.6rem;
+}
+
+.selectBox .choose {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc( 100% - 30rem);
+    text-align: right;
+}
+
+.selectBox .choose>div {
+    float: right;
+    width: calc( 6rem - 2px);
+    height: 3rem;
+    border-radius: 1.5rem;
+    background: #BBBBBB;
+    position: relative;
+}
+
+.selectBox .choose>div>span {
+    position: absolute;
+    height: calc( 3rem - 2px);
+    width: calc( 3rem - 2px);
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #aaaaaa;
+    left: 0;
+}
+
+.selectBox .choose>div.selected {
+    background: #0BB908;
+}
+
+.selectBox .choose>div.selected>span {
+    left: auto;
+    right: 0;
+}
+
 
 /* ------------------------------------------- */
 
@@ -626,7 +670,7 @@ body article .roomState .mes {
     position: relative;
 }
 
-body article .roomState #fileDownload{
+body article .roomState #fileDownload {
     font-size: 3rem;
     line-height: 4rem;
     color: #3f3f3f;
@@ -846,13 +890,20 @@ body article .new .newBox li.inputBox input#upLoadPicBtn {
     border-radius: 6rem;
 }
 
-body article .new .newBox li span {
+body article .new .newBox li:not(.selectBox) span {
     width: 12rem;
     font-size: 3rem;
     line-height: 5rem;
     display: inline-block;
     vertical-align: middle;
 }
+body article .new .newBox li.selectBox span {
+    font-size: 3rem;
+    line-height: 5rem;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 
 body article .new .newBox li span.val {
     width: calc( 100% - 12rem - 4rem);
@@ -867,45 +918,6 @@ body article .new .newBox li span.btn {
     vertical-align: middle;
     color: #aaaaaa;
     font-weight: bold;
-}
-
-body article .new .newBox li.selectBox span {
-    width: 30rem;
-}
-
-body article .new .newBox li.selectBox .choose {
-    display: inline-block;
-    vertical-align: middle;
-    width: calc( 100% - 30rem);
-    text-align: right;
-}
-
-body article .new .newBox li.selectBox .choose>div {
-    float: right;
-    width: calc( 6rem - 2px);
-    height: 3rem;
-    border-radius: 1.5rem;
-    background: #BBBBBB;
-    position: relative;
-}
-
-body article .new .newBox li.selectBox .choose>div>span {
-    position: absolute;
-    height: calc( 3rem - 2px);
-    width: calc( 3rem - 2px);
-    border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid #aaaaaa;
-    left: 0;
-}
-
-body article .new .newBox li.selectBox .choose>div.selected {
-    background: #0BB908;
-}
-
-body article .new .newBox li.selectBox .choose>div.selected>span {
-    left: auto;
-    right: 0;
 }
 
 body article .new .newBox li.chooseBox ul,
@@ -1117,6 +1129,12 @@ footer .inputBox button {
     padding: 0;
     border: 0;
 }
+.tipMain .leaveMain h3 i{
+    font-size: 2.2rem;
+    font-weight: normal;
+    padding: 0 1rem;
+}
+
 
 .tipMain .leaveMain .fontLength {
     text-align: right;
@@ -1473,7 +1491,7 @@ body article .newMeet h3 {
     font-weight: bold;
 }
 
-body article .newMeet span {
+body article .newMeet > span {
     font-size: 2.4rem;
     margin: 1rem 0;
     display: block;
@@ -1482,7 +1500,7 @@ body article .newMeet span {
     text-align: right;
 }
 
-body article .newMeet span::before {
+body article .newMeet > span::before {
     content: '*';
     color: red;
     padding-right: .5rem;

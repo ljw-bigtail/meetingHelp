@@ -135,9 +135,9 @@ userSchema.statics = {
 			"name": user.name || '',
 			"email": user.email || '',
 			"phone": user.phone || '',
-			"password": user.password || '',
 			"desc": user.desc || '',
 			"dName": user.dName || '',
+			"initiate": user.initiate
 		}
 
 		this.create(newUser, (err) => {

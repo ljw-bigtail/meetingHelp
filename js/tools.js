@@ -39,7 +39,7 @@ let tools = {
     },
     // 验证是否为移动电话
     isMobile: (sMobile) => {
-        var reg = /^1[3|4|5|8][0-9]\d{4,8}$/;
+        var reg = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
         if (reg.test(sMobile) === false) {
             return false;
         } else {

@@ -15,7 +15,7 @@ let meetSchema = new Schema({
 		type: String,
 	},
 	"mFile": {
-		type: String,
+		type: [String],
 	},
 	"mStartTime": {
 		type: String,
@@ -29,8 +29,14 @@ let meetSchema = new Schema({
 	"mAdmin": {
 		type: String,
 	},
-	"mPeople": {
+	"mApplicant": {
 		type: String,
+	},
+	"mRecorder": {
+		type: String,
+	},
+	"mPeople": {
+		type: [String],
 	},
 	// "mContainer": {
 	//     type: String,

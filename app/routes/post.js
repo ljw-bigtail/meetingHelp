@@ -136,7 +136,7 @@ router.post('/getUserByAttr', function (req, res) {
 
 // 新建账户
 router.post('/addUser', function (req, res) {
-	if (!req.body.name || !req.body.email || !req.body.phone || !req.body.password) {
+	if (!req.body.name || !req.body.email || !req.body.phone || !req.body.dName) {
 		res.send(200, {
 			mes: '参数错误。'
 		});

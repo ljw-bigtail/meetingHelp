@@ -1,4 +1,6 @@
 (function () {
+    const err = new Err(errMes, 1000);
+
     let userData = tools.getUserFormCookie();
     tools.noUser(userData.username);
 
@@ -10,12 +12,29 @@
     const adminTip = document.querySelector('.adminTip');
     const addMeetBtn = document.querySelector('.btnBox:nth-child(3) ul li:nth-child(1)');
     const cameraBtn = document.querySelector('.btnBox:nth-child(3) ul li:nth-child(3)');
+    const newSth = document.querySelector('.btnBox:last-child');
+
+    const addUser = document.querySelector('.addUser');
+    const leaveBox = document.querySelector('.leaveBox');
+    const leaveClose = document.querySelector('.leaveClose');
+    const save = document.querySelector('.save');
+
+    const haveNew = document.querySelector('#haveNew');
+    const name = document.querySelector('.name');
+    const email = document.querySelector('.email');
+    const phone = document.querySelector('.phone');
+    const dName = document.querySelector('.dName');
+
+    haveNew.addEventListener('click', () => {
+        events.toggleClass(haveNew, '', 'selected');
+    })
 
     // 根据用户权限修改显示的按钮：管理员，用户，可以发起会议，不可以发起会议
     tools.runUserFunc(userData, () => {
         userTip.style.display = 'none';
         adminTip.style.display = 'block';
         cameraBtn.style.display = 'none';
+        
         // 一个统计图
         let myChart = echarts.init(document.querySelector('.adminTip'));
         myChart.setOption({
@@ -102,6 +121,8 @@
     }, () => {
         userTip.style.display = 'block';
         adminTip.style.display = 'none';
+        newSth.style.display = 'none';
+        
         // 加载待进行会议
         ajaxTool.getMeetList({
             'user': userData.username
@@ -135,4 +156,51 @@
         addMeetBtn.style.display = 'none';
         return false;
     }, )
+
+    // 新建用户
+    addUser.addEventListener('click', function () {
+        if (userData.level == 0) {
+            leaveBox.style.display = 'block';
+        }
+    });
+    leaveClose.addEventListener('click', function () {
+        leaveBox.style.display = 'none';
+    });
+    save.addEventListener('click', function () {
+        const data = {
+            "name": name.value,
+            "email": email.value,
+            "phone": phone.value,
+            "dName": dName.value,
+            "initiate": haveNew.className == 'selected' ? 0 : 1
+        }
+        if (name.value == '') {
+            err.errMesShow('请输入用户名称');
+            return false;
+        };
+        if (!tools.isEmail(email.value)) {
+            err.errMesShow('邮箱有误');
+            return false;
+        };
+        if (!tools.isMobile(phone.value)) {
+            err.errMesShow('手机号有误');
+            return false;
+        };
+        if (dName.value == '') {
+            err.errMesShow('请输入用户部门');
+            return false;
+        };
+        ajaxTool.addUser(data, (req) => {
+            if (req.status == "success") {
+                err.errMesShow('创建成功', () => {
+                    name.value = '';
+                    email.value = '';
+                    phone.value = '';
+                    dName.value = '';
+                    leaveClose.click();
+                });
+            }
+        });
+    });
+
 })()

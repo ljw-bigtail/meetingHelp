@@ -49,6 +49,7 @@
         newMeet.innerHTML = '新建会议';
         return false;
     }, () => {}, () => {
+        console.log('guanliyuan ')
         document.querySelector('body>footer').style.display = 'none';
         document.querySelector('body>article.hasFooter').className = '';
     });
