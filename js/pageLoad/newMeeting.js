@@ -87,11 +87,12 @@
 
     let now = new Date();
 
-    function isIn(name, list) {
+    function isIn(_name, list) {
         let state = -1;
         list.map((data, index) => {
-            if (name == data[0].name) {
+            if (_name.split('')[0] == data[0].user.name.split('')[0]) {
                 state = index;
+                return false;
             }
         });
         return state;
@@ -100,20 +101,22 @@
     // 修改数组格式
     function getNewData(data) {
         let userData = [];
-        data.map((data, index) => {
+        data.reverse().map((_data, index) => {
             // 先根据name返回二维数组
-            if (isIn(name, userData) > -1) {
-                userData[isIn(name, userData)].push({
-                    'first': data.name.split('')[0],
-                    'user': data
+            let dataIndex = isIn(_data.name, userData);
+            if (dataIndex > -1) {
+                userData[dataIndex].push({
+                    'first': _data.name.split('')[0],
+                    'user': _data
                 });
             } else {
                 userData.push([{
-                    'first': data.name.split('')[0],
-                    'user': data
+                    'first': _data.name.split('')[0],
+                    'user': _data
                 }]);
             }
         });
+        console.log(userData)
         return userData
     }
 
@@ -462,9 +465,6 @@
         err.errMesShow('正在创建，请稍后。');
         ajaxTool.addMeet(meetData, (res) => {
             // 不需要修改会议室状态
-            console.log(_res)
-            console.log(res)
-            // debugger;
             if (res.status == 'success') {
                 err.errMesShow('新建成功，请保存二维码。');
                 // 展示生成的二维码（签到用）
