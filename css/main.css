@@ -1264,8 +1264,15 @@ footer .inputBox button {
 
 .meetPeopleTab .tabMain .userPic li {
     padding: 1rem;
-    margin: 0;
+    margin: 1px .5rem;
     border: 0;
+    overflow: hidden;
+}
+
+.meetPeopleTab .tabMain .userPic li.active {
+    outline: 1px dashed #6DC56E;
+    background: url(../img/select.png) right bottom no-repeat;
+    background-size: 24px 24px;
 }
 
 .meetPeopleTabLittle .tabMain .pic {

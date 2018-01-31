@@ -51,7 +51,8 @@
     let pushMesValue = '';
 
     // 加载会议回应状态
-    joinNum.href = 'afterMeetNum.html?meet=' + meet;
+    joinNum.href = 'feedback.html?meet=' + meet;
+    noBackNum.href = 'afterMeetNum.html?meet=' + meet;
 
     // 更新会议相关信息
     ajaxTool.findMeet({
@@ -70,7 +71,7 @@
 
         changeBtn.setAttribute('href', 'newMeeting.html?meet=' + meetData.mName)
 
-        // 加载发起人
+        // 加载管理员
         pic.innerHTML = meetData.mAdmin.split('')[0];
         pic.style.background = tools.radomData(user_avatar_data);
         ajaxTool.findUser({
@@ -84,9 +85,13 @@
 
         // 加载参会人
         let userDom = '';
-        meetData.mPeople.split(',').map((data) => {
-            userDom += '<li><div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
-        });
+        if(meetData.mPeople.length == 0){
+            userDom += '<div class="adminMes"><span class="name">数据错误，请联系管理员</span></div>';
+        }else{
+            meetData.mPeople.map((data) => {
+                userDom += '<li><div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
+            });
+        }
         meetPeople.innerHTML = userDom;
 
         // 加载二维码
@@ -196,18 +201,30 @@
     }, (data) => {
         // 确认参加
         // 条件：参加
-        let data_1 = tools.filterData(data.statusList, 'sStatus', 0);
-        document.querySelector('.joinNum span').innerHTML = data_1.length;
+        // let data_1 = tools.filterData(data.statusList, 'sStatus', 0);
+        // document.querySelector('.joinNum span').innerHTML = data_1.length;
+
+        // 已经反馈的用户量
+        let data_1 = tools.filterData(data.statusList, 'sStatus', 2);
+        document.querySelector('.joinNum span').innerHTML = data.statusList.length - data_1.length;
 
         // 已请假，待审批的
         // 条件：请假
+        // let data_2 = tools.filterData(data.statusList, 'sStatus', 1);
+        // document.querySelector('.leaveNum span').innerHTML = data_2.length;
+
+        // 请假的人数，全部 
         let data_2 = tools.filterData(data.statusList, 'sStatus', 1);
-        // data_2 = tools.filterData(data_2, 'sLeave', 0);
-        document.querySelector('.leaveNum span').innerHTML = data_2.length;
+        let data_2_1 = tools.filterData(data_2, 'sLeave', 2);
+        document.querySelector('.leaveNum span').innerHTML = data_2.length - data_2_1.length;
 
         // 未反馈
         // 条件
-        let data_3 = tools.filterData(data.statusList, 'sStatus', 2);
+        // let data_3 = tools.filterData(data.statusList, 'sStatus', 2);
+        // document.querySelector('.noBackNum span').innerHTML = data_3.length;
+
+        // 签到的人数
+        let data_3 = tools.filterData(data.statusList, 'sSign', 0);
         document.querySelector('.noBackNum span').innerHTML = data_3.length;
     });
 

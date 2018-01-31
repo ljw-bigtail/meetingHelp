@@ -145,8 +145,8 @@ meetSchema.statics = {
 			} else {
 				let meetData = [];
 				meetList.map((data) => {
-					let userData = data.mPeople.split(",");
-					userData.map((user) => {
+					// let userData = data.mPeople.split(",");
+					data.mPeople.map((user) => {
 						if (user == val) {
 							meetData.push(data);
 						}
