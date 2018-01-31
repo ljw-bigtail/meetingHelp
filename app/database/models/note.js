@@ -15,7 +15,7 @@ let noteSchema = new Schema({
 		type: String
 	},
 	"mName": {
-		type: String,
+		type: String
 	},
 	"nMes": {
 		type: String
@@ -77,6 +77,7 @@ noteSchema.statics = {
 		});
 	},
 	findNoteByAttr: function (option, callback) {
+		console.log(option)
 		this.findOne(option).exec((err, note) => {
 			if (err) {
 				console.log(err);
@@ -91,6 +92,7 @@ noteSchema.statics = {
 			"name": note.name || '',
 			"mName": note.mName || '',
 			"nMes": note.nMes || '',
+			"isPush": note.isPush || '',
 		}
 		this.create(newNote, (err) => {
 			if (err) {

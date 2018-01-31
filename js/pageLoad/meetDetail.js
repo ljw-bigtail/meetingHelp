@@ -30,7 +30,8 @@
     let pushMes = document.querySelector('#pushMes');
     let fileDownload = document.querySelector('#fileDownload');
     let pushBtn = document.querySelector('.pushBtn');
-    
+    let saveBtn = document.querySelector('.saveBtn');
+
     let joinNum = document.querySelector('.joinNum');
     let leaveNum = document.querySelector('.leaveNum');
     let noBackNum = document.querySelector('.noBackNum');
@@ -64,10 +65,13 @@
         startDom.innerHTML = meetData.mStartTime.replace(/T/, '  ');
         endDom.innerHTML = meetData.mEndTime.replace(/T/, '  ');
         mDesc.innerHTML = meetData.mDesc;
-        if(meetData.mFile){
+        if (meetData.mFile) {
             fileDownload.setAttribute('href', meetData.mFile);
             fileDownload.style.color = '#5176AB';
         }
+
+        // 绑定做笔记的人
+        pushMes.setAttribute('data-recorder', meetData.mRecorder);
 
         changeBtn.setAttribute('href', 'newMeeting.html?meet=' + meetData.mName)
 
@@ -85,9 +89,9 @@
 
         // 加载参会人
         let userDom = '';
-        if(meetData.mPeople.length == 0){
+        if (meetData.mPeople.length == 0) {
             userDom += '<div class="adminMes"><span class="name">数据错误，请联系管理员</span></div>';
-        }else{
+        } else {
             meetData.mPeople.map((data) => {
                 userDom += '<li><div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
             });
@@ -107,11 +111,11 @@
         }, () => {
             // 加载会议管理员
             if (userData.username == meetData.mAdmin) {
-                changeBtn.style.display = 'none';
+                changeBtn.style.display = 'block';
                 leaveNum.href = 'beforeMeetNum.html?meet=' + meet;
                 qrBox.querySelector('img').src = '/uploads/' + meetData.mQRcode.split('uploads/')[1];
             } else {
-                changeBtn.style.display = 'block';
+                changeBtn.style.display = 'none';
                 leaveNum.href = 'JavaScript:void(0)';
                 qrBox.querySelector('img').src = '/img/noQr.png';
             }
@@ -171,17 +175,22 @@
         ajaxTool.findNote({
             option: {
                 'mName': meet,
-                'name': meetData.mAdmin == username ? '' : username,
+                'name': meetData.mRecorder == username ? '' : username,
             }
         }, (noteData) => {
+            // 会议记录员
+            if (userData.username == meetData.mRecorder) {
+                pushBtn.innerHTML = '发布纪要';
+            } else {
+                pushBtn.innerHTML = '发布笔记';
+            }
+
             if (noteData.nMes) {
                 pushMes.value = noteData.nMes;
-                pushBtn.innerHTML = '更新';
+                pushMesValue = noteData.nMes;
                 pushMes.setAttribute('data-title', noteData.nTitle);
                 return false;
             }
-            pushMesValue = pushMes.value;
-            pushBtn.innerHTML = '发表纪要';
         });
     });
 
@@ -294,64 +303,79 @@
         });
     }
 
-    // 保存\更新纪要信息
-    pushBtn.addEventListener('click', () => {
-        if (pushBtn.innerHTML == '发表纪要') {
-            let now = new Date();
-            let Timestamp = '' + now.getFullYear() +
-                ((now.getMonth() + 1) / 10 >= 1 ? (now.getMonth() + 1) : ('0' + (now.getMonth() + 1))) +
-                (now.getDate() / 10 >= 1 ? now.getDate() : ('0' + now.getDate()));
-            let note = {
-                'nTitle': Timestamp + '-' + pushMes.value.substring(0, 10),
-                'name': name.innerHTML.split('：')[1] == username ? '' : username,
-                'mName': meet,
-                'nMes': pushMes.value
-            };
+    // 保存纪要信息
+    saveBtn.addEventListener('click', () => {
+        let now = new Date();
+        // 计算时间编码
+        let Timestamp = '' + now.getFullYear() +
+            ((now.getMonth() + 1) / 10 >= 1 ? (now.getMonth() + 1) : ('0' + (now.getMonth() + 1))) +
+            (now.getDate() / 10 >= 1 ? now.getDate() : ('0' + now.getDate()));
+        // 判断是否有内容
+        if (pushMes.getAttribute('data-title')) {
+            // 保存
             if (pushMes.value == pushMesValue) {
-                err.errMesShow('请填写内容后再发表。');
+                err.errMesShow('没改就不要随便保存了。');
                 return false;
             }
-            ajaxTool.addNote(note, (req) => {
-                if (req.status == 'success') {
-                    err.errMesShow('会议纪要发表成功。');
-                } else {
-                    if (mes.code == 11000) {
-                        err.errMesShow('纪要内容有重复，请修改。');
-                        return false;
-                    }
-                    err.errMesShow('请稍后重试，谢谢。');
-                }
-            });
-        } else if (pushBtn.innerHTML == '更新') {
-            // 更新纪要
-            let note = {
+            ajaxTool.updateNote({
                 'nTitle': pushMes.getAttribute('data-title'),
-                'name': name.innerHTML.split('：')[1] == username ? '' : username,
+                'name': pushMes.getAttribute('data-recorder') == username ? '' : username,
                 'mName': meet,
                 'nMes': pushMes.value
-            };
-            if (pushMes.value == pushMes.getAttribute('data-title')) {
-                err.errMesShow('请更新内容后再发表。');
-                return false;
-            }
-            ajaxTool.updateNote(note, (req) => {
+            }, (req) => {
                 if (req.status == 'success') {
-                    err.errMesShow('会议纪要更新成功。');
+                    err.errMesShow('发布成功！');
                 } else {
                     err.errMesShow('请稍后重试，谢谢。');
                 }
             });
         } else {
-            err.errMesShow('系统繁忙，请稍后。');
+            // 新建
+            if (pushMes.value.split('').length < 20) {
+                err.errMesShow('少说也得多写几个字吧。');
+                return false;
+            }
+            // 存储数据
+            ajaxTool.addNote({
+                'nTitle': Timestamp + '-' + pushMes.value.substring(0, 10),
+                'name': pushMes.getAttribute('data-recorder') == username ? '' : username,
+                'mName': meet,
+                'nMes': pushMes.value,
+                'isPush': false
+            }, (req) => {
+                if (req.status == 'success') {
+                    err.errMesShow('保存成功。');
+                } else {
+                    if (mes.code == 11000) {
+                        err.errMesShow('这都能重复!改改前面的话。');
+                        return false;
+                    }
+                    err.errMesShow('请稍后重试，谢谢。');
+                }
+            });
         }
+    });
+
+    // 更新纪要状态（发布）
+    pushBtn.addEventListener('click', () => {
+        ajaxTool.updateNote({
+            'nTitle': pushMes.getAttribute('data-title'),
+            'isPush': true
+        }, (req) => {
+            if (req.status == 'success') {
+                err.errMesShow('发布成功！');
+                pushMes.className = '';
+            } else if (req.mes == "信息重复。") {
+                err.errMesShow('已经发布过了。');
+            } else {
+                err.errMesShow('请稍后重试，谢谢。');
+            }
+        });
     });
 
     // 点击输入框放大
     pushMes.addEventListener('focus', () => {
-        console.log('add')
         pushMes.className = 'writeIn';
     });
-    pushMes.addEventListener('blur', () => {
-        pushMes.className = '';
-    });
+
 })();

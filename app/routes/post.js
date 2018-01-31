@@ -420,7 +420,7 @@ router.post('/addNote', function (req, res) {
 
 // 修改纪要
 router.post('/updateNote', function (req, res) {
-	if (!req.body.nTitle || !req.body.nMes || !req.body.nTitle) {
+	if (!req.body.nTitle) {
 		res.send(200, {
 			mes: '参数错误。'
 		});

@@ -28,11 +28,13 @@
 
             let canSign = 0;
 
+            // 参与者需要签到，其他人不用签到
             data.mPeople.map((user) => {
                 if (user == username) {
                     canSign += 1;
                 }
             });
+
             // 校验时间，校验人员
             if (start <= now && now <= end) {
                 // 会议进行中                
