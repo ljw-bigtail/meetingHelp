@@ -116,8 +116,7 @@
                 }]);
             }
         });
-        console.log(userData)
-        return userData
+        return userData;
     }
 
     // 加载用户列表
@@ -381,14 +380,20 @@
     // 保存后获取对应位置的信息
     save.addEventListener('click', () => {
         let gapIndex = isGap();
+        // 时间点连续
         let gapState = true;
         // 查看是否连贯
-        for (let i = 0; i < gapIndex.length; i++) {
-            if (gapIndex[i + 1] - gapIndex[i] > 1) {
-                gapState = false;
+        if(gapIndex.length){
+            for (let i = 0; i < gapIndex.length; i++) {
+                if (gapIndex[i + 1] - gapIndex[i] > 1) {
+                    gapState = false;
+                }
             }
+        }else{
+            err.errMesShow('请选择会议召开时间');
+            return false;
         }
-
+        
         if (save.innerHTML == '保存') {
             let changeMeet = {
                 'mDesc': detail.value,
@@ -502,7 +507,7 @@
         let timeChooseClockSelect = timeChooseClock.querySelectorAll('li');
         for (var i = 0; i < timeChooseClockSelect.length; i++) {
             let chooseOneFromClock = timeChooseClockSelect[i].querySelector('input');
-            if (chooseOneFromClock.checked) {
+            if (chooseOneFromClock.checked && !chooseOneFromClock.disabled) {
                 status.push(1);
             } else {
                 status.push(0);
