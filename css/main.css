@@ -647,6 +647,11 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
     font-weight: bold;
 }
 
+.list ul li .main .mes+span.red {
+    color: rgb(216, 23, 17);
+}
+
+
 .list ul li .main .mes h3 {
     line-height: 7rem;
     color: #3f3f3f;

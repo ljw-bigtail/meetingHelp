@@ -147,7 +147,7 @@
             data.mName + '"><h3>' +
             data.mName + '</h3>' + '<div class="mesPeople">' + '<img src="img/04.png" alt="">' + '<span>会议地点</span><span>' +
             data.rName + '</span>' + '</div><div class="mesPeople">' + '<img src="img/03.png" alt=""><span>开始时间</span>' + '<span>' +
-            data.mStartTime + '</span>' + '</div></a></div><span class="showBtn">&gt;</span>' + '</div><div class="del">' +
-            btnValue + '</div></li>';
+            data.mStartTime + '</span>' + '</div></a></div><span class="showBtn ' + (userData.username == data.mAdmin ? 'red' : '') + '">&gt;</span>' + '</div> ' +
+            (userData.username == data.mAdmin ? ('<div class="del">' + btnValue + '</div>') : '') + '</li>';
     }
 })();

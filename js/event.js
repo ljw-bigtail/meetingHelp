@@ -81,10 +81,12 @@ let events = {
     },
     //切换显示方式
     toggleShow: (dom) => {
-        if (dom.style.display == 'block') {
-            dom.style.display = 'none';
-        } else {
-            dom.style.display = 'block';
+        if (dom) {
+            if (dom.style.display == 'block') {
+                dom.style.display = 'none';
+            } else {
+                dom.style.display = 'block';
+            }
         }
     },
     //切换class
