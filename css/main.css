@@ -86,7 +86,7 @@ input:focus {
 }
 
 .search.searchNoun input {
-    background: #e8e8e8;    
+    background: #e8e8e8;
     border: 1px solid #cccccc;
     border-radius: 1rem;
 }
@@ -645,6 +645,10 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
     vertical-align: middle;
     color: #aaaaaa;
     font-weight: bold;
+}
+
+.list ul li .main .mes+span.red {
+    color: rgb(216, 23, 17);
 }
 
 .list ul li .main .mes h3 {
