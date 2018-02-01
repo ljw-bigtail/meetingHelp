@@ -65,9 +65,19 @@
         startDom.innerHTML = meetData.mStartTime.replace(/T/, '  ');
         endDom.innerHTML = meetData.mEndTime.replace(/T/, '  ');
         mDesc.innerHTML = meetData.mDesc;
-        if (meetData.mFile) {
-            fileDownload.setAttribute('href', meetData.mFile);
+        if (meetData.mFile[0] != '') {
+            let dom = '';
+            meetData.mFile.map((data) => {
+                dom += '<a href="' + data + '">会议文件下载</a>'
+            });
+            fileDownload.innerHTML = dom;
             fileDownload.style.color = '#5176AB';
+        } else {
+            fileDownload.innerHTML = '<a href="javascript:void(0)">会议文件下载</a>';
+            fileDownload.style.textDecoration = 'none';
+            fileDownload.addEventListener('click', () => {
+                err.errMesShow('本场会议没有会议文件');
+            });
         }
 
         // 绑定做笔记的人
@@ -337,9 +347,9 @@
             }
             // 存储数据
             let oneTitle = '';
-            if(pushMes.value.substring(0, 10).replace(/(\s|\n)/g,'')){
-                oneTitle = Timestamp + '-' + pushMes.value.substring(0, 10).replace(/(\s|\n)/g,'');
-            }else{
+            if (pushMes.value.substring(0, 10).replace(/(\s|\n)/g, '')) {
+                oneTitle = Timestamp + '-' + pushMes.value.substring(0, 10).replace(/(\s|\n)/g, '');
+            } else {
                 oneTitle = Timestamp + '-' + pushMes.value.substring(0, 10);
             }
             ajaxTool.addNote({
