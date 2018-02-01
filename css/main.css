@@ -77,6 +77,20 @@ input:focus {
     text-align: center;
 }
 
+.search.searchNoun {
+    padding: 1rem 2rem;
+    margin: 0;
+    width: calc( 100% - 4rem);
+    border-radius: 0;
+    border: 0;
+}
+
+.search.searchNoun input {
+    background: #e8e8e8;    
+    border: 1px solid #cccccc;
+    border-radius: 1rem;
+}
+
 footer {
     height: 8rem;
     background: #ffffff;
@@ -371,9 +385,10 @@ div#canNext {
     color: #3f3f3f;
 }
 
-.selectBox{
+.selectBox {
     font-size: 0;
 }
+
 .selectBox span {
     display: inline-block;
     width: 30rem;
@@ -415,7 +430,6 @@ div#canNext {
     right: 0;
 }
 
-
 /* ------------------------------------------- */
 
 @keyframes showErr {
@@ -432,7 +446,6 @@ div#canNext {
         top: -5rem;
     }
 }
-
 
 /* ------------------------------------------- */
 
@@ -595,11 +608,15 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
 }
 
 .list ul li {
-    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     display: block;
     background: #ffffff;
     border: 1px solid #dddddd;
     border-radius: 4px;
+}
+
+.list ul li:last-child {
+    margin-bottom: 0;
 }
 
 .list ul li .main {
@@ -897,13 +914,13 @@ body article .new .newBox li:not(.selectBox) span {
     display: inline-block;
     vertical-align: middle;
 }
+
 body article .new .newBox li.selectBox span {
     font-size: 3rem;
     line-height: 5rem;
     display: inline-block;
     vertical-align: middle;
 }
-
 
 body article .new .newBox li span.val {
     width: calc( 100% - 12rem - 4rem);
@@ -1041,7 +1058,7 @@ footer .inputBox textarea {
     vertical-align: top;
 }
 
-footer .inputBox textarea + .mesFooter {
+footer .inputBox textarea+.mesFooter {
     display: none;
     height: 6rem;
 }
@@ -1066,21 +1083,20 @@ footer .inputBox textarea.writeIn {
     padding: 1rem;
 }
 
-footer .inputBox textarea.writeIn + .mesFooter{
+footer .inputBox textarea.writeIn+.mesFooter {
     display: block;
     height: calc(6rem + 2px);
     background: transparent;
 }
 
-footer .inputBox textarea.writeIn + .mesFooter .flexBox{
+footer .inputBox textarea.writeIn+.mesFooter .flexBox {
     height: calc(6rem + 2px);
     padding: 0;
 }
-footer .inputBox textarea.writeIn + .mesFooter .flexBox span{
+
+footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
     margin-top: 0;
 }
-
-
 
 /* footer .inputBox button {
     vertical-align: top;
@@ -1152,12 +1168,12 @@ footer .inputBox textarea.writeIn + .mesFooter .flexBox span{
     padding: 0;
     border: 0;
 }
-.tipMain .leaveMain h3 i{
+
+.tipMain .leaveMain h3 i {
     font-size: 2.2rem;
     font-weight: normal;
     padding: 0 1rem;
 }
-
 
 .tipMain .leaveMain .fontLength {
     text-align: right;
@@ -1392,7 +1408,7 @@ body article .myMes li.changeMes span {
 
 body article .meetList h4 {
     font-size: 2.8rem;
-    padding: 1.5rem 1.5rem 0 1.5rem;
+    padding: 1.5rem 1.5rem 1rem;
     color: #aaaaaa;
 }
 
@@ -1521,7 +1537,7 @@ body article .newMeet h3 {
     font-weight: bold;
 }
 
-body article .newMeet > span {
+body article .newMeet>span {
     font-size: 2.4rem;
     margin: 1rem 0;
     display: block;
@@ -1530,7 +1546,7 @@ body article .newMeet > span {
     text-align: right;
 }
 
-body article .newMeet > span::before {
+body article .newMeet>span::before {
     content: '*';
     color: red;
     padding-right: .5rem;

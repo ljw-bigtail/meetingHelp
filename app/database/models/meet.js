@@ -145,12 +145,20 @@ meetSchema.statics = {
 			} else {
 				let meetData = [];
 				meetList.map((data) => {
-					// let userData = data.mPeople.split(",");
 					data.mPeople.map((user) => {
 						if (user == val) {
 							meetData.push(data);
 						}
 					});
+					if(data.mAdmin == val){
+						meetData.push(data);						
+					}
+					if(data.mApplicant == val){
+						meetData.push(data);						
+					}
+					if(data.mRecorder == val){
+						meetData.push(data);						
+					}
 				});
 				callback(meetData);
 			}

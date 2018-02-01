@@ -24,6 +24,9 @@
     const writeMainTit = document.querySelector('.writeMain h5');
     const writeMainTime = document.querySelector('.writeMain .mesPeople span:last-child');
 
+    const detailTitle = document.querySelector('.writeMain h6');
+    const pushState = document.querySelector('.writeMain .pushState span');
+
     noteName.innerHTML = note;
 
     let noteDate = {
@@ -41,6 +44,14 @@
         // 数组合并
         Object.assign(noteDate, data);
 
+         // 提示状态信息
+         if(data.isPush){
+            pushState.innerHTML = '已发布，请谨慎修改';
+            pushState.style.color = 'rgb(216, 23, 17)'
+        }else{
+            pushState.innerHTML = '还没有发布呢';            
+        }
+        
         // 填充数据
         writeMainTime.innerHTML = changeTime(data.meta.updateAt);
         writeMainTit.innerHTML = '<a href="meetDetail.html?meet=' + data.mName + '">' + data.mName + '</a>';
@@ -51,17 +62,17 @@
             'attr': 'mName',
             'val': noteDate.mName
         }, (mData) => {
-            // 如果管理员怎样都行
-            if (userData.level == 0) {
+            tools.runUserFunc(userData, () => {
+                // 如果管理员怎样都行
                 publicBtn.style.display = 'block';
                 textMain.value = data.nMes;
                 textMain.removeAttribute('disabled');
-            } else if (userData.level == 1) {
+            }, () => {
                 // 如果是公共纪要，icon显示
                 if (isMain == 'true') {
                     publicBtn.style.display = 'block';
                     // 如果是会议管理员的话可以编辑
-                    if (mData.mAdmin == username) {
+                    if (mData.mRecorder == username) {
                         textMain.value = data.nMes;
                         textMain.removeAttribute('disabled');
                     } else {
@@ -82,14 +93,15 @@
                     publicBtn.style.display = 'none';
                     textMain.value = data.nMes;
                     textMain.removeAttribute('disabled');
+                    detailTitle.innerHTML = '笔记内容';
                 }
-            }
+            });
         });
     });
 
     // 点击提示
     publicBtn.addEventListener('click', function () {
-        err.errMesShow('公共纪要，可以查看，不可编辑。');
+        err.errMesShow('公共纪要，谨慎操作。');
     });
 
     // 保存纪要信息

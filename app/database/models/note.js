@@ -77,7 +77,6 @@ noteSchema.statics = {
 		});
 	},
 	findNoteByAttr: function (option, callback) {
-		console.log(option)
 		this.findOne(option).exec((err, note) => {
 			if (err) {
 				console.log(err);

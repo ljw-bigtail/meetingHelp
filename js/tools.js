@@ -140,5 +140,22 @@ let tools = {
     // 根据index值（第几个半点）返回时间段，从0开始
     getPeriod: (index, joiner) => {
         return work_time[index] + joiner + work_time[index + 1];
+    },
+    // 查询Data中是否有text
+    haveTextInData: (text, Data, callback1, callback2) => {
+        let reg = new RegExp(text, 'g');
+        let isFind = [];
+        Data.map(function (value, index) {
+            if (value.match(reg)) {
+                isFind.push(index)
+            }
+        });
+        if (isFind.length == 0) {
+            // 没找到
+            callback1();
+        } else {
+            // 找到的数组           
+            callback2(isFind);
+        }
     }
 }

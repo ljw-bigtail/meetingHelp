@@ -336,8 +336,14 @@
                 return false;
             }
             // 存储数据
+            let oneTitle = '';
+            if(pushMes.value.substring(0, 10).replace(/(\s|\n)/g,'')){
+                oneTitle = Timestamp + '-' + pushMes.value.substring(0, 10).replace(/(\s|\n)/g,'');
+            }else{
+                oneTitle = Timestamp + '-' + pushMes.value.substring(0, 10);
+            }
             ajaxTool.addNote({
-                'nTitle': Timestamp + '-' + pushMes.value.substring(0, 10),
+                'nTitle': oneTitle,
                 'name': pushMes.getAttribute('data-recorder') == username ? '' : username,
                 'mName': meet,
                 'nMes': pushMes.value,

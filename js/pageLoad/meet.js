@@ -22,8 +22,8 @@
     events.showBtnEvent(meetList, (e) => {
         e.parentNode.style.display = 'none';
         ajaxTool.delMeet({
-            "mName":e.parentNode.querySelector('h3').innerHTML
-        },(req)=>{
+            "mName": e.parentNode.querySelector('h3').innerHTML
+        }, (req) => {
             err.errMesShow(req.mes)
         });
     });
@@ -39,11 +39,18 @@
     let endDom = endTit;
     let futureDom = futureTit;
 
+    // 预备搜索
+    const searchBtn = document.querySelector('.searchBtn');
+    let meetTitleData = [];
+    let meetListLi;
+
     // 根据用户权限修改显示的按钮：管理员，用户
     tools.runUserFunc(userData, () => {
         // 加载会议列表
         ajaxTool.getMeetList({}, (data) => {
             data.meetList.map((data) => {
+                meetTitleData.push(data.mAdmin + data.mName + data.mStartTime.split('T')[0]);
+
                 let now = new Date();
                 let start = new Date(data.mStartTime);
                 // 过期的会议
@@ -63,6 +70,11 @@
             startDom += '</ul>';
             endDom += '</ul>';
             document.querySelector('.meetList').innerHTML += futureDom + endDom;
+
+            meetListLi = document.querySelectorAll('.meetList li:not(.noneData)');
+
+            // 根据dom绑定搜索
+            bindSearch(writeTitleData, meetListLi);
         });
     }, () => {
         // 加载会议列表
@@ -70,6 +82,7 @@
             'user': userData.username
         }, (data) => {
             data.meetList.map((data) => {
+                meetTitleData.push(data.mName + '&' + data.mAdmin + '&' + data.mStartTime.split('T')[0]);
                 let now = new Date();
                 let start = new Date(data.mStartTime);
                 // 过期的会议
@@ -104,11 +117,29 @@
             } else {
                 document.querySelector('.meetList').innerHTML += startDom + joinDom;
             }
+
+            meetListLi = document.querySelectorAll('.meetList li:not(.noneData)');
+
+            // 根据dom绑定搜索
+            bindSearch(meetTitleData, meetListLi);
         });
     });
 
+    function bindSearch(data, dom) {
+        searchBtn.addEventListener('change', function () {
+            tools.haveTextInData(this.value, data, function () {
+                events.hideList(dom);
+            }, function (isFind) {
+                events.hideList(dom);
+                isFind.map(function (num) {
+                    dom[num].style.display = 'block';
+                });
+            });
+        });
+    }
+
     function noMeetDom(val) {
-        return '<li><div class="main"><div class="mes"><span>' + val + '</span></div></li>';
+        return '<li class="noneData"><div class="main"><div class="mes"><span>' + val + '</span></div></li>';
     }
 
     function initDom(data) {
