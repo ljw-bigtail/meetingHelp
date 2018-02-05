@@ -781,4 +781,10 @@ router.post('/getRoomGap', function (req, res) {
 	}
 });
 
+router.get('/getNow', function (req, res) {
+	res.send(200, {
+		'now': new Date()
+	});
+});
+
 module.exports = router;

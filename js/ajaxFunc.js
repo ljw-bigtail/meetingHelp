@@ -464,4 +464,18 @@ let ajaxTool = {
             })
             .catch(e => console.log("报错信息：", e))
     },
+    // 获取现在服务器时间
+    getNow: function (callback) {
+        fetch(server_url + "/api/getNow", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(res => {
+                callback(res)
+            })
+            .catch(e => console.log("报错信息：", e))
+    },
 }

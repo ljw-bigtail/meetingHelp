@@ -647,7 +647,7 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
     font-weight: bold;
 }
 
-.list ul li .main .mes+span.red {
+.list ul li .main .mes+span.showBtn {
     color: rgb(216, 23, 17);
 }
 
@@ -1406,6 +1406,12 @@ body article .myMes li.changeMes {
     margin-bottom: 1rem;
     border-radius: 1rem;
 }
+
+body article .myMes li.changeMes input{
+    padding: 0 1rem;
+    width: calc(100% - 2rem);
+}
+
 
 body article .myMes li.changeMes span {
     width: auto;

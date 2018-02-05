@@ -310,6 +310,7 @@
             start.value = '';
             return false;
         }
+        err.errMesShow('请尽快选择时间并提交，抢占先机');
         ajaxTool.getRoomGap({
             'date': start.value
         }, (req) => {
@@ -383,17 +384,17 @@
         // 时间点连续
         let gapState = true;
         // 查看是否连贯
-        if(gapIndex.length){
+        if (gapIndex.length) {
             for (let i = 0; i < gapIndex.length; i++) {
                 if (gapIndex[i + 1] - gapIndex[i] > 1) {
                     gapState = false;
                 }
             }
-        }else{
+        } else {
             err.errMesShow('请选择会议召开时间');
             return false;
         }
-        
+
         if (save.innerHTML == '保存') {
             let changeMeet = {
                 'mDesc': detail.value,
@@ -569,43 +570,48 @@
         let timeTitleDom = '';
         let timeClockDomA = '';
         let timeClockDomB = '';
-        work_time.map((data, index) => {
-            let checkDom = '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"><span></span></li>';
-            let disableDom = '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled"></li>';
-            let normalDom = '<li><input type="checkbox" name="08" value="' + data + '" ></li>';
-            // 是不是今天现在之前的时间
-            let isFuture = data.split(':')[0] - 0 <= now.getHours() && valDate - 0 == now.getDate();
-            if (index % 2 == 0) {
-                timeTitleDom += '<li>' + data + '</li>'
-                // 根据已选择的会议判定为被选中的
-                if (stateData[index] == 1) {
-                    timeClockDomA += checkDom;
-                } else {
-                    if (isFuture) {
-                        timeClockDomA += disableDom;
+        // 从服务器获取当前时间
+        ajaxTool.getNow((data) => {
+            let serverNow = new Date(data.now);
+            work_time.map((data, index) => {
+                let checkDom = '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"><span></span></li>';
+                let disableDom = '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled"></li>';
+                let normalDom = '<li><input type="checkbox" name="08" value="' + data + '" ></li>';
+                // 是不是今天现在之前的时间
+                let isFuture = data.split(':')[0] - 0 <= serverNow.getHours() && valDate - 0 == serverNow.getDate();
+                if (index % 2 == 0) {
+                    timeTitleDom += '<li>' + data + '</li>'
+                    // 根据已选择的会议判定为被选中的
+                    if (stateData[index] == 1) {
+                        timeClockDomA += checkDom;
                     } else {
-                        timeClockDomA += normalDom;
+                        if (isFuture) {
+                            timeClockDomA += disableDom;
+                        } else {
+                            timeClockDomA += normalDom;
+                        }
+                    }
+                } else {
+                    if (stateData[index] == 1) {
+                        timeClockDomB += checkDom;
+                    } else {
+                        if (isFuture) {
+                            timeClockDomB += disableDom;
+                        } else {
+                            timeClockDomB += normalDom;
+                        }
                     }
                 }
-            } else {
-                if (stateData[index] == 1) {
-                    timeClockDomB += checkDom;
-                } else {
-                    if (isFuture) {
-                        timeClockDomB += disableDom;
-                    } else {
-                        timeClockDomB += normalDom;
-                    }
-                }
-            }
+            });
+            // 渲染时间段--时间dom
+            timeChooseTit.innerHTML = timeTitleDom;
+            // 渲染时间段--时间checkbox
+            timeChooseClock.innerHTML = timeClockDomA + timeClockDomB;
+            // 设置宽度
+            let timeChooseTitWidth = 8 * (work_time.length / 2);
+            timeChooseTit.style.width = timeChooseTitWidth + 'rem';
+            timeChooseClock.style.width = timeChooseTitWidth + 'rem';
         });
-        // 渲染时间段--时间dom
-        timeChooseTit.innerHTML = timeTitleDom;
-        // 渲染时间段--时间checkbox
-        timeChooseClock.innerHTML = timeClockDomA + timeClockDomB;
-        // 设置宽度
-        let timeChooseTitWidth = 8 * (work_time.length / 2);
-        timeChooseTit.style.width = timeChooseTitWidth + 'rem';
-        timeChooseClock.style.width = timeChooseTitWidth + 'rem';
+
     }
 })()
