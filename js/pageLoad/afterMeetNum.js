@@ -1,5 +1,6 @@
 (() => {
     const err = new Err(errMes);
+    const message = new Message(['email','app']);
 
     let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
@@ -57,6 +58,9 @@
         data_2 = tools.filterData(data.statusList, 'sSign', 1);
         dom_span_2.innerHTML = data_2.length;
         dom_ul_2.innerHTML = addDom(data_2);
+
+        chooseAll.click();
+        // clickAll(dom_ul_2.querySelectorAll('li'));        
     });
 
     // 角色可选
@@ -69,10 +73,10 @@
         } else {
             return false;
         }
-        
-        if(dom.className == 'active'){
+
+        if (dom.className == 'active') {
             dom.className = '';
-        }else{
+        } else {
             dom.className = 'active';
         }
     });
@@ -89,8 +93,8 @@
         }
     });
 
-    function clickAll(list){
-        list.forEach((e)=>{
+    function clickAll(list) {
+        list.forEach((e) => {
             e.click();
         });
     }
@@ -98,42 +102,23 @@
     // 提醒签到    
     tipsTo.addEventListener('click', () => {
         const noSignList = dom_ul_2.querySelectorAll('li.active');
+        var userList = [];
+
         if (noSignList.length == 0) {
             err.errMesShow('请选择需要提醒的角色。');
             return false;
         }
-        var userList = [];
         for (var i = 0; i < noSignList.length; i++) {
             userList.push(noSignList[i].querySelector('span').innerHTML);
         }
-        return false;
-        var userMesList = [];
-        userList.map((user) => {
-            ajaxTool.findUser({
-                'attr': 'name',
-                'val': user
-            }, (req) => {
-                userMesList.push(req);
-                if (userMesList.length == userList.length) {
-                    // 计算对应邮件信息
-                    let emailString = '';
-                    userMesList.map((user) => {
-                        emailString += (user.email + ',');
-                    });
-                    ajaxTool.sendMail({
-                        email: emailString,
-                        title: email_title,
-                        mes: email_mes
-                    }, (req) => {
-                        if (req.status.trim() == '250 Ok: queued as') {
-                            err.errMesShow('正在通过邮件提醒参会人员。');
-                            return false;
-                        }
-                        err.errMesShow(req.status);
-                    });
-                }
-            });
-        });
+        
+        message.sendMes({
+            userList: userList,
+            title: email_title,
+            mes: email_mes
+        }, (req) => {
+            console.log(req)
+        })
     });
 
     function addDom(data) {

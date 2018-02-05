@@ -549,44 +549,46 @@ router.post('/getStatusList', function (req, res) {
 
 // 批量发送邮件
 router.post('/sendMail', function (req, res) {
-	let email = req.body.email || null;
+	let userList = req.body.userList || null;
 	let title = req.body.title || null;
 	let mes = req.body.mes || null;
-	if (email == null || title == null || mes == null) {
+	if (userList == null || title == null || mes == null) {
 		res.send(200, {
 			mes: '请输入收件人邮箱、邮件标题、邮件内容。'
 		});
 		return false;
 	}
-	User.findUserByAttr('name', 'admin', (data) => {
-		let transporter = nodeMailer.createTransport({
-			service: 'qq',
-			port: 465,
-			secureConnection: true,
-			auth: {
-				user: data.email,
-				pass: data.desc,
-			}
-		});
-		let mailOptions = {
-			from: data.email,
-			to: email,
-			subject: title,
-			text: mes,
-		};
-		transporter.sendMail(mailOptions, function (error, info) {
-			if (error) {
-				console.log(error);
-				res.send(200, {
-					status: error.response
-				});
-			} else {
-				res.send(200, {
-					status: info.response
-				});
-			}
-		});
-	})
+	User.getEmail(userList, (mailListReq) => {
+		User.findUserByAttr('name', 'admin', (data) => {
+			let transporter = nodeMailer.createTransport({
+				service: 'qq',
+				port: 465,
+				secureConnection: true,
+				auth: {
+					user: data.email,
+					pass: data.desc,
+				}
+			});
+			transporter.sendMail({
+				from: data.email,
+				to: mailListReq,
+				subject: title,
+				text: mes,
+			}, (error, info) => {
+				if (error) {
+					console.log(error);
+					res.send(200, {
+						status: error.response
+					});
+				} else {
+					res.send(200, {
+						status: info.response
+					});
+				}
+			});
+		})
+	});
+
 });
 
 // 获取本年月度数据
@@ -599,7 +601,7 @@ router.post('/getMonthData', function (req, res) {
 		return false;
 	}
 	User.findUserByAttr('name', req.body.username, (req) => {
-		console.log(req)
+		// console.log(req)
 		if (req.level !== 0) {
 			res.send(200, {
 				mes: '该账户没有权限。'
@@ -744,9 +746,9 @@ router.post('/getRoomGap', function (req, res) {
 		}
 
 		//把筛选出的会议室数据跟room表中对比，防止新建会议室没有信息
-		Room.findRoomList(null,null,(roomList)=>{
-			roomList.map((room)=>{
-				if(isInList(room.rName, reqData)){
+		Room.findRoomList(null, null, (roomList) => {
+			roomList.map((room) => {
+				if (isInList(room.rName, reqData)) {
 					reqData.push({
 						'rName': room.rName,
 						'utilization': '',

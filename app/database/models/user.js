@@ -80,8 +80,26 @@ userSchema.pre('save', function (next) {
 	})
 })
 
+userSchema.statimethodscs = {};
 
 userSchema.statics = {
+	getEmail: function (userList, callback) {
+		let result = [];
+		this.find({
+			'name': {
+				'$in': userList
+			}
+		}, (err, list) => {
+			if (err) {
+				console.log(err);
+			} else {
+				list.map((data) => {
+					result.push(data.email);
+				});
+				callback(result);
+			}
+		});
+	},
 	findUserList: function (attr, val, callback) {
 		if (attr && val) {
 			this.find({
@@ -116,16 +134,16 @@ userSchema.statics = {
 		}).exec((err, user) => {
 			if (err) {
 				console.log(err);
-				callback('faile');				
+				callback('faile');
 			} else {
 				// callback(user);
 				callback({
-					'name':user.name,
-					'email':user.email,
-					'phone':user.phone,
-					'desc':user.desc,
-					'dName':user.dName,
-					'level':user.level,
+					'name': user.name,
+					'email': user.email,
+					'phone': user.phone,
+					'desc': user.desc,
+					'dName': user.dName,
+					'level': user.level,
 				});
 			}
 		});
@@ -272,5 +290,7 @@ userSchema.statics = {
 		})
 	}
 }
+
+
 
 module.exports = mongoose.model('user', userSchema);
