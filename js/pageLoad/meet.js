@@ -74,7 +74,7 @@
             meetListLi = document.querySelectorAll('.meetList li:not(.noneData)');
 
             // 根据dom绑定搜索
-            bindSearch(writeTitleData, meetListLi);
+            bindSearch(meetTitleData, meetListLi);
         });
     }, () => {
         // 加载会议列表
@@ -143,11 +143,14 @@
     }
 
     function initDom(data) {
+        // 是否是会议管理员 || 是否是管理员 
+        let canManage = userData.username == data.mAdmin || userData.level == 0;
         return '<li><div class="main"><div class="mes">' + '<a href="meetDetail.html?meet=' +
             data.mName + '"><h3>' +
             data.mName + '</h3>' + '<div class="mesPeople">' + '<img src="img/04.png" alt="">' + '<span>会议地点</span><span>' +
             data.rName + '</span>' + '</div><div class="mesPeople">' + '<img src="img/03.png" alt=""><span>开始时间</span>' + '<span>' +
-            data.mStartTime + '</span>' + '</div></a></div><span class="' + (userData.username == data.mAdmin ? 'showBtn' : '') + '">&gt;</span>' + '</div> ' +
-            (userData.username == data.mAdmin ? ('<div class="del">' + btnValue + '</div>') : '') + '</li>';
+            data.mStartTime + '</span>' + '</div></a></div><span class="' + 
+            (canManage ? 'showBtn' : '') + '">&gt;</span>' + '</div> ' +
+            (canManage ? ('<div class="del">' + btnValue + '</div>') : '') + '</li>';
     }
 })();

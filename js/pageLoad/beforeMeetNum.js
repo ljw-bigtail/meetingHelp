@@ -1,20 +1,20 @@
 (() => {
     const err = new Err(errMes);
+    let userData = tools.getUserFormCookie();
 
-    let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
-    tools.noUser(username);
+    tools.noUser(userData.username);
     tools.headValue(meet + '-请假统计-' + project_name);
     tools.titleValue('请假统计');
 
-    // if(username == )
     ajaxTool.findMeet({
         'attr': 'mName',
         'val': meet
     }, (meetData) => {
         // 放置没有权限的审批请假
-        if (username != meetData.mAdmin) {
-            window.location.href = '/';
+        let canManage = userData.username != meetData.mAdmin && userData.level != 0;
+        if (canManage) {
+            window.location.goBack();
         }
     });
 

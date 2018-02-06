@@ -1,5 +1,6 @@
 (function () {
     const err = new Err(errMes);
+    let userData = tools.getUserFormCookie();
 
     let username = tools.getCookie('username');
     tools.noUser(username);
@@ -21,14 +22,25 @@
     const phoneDom = document.getElementById('phone');
     const emailDom = document.getElementById('email');
     const descDom = document.getElementById('desc');
+    const descTit = document.querySelectorAll('.myMes .changeMes')[3].querySelector('span');
     const departmentDom = document.getElementById('department');
     const logout = document.querySelector('.logout');
+    const departmentLi = document.querySelectorAll('.myMes .changeMes')[4]
 
     userDom.value = username;
     phoneDom.value = phone;
     emailDom.value = email;
     descDom.value = desc;
     departmentDom.value = department;
+
+    tools.runUserFunc(userData,()=>{
+        // 管理员
+        descTit.innerHTML = '邮箱密码';
+        descDom.setAttribute('placeholder','请填写QQ邮箱授权码');
+        descDom.setAttribute('type','password');
+
+        departmentLi.style.display = 'none';
+    });
 
     // 保存数据
     document.querySelector('.save').addEventListener('click', () => {

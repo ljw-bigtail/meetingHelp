@@ -588,7 +588,6 @@ router.post('/sendMail', function (req, res) {
 			});
 		})
 	});
-
 });
 
 // 获取本年月度数据

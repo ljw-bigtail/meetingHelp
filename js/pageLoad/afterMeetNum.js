@@ -1,10 +1,10 @@
 (() => {
     const err = new Err(errMes);
-    const message = new Message(['email','app']);
+    const message = new Message(['email', 'app']);
+    let userData = tools.getUserFormCookie();
 
-    let username = tools.getCookie('username');
     let meet = tools.getQuery('meet');
-    tools.noUser(username);
+    tools.noUser(userData.username);
     tools.headValue(meet + '-参会统计-' + project_name);
     tools.titleValue('参会统计');
 
@@ -24,7 +24,8 @@
         'val': meet
     }, (meetData) => {
         // 放置没有权限的审批请假
-        if (username != meetData.mAdmin) {
+        let canManage = userData.username != meetData.mAdmin && userData.level != 0;
+        if (canManage) {
             document.querySelector('.tabMain li[data-index="2"]').removeChild(document.querySelector('footer'));
             dom_ul_2.className = 'userPic';
         }
@@ -102,7 +103,7 @@
     // 提醒签到    
     tipsTo.addEventListener('click', () => {
         const noSignList = dom_ul_2.querySelectorAll('li.active');
-        var userList = [];
+        let userList = [];
 
         if (noSignList.length == 0) {
             err.errMesShow('请选择需要提醒的角色。');
@@ -111,13 +112,29 @@
         for (var i = 0; i < noSignList.length; i++) {
             userList.push(noSignList[i].querySelector('span').innerHTML);
         }
-        
+
         message.sendMes({
             userList: userList,
             title: email_title,
             mes: email_mes
         }, (req) => {
-            console.log(req)
+            let mes = '消息推送成功';
+            let len = req.length;
+            let count = 0;
+            req.map((data) => {
+                count++;
+                if (data.meg == 'false') {
+                    if (data.way == 'app') {
+                        mes = 'App端消息推送失败';
+                    }
+                    if (data.way == 'email') {
+                        mes = '通知邮件发送消息失败';
+                    }
+                }
+                if(count >= len){
+                    err.errMesShow(mes)
+                }
+            });
         })
     });
 
