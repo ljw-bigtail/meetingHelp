@@ -207,69 +207,96 @@ router.post('/addRoom', function (req, res) {
 
 // 新建会议
 router.post('/addMeet', function (req, res) {
-	if (!req.body.name || !req.body.detail || !req.body.start || !req.body.end || !req.body.room || !req.body.sponsor || !req.body.joinList) {
+	if (!req.body.name || !req.body.detail || !req.body.start || !req.body.end || !req.body.room || !req.body.mAdmin || !req.body.joinList) {
 		res.send(200, {
 			mes: '参数错误。'
 		});
 		return false;
 	}
-	// 是否成功保存
-	let sure = 0;
-	// 创建二维码
-	var saveData = {
-		'mName': req.body.name,
-		'mStartTime': req.body.start,
-		'mEndTime': req.body.end,
-		'mPeople': req.body.joinList
-	}
-	let qr_png = qr_image.image(encodeURI(JSON.stringify(saveData)), {
-		type: 'png',
-		size: 6
-	});
-	let qr_png_url = URL + '/uploads/qr_code/uploads_' + req.body.name + '.png';
-	let qr_pipe = qr_png.pipe(fs.createWriteStream(qr_png_url));
-	qr_pipe.on('error', function (err) {
-		res.send(200, {
-			'mes': err
-		});
-		return false;
-	})
-	qr_pipe.on('finish', function () {
-		// 合并新参数、，创建会议
-		var meetData = req.body;
-		Object.assign(meetData, {
-			'mQRcode': qr_png_url
-		});
-		Meet.addMeet(meetData, (mes) => {
-			if (mes.status == "faile") {
-				res.send(200, mes);
-				return false;
-			}
-			// 创建参会人员状态
-			let peopleData = req.body.joinList;
-			peopleData.push(req.body.sponsor);
-			peopleData.map((join) => {
-				Status.addStatus({
-					'name': join,
-					'mName': req.body.name
-				}, (req) => {
-					if ('status' == 'faile') {
-						sure += 1;
-					}
-				});
+	// 发起时间与结束时间的校验
+	Meet.findMeetInToday((todyData) => {
+		let newStart = new Date(req.body.start).getTime();
+		let newEnd = new Date(req.body.end).getTime();
+		let oneStart, oneEnd;
+		let questionCount = 0;
+		// 查到今天的
+		if (todyData.length > 0) {
+			todyData.map((data) => {
+				oneStart = new Date(data.mStartTime).getTime();
+				oneEnd = new Date(data.mEndTime).getTime();
+				if (!(newStart >= oneEnd || newEnd <= oneStart)) {
+					questionCount++;
+				}
 			});
-			if (sure == 0) {
-				res.send(200, {
-					'status': 'success',
-					'qrCode': '/uploads/qr_code/uploads_' + req.body.name + '.png'
+		}
+		// 如果有问题
+		if (questionCount > 0) {
+			res.send(200, {
+				mes: '填写的过程中，您选择的时间段被占用了'
+			});
+			return false;
+		}
+		return false;
+		// 一切正常
+		// 是否成功保存
+		let sure = 0;
+		// 创建二维码
+		var saveData = {
+			'mName': req.body.name,
+			'mStartTime': req.body.start,
+			'mEndTime': req.body.end,
+			'mPeople': req.body.joinList
+		}
+		let qr_png = qr_image.image(encodeURI(JSON.stringify(saveData)), {
+			type: 'png',
+			size: 6
+		});
+		let qr_png_url = URL + '/uploads/qr_code/uploads_' + req.body.name + '.png';
+		let qr_pipe = qr_png.pipe(fs.createWriteStream(qr_png_url));
+		qr_pipe.on('error', function (err) {
+			res.send(200, {
+				'mes': err
+			});
+			return false;
+		})
+		qr_pipe.on('finish', function () {
+			// 合并新参数、，创建会议
+			var meetData = req.body;
+			Object.assign(meetData, {
+				'mQRcode': qr_png_url
+			});
+			Meet.addMeet(meetData, (mes) => {
+				if (mes.status == "faile") {
+					res.send(200, mes);
+					return false;
+				}
+				// 创建参会人员状态
+				let peopleData = req.body.joinList;
+				peopleData.push(req.body.mAdmin);
+				peopleData.map((join) => {
+					Status.addStatus({
+						'name': join,
+						'mName': req.body.name
+					}, (req) => {
+						if ('status' == 'faile') {
+							sure += 1;
+						}
+					});
 				});
-			} else {
-				res.send(200, {
-					'status': 'false'
-				})
-			}
+				if (sure == 0) {
+					res.send(200, {
+						'status': 'success',
+						'qrCode': '/uploads/qr_code/uploads_' + req.body.name + '.png'
+					});
+				} else {
+					res.send(200, {
+						'status': 'false'
+					})
+				}
+			});
 		});
 	});
+	return false;
 });
 
 // 删除会议

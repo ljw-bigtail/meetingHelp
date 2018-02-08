@@ -34,7 +34,7 @@
         userTip.style.display = 'none';
         adminTip.style.display = 'block';
         cameraBtn.style.display = 'none';
-        
+
         // 一个统计图
         let myChart = echarts.init(document.querySelector('.adminTip'));
         myChart.setOption({
@@ -122,7 +122,7 @@
         userTip.style.display = 'block';
         adminTip.style.display = 'none';
         newSth.style.display = 'none';
-        
+
         // 加载待进行会议
         ajaxTool.getMeetList({
             'user': userData.username

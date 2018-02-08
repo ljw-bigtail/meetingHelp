@@ -115,26 +115,10 @@
 
         message.sendMes({
             userList: userList,
-            title: email_title,
-            mes: email_mes
+            title: warn_signin_title,
+            mes: warn_signin_mes
         }, (req) => {
-            let mes = '消息推送成功';
-            let len = req.length;
-            let count = 0;
-            req.map((data) => {
-                count++;
-                if (data.meg == 'false') {
-                    if (data.way == 'app') {
-                        mes = 'App端消息推送失败';
-                    }
-                    if (data.way == 'email') {
-                        mes = '通知邮件发送消息失败';
-                    }
-                }
-                if(count >= len){
-                    err.errMesShow(mes)
-                }
-            });
+            err.errMesShow(tools.checkState(req, '消息推送成功', 'App端消息推送失败', '通知邮件发送消息失败'))
         })
     });
 

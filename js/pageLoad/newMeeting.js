@@ -2,6 +2,7 @@
     // 提示信息
     const err = new Err(errMes);
     const tipBox = new Err(canNext);
+    const message = new Message(['email', 'app']);
 
     let userCookie = tools.getUserFormCookie();
     let username = tools.getCookie('username');
@@ -70,7 +71,7 @@
     const start = document.querySelector('#start');
     const end = document.querySelector('#end');
     const room = document.querySelector('#room');
-    const sponsor = document.querySelector('#sponsor');
+    const mAdmin = document.querySelector('#mAdmin');
     const join = document.querySelector('#join');
     const canRead = document.querySelector('#canRead');
     const autoJoin = document.querySelector('#autoJoin');
@@ -440,7 +441,7 @@
             err.errMesShow('请选择会议地点');
             return false;
         }
-        if (sponsor.innerHTML == '请选择' || sponsor.innerHTML == '') {
+        if (mAdmin.innerHTML == '请选择' || mAdmin.innerHTML == '') {
             err.errMesShow('请选择管理员');
             return false;
         }
@@ -448,7 +449,7 @@
             err.errMesShow('请选择记录员');
             return false;
         }
-        if (join.innerHTML == '请选择' || sponsor.innerHTML == '') {
+        if (join.innerHTML == '请选择' || join.innerHTML == '') {
             err.errMesShow('请选择参会者');
             return false;
         }
@@ -461,7 +462,7 @@
             'start': start.value + 'T' + work_time[gapIndex[0]],
             'end': start.value + 'T' + work_time[(gapIndex[gapIndex.length - 1] + 1)],
             'room': showRoom.getAttribute('data-room'),
-            'sponsor': sponsor.innerHTML,
+            'mAdmin': mAdmin.innerHTML,
             'joinList': join.innerHTML.split(','),
             'mNote': canRead.className == 'selected' ? 0 : 1,
             'mJoin': autoJoin.className == 'selected' ? 0 : 1,
@@ -472,19 +473,52 @@
         ajaxTool.addMeet(meetData, (res) => {
             // 不需要修改会议室状态
             if (res.status == 'success') {
-                err.errMesShow('新建成功，请保存二维码。');
-                // 展示生成的二维码（签到用）
-                qrcode.querySelector('#qrCodeImg').src = res.qrCode;
-                qrcode.style.display = 'block';
+                // 查看申请者是不是管理员
+                if (meetData.mAdmin == meetData.mApplicant) {
+                    qrcode.querySelector('#qrCodeImg').src = res.qrCode;
+                    qrcode.style.display = 'block';
+                }
+                // 展示生成的二维码（签到用），由于申请者不一定是管理员，所以不允许展示二维码
+                err.errMesShow('新建成功，正在通知相关人员。');
+                // 管理员权限消息
+                message.sendMes({
+                    userList: meetData.mAdmin,
+                    title: newMeet_admin_title,
+                    mes: newMeet_admin_mes
+                }, (req) => {
+                    err.errMesShow(tools.checkState(req, '消息推送成功', '管理员的App端消息推送失败', '管理员的邮件推送失败'))
+                })
+                // 记录员权限消息
+                message.sendMes({
+                    userList: meetData.mRecorder,
+                    title: newMeet_admin_title,
+                    mes: newMeet_admin_mes
+                }, (req) => {
+                    err.errMesShow(tools.checkState(req, '消息推送成功', '记录员的App端消息推送失败', '记录员的邮件推送失败'))
+                })
+                // 参会者权限消息
+                message.sendMes({
+                    userList: meetData.joinList,
+                    title: newMeet_admin_title,
+                    mes: newMeet_admin_mes
+                }, (req) => {
+                    err.errMesShow(tools.checkState(req, '消息推送成功', '参会者的App端消息推送失败', '参会者的邮件推送失败'))
+                })
             } else {
                 if (res.mes.code == 11000) {
                     err.errMesShow('会议重复，请修改名称。');
+                    return false;
+                }
+                if (res.mes == '填写的过程中，您选择的时间段被占用了') {
+                    err.errMesShow(res.mes);
                     return false;
                 }
                 err.errMesShow('新建失败，请重新来过。');
             }
         });
     });
+
+
 
     qrCodeClose.addEventListener('click', () => {
         window.location.href = '/';

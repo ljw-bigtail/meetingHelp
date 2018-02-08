@@ -150,17 +150,34 @@ meetSchema.statics = {
 							meetData.push(data);
 						}
 					});
-					if(data.mAdmin == val){
-						meetData.push(data);						
+					if (data.mAdmin == val) {
+						meetData.push(data);
 					}
-					if(data.mApplicant == val){
-						meetData.push(data);						
+					if (data.mApplicant == val) {
+						meetData.push(data);
 					}
-					if(data.mRecorder == val){
-						meetData.push(data);						
+					if (data.mRecorder == val) {
+						meetData.push(data);
 					}
 				});
 				callback(meetData);
+			}
+		});
+	},
+	findMeetInToday: function (callback) {
+		let now = new Date();
+		let nowStr = now.getFullYear() + '-' + (now.getMonth() < 9 ? '0' + (now.getMonth() + 1) : now.getMonth() + 1) + '-' + (now.getDate() < 10 ? '0' + now.getDate() : now.getDate());
+		let reg = new RegExp(nowStr);
+		console.log(reg)
+		this.find({
+			'mStartTime': reg
+		}).sort({
+			"_id": -1
+		}).exec((err, meetList) => {
+			if (err) {
+				callback(err);
+			} else {
+				callback(meetList);
 			}
 		});
 	},
@@ -222,7 +239,7 @@ meetSchema.statics = {
 			"mStartTime": meet.start || '',
 			"mEndTime": meet.end || '',
 			"rName": meet.room || '',
-			"mAdmin": meet.sponsor || '',
+			"mAdmin": meet.mAdmin || '',
 			"mPeople": meet.joinList || [],
 			"mQRcode": meet.mQRcode || '',
 			"mJoin": meet.mJoin,

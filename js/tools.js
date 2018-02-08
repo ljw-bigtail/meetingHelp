@@ -157,5 +157,25 @@ let tools = {
             // 找到的数组           
             callback2(isFind);
         }
+    },
+    // 校验状态数组并返回消息
+    checkState: (stateArray, mesOk, mesApp, mesEmail) => {
+        let mes = mesOk;
+        let len = stateArray.length;
+        let count = 0;
+        stateArray.map((data) => {
+            count++;
+            if (data.msg == 'false') {
+                if (data.way == 'app') {
+                    mes = mesApp;
+                }
+                if (data.way == 'email') {
+                    mes = mesEmail;
+                }
+            }
+            if (count >= len) {
+                return mes;
+            }
+        });
     }
 }

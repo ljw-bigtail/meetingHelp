@@ -1,7 +1,10 @@
 // 应用名称
 const project_name = '会议助手';
 
-// 服务器地址
+// 页面地址
+const website_url = 'http://192.168.199.206:5500';
+
+// 服务器后台地址
 const server_url = 'http://192.168.199.206:3000';
 
 // 用户头像背景色数组
@@ -41,6 +44,17 @@ const work_time = [
 // 会议室未来几小时的状态
 const room_future_status = 3;
 
-// 邮件提醒信息
-const email_title = '会议签到提醒-来自会议助手';
-const email_mes = '您的会议已经开始，请不要忘记参加并签到。';
+// 签到提醒
+const warn_signin_title = '会议签到提醒-来自会议助手';
+const warn_signin_mes = '您的会议即将开始，请不要忘记参加并签到。打开' + website_url + '立即进入应用！';
+
+// 新建提醒
+// 管理员消息
+const newMeet_admin_title = '会议发起提醒-来自会议助手';
+const newMeet_admin_mes = '由您管理的会议已经申请成功，请打开会议助手应用' + website_url + '查看。';
+// 记录员消息
+const newMeet_recorder_title = '会议签到提醒-来自会议助手';
+const newMeet_recorder_mes = '由您需要记录的会议已经申请成功，请打开会议助手应用' + website_url + '查看。';
+// 参会者消息
+const newMeet_join_title = '会议签到提醒-来自会议助手';
+const newMeet_join_mes = '您参加的会议已经申请成功，请不要忘记参加并签到。' + website_url;
