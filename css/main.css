@@ -86,7 +86,7 @@ input:focus {
 }
 
 .search.searchNoun input {
-    background: #e8e8e8;    
+    background: #e8e8e8;
     border: 1px solid #cccccc;
     border-radius: 1rem;
 }
@@ -99,23 +99,27 @@ footer {
 
 footer .flexBox {
     display: flex;
-    padding: 1rem 0rem;
+    padding: 1.6rem 2.5rem;
 }
 
 footer .flexBox span {
     flex: 2;
     text-align: center;
-    line-height: 6rem;
-    height: 6rem;
+    line-height: 6.8rem;
+    height: 6.8rem;
     font-size: 3rem;
-    margin: 0 1rem;
+    /* margin: 0 1rem; */
     margin-top: -1px;
     border: 1px solid #cccccc;
     border-radius: 1rem;
 }
 
+footer .flexBox span:first-child {
+    margin-right: 2.5rem;
+}
+
 footer .flexBox span.success {
-    background: #0BB908;
+    background: #3d8cf8;
     color: #ffffff;
     margin-top: 0;
     border: none;
@@ -130,6 +134,8 @@ footer .flexBox span.warning {
     color: #ffffff;
     margin-top: 0;
     border: none;
+    line-height: calc(6.8rem - 2px);
+    height: calc(6.8rem - 2px);
 }
 
 footer .flexBox span.warning a {
@@ -137,10 +143,12 @@ footer .flexBox span.warning a {
 }
 
 footer .flexBox span.wrong {
-    background: rgb(216, 23, 17);
-    color: #ffffff;
+    background: #ffffff;
+    color: rgb(216, 23, 17);
     margin-top: 0;
-    border: none;
+    border: 1px solid rgb(216, 23, 17);
+    line-height: calc(6.8rem - 2px);
+    height: calc(6.8rem - 2px);
 }
 
 footer .flexBox span.wrong a {
@@ -235,15 +243,47 @@ div#canNext {
 }
 
 #user {
-    display: none;
     position: fixed;
-    left: 0;
-    right: 0;
+    left: 100%;
     top: 0;
     bottom: 0;
     background: rgba(200, 200, 200, .8);
     font-size: 0;
 }
+
+#user.openUserBox {
+    left: 0;
+    right: 0;
+    animation: .3s closeUserBox;
+}
+
+#user.closeUserBox {
+    left: 100%;
+    animation: .3s openUserBox;
+}
+
+/* --------------------- */
+
+@keyframes openUserBox {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 100%;
+        right: auto;
+    }
+}
+
+@keyframes closeUserBox {
+    0% {
+        left: 100%;
+    }
+    100% {
+        left: 0;
+    }
+}
+
+/* --------------------- */
 
 #user div.search {
     display: inline-block;
@@ -273,7 +313,7 @@ div#canNext {
 }
 
 #user ul.userSelect {
-    width: calc(5 * 13rem);
+    min-width: 100%;
     font-size: 0;
     height: 6rem;
 }
@@ -404,17 +444,17 @@ div#canNext {
 
 .selectBox .choose>div {
     float: right;
-    width: calc( 6rem - 2px);
-    height: 3rem;
-    border-radius: 1.5rem;
+    width: calc( 6.4rem - 2px);
+    height: 3.6rem;
+    border-radius: 1.8rem;
     background: #BBBBBB;
     position: relative;
 }
 
 .selectBox .choose>div>span {
     position: absolute;
-    height: calc( 3rem - 2px);
-    width: calc( 3rem - 2px);
+    height: calc( 3.6rem - 2px);
+    width: calc( 3.6rem - 2px);
     border-radius: 50%;
     background: #ffffff;
     border: 1px solid #aaaaaa;
@@ -425,12 +465,36 @@ div#canNext {
     background: #0BB908;
 }
 
+.selectBox .choose>div.rmSelected>span {
+    left: 0;
+    animation: .3s rmSelectSpanMove;
+}
+
 .selectBox .choose>div.selected>span {
-    left: auto;
-    right: 0;
+    left: 2.8rem;
+    border-color: #0BB908;
+    animation: .3s selectSpanMove;
 }
 
 /* ------------------------------------------- */
+
+@keyframes rmSelectSpanMove {
+    0% {
+        left: 2.8rem;
+    }
+    100% {
+        left: 0;
+    }
+}
+
+@keyframes selectSpanMove {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 2.8rem;
+    }
+}
 
 @keyframes showErr {
     0% {
@@ -453,7 +517,7 @@ body>header {
     height: 8rem;
     font-size: 0;
     line-height: 8rem;
-    background: #5176AB;
+    background: #3d8cf8;
 }
 
 body>header .back {
@@ -461,7 +525,7 @@ body>header .back {
     width: 10rem;
     height: 8rem;
     border: 0;
-    font-size: 4rem;
+    font-size: 3.6rem;
     background: transparent;
     line-height: 8rem;
     color: #ffffff;
@@ -470,7 +534,7 @@ body>header .back {
 }
 
 body>header .title {
-    font-size: 4rem;
+    font-size: 3.6rem;
     color: #ffffff;
     display: inline-block;
     margin-right: 10rem;
@@ -480,7 +544,7 @@ body>header .title {
 }
 
 body>article.hasFooter {
-    height: calc( 100% - 16rem);
+    height: calc( 100% - 10rem - 8rem);
 }
 
 body>article {
@@ -490,7 +554,8 @@ body>article {
 
 body>article .tip {
     overflow: hidden;
-    background: #4C4F58;
+    /* background: #4C4F58; */
+    background: #fff;
     height: calc( 28% - 8rem);
     min-height: 16rem;
     text-align: center;
@@ -506,20 +571,22 @@ body>article .adminTip {
 }
 
 body>article .tip .num {
-    font-size: 8rem;
+    font-size: 9.4rem;
     line-height: 11rem;
-    color: #ffffff;
+    color: #3c8bf9;
+    font-weight: 500;
 }
 
 body>article .tip p {
-    font-size: 2.6rem;
-    line-height: 6rem;
-    color: #ffffff;
+    font-size: 3.2rem;
+    line-height: 5rem;
+    color: #202020;
 }
 
 body>article .tip a {
-    font-size: 2rem;
-    color: #ffffff;
+    font-size: 3rem;
+    line-height: 6rem;
+    color: #3c8bf9;
 }
 
 body>article .btnBox {
@@ -538,6 +605,7 @@ body>article .btnBox .btnTitle {
 
 body>article .btnBox .btnTitle h3 {
     font-size: 3rem;
+    padding-left: 2rem;
 }
 
 body>article .btnBox ul {
@@ -547,11 +615,12 @@ body>article .btnBox ul {
 body>article .btnBox ul li {
     display: inline-block;
     width: 33.33%;
+    padding-bottom: 1rem;
 }
 
 body>article .btnBox ul li .pic {
     display: block;
-    margin: 1rem auto;
+    margin: 2rem auto;
     padding: 1rem;
     width: 7rem;
     height: 7rem;
@@ -580,7 +649,7 @@ body>article .btnBox ul li h5 {
 }
 
 body>footer {
-    height: 8rem;
+    height: 10rem;
 }
 
 body>article .btnBox:nth-child(3) ul li:nth-child(1) .pic {
@@ -638,7 +707,7 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
 
 .list ul li .main .mes+span {
     display: inline-block;
-    font-size: 3.2rem;
+    font-size: 5rem;
     font-family: serif;
     width: 4rem;
     text-align: center;
@@ -650,7 +719,6 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
 .list ul li .main .mes+span.showBtn {
     color: rgb(216, 23, 17);
 }
-
 
 .list ul li .main .mes h3 {
     line-height: 7rem;
@@ -855,7 +923,7 @@ body article .new .newBox:first-child {
 body article .new .newBox {
     margin-top: 2rem;
     background: #ffffff;
-    padding: 2rem;
+    padding: 2.5rem;
 }
 
 body article .new .newBox li {
@@ -999,7 +1067,7 @@ body article .meetMain h3 {
 body article .meetMain h3+a {
     font-size: 2.6rem;
     line-height: 5rem;
-    color: #5176AB;
+    color: #3d8cf8;
     margin-bottom: 1rem;
     display: block;
 }
@@ -1034,11 +1102,11 @@ body article .meetMain ul li span {
 }
 
 body article .meetMain ul li.colorBlue {
-    color: #5176AB;
+    color: #3d8cf8;
 }
 
 body article .meetMain ul li.colorBlue span {
-    color: #5176AB;
+    color: #3d8cf8;
 }
 
 footer .inputBox {
@@ -1231,7 +1299,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 
 .tab .tabTittle li.select {
     background: #ffffff;
-    border-bottom: 2px solid #5176AB;
+    border-bottom: 2px solid #3d8cf8;
     margin-bottom: -1px;
 }
 
@@ -1255,11 +1323,11 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 }
 
 .meetPeopleTab .tabMain li ul.hasFooter.hasPadding {
-    height: calc( 100% - 8rem - 3rem);
+    height: calc( 100% - 10rem - 3rem);
 }
 
 .meetPeopleTab .tabMain li ul.hasFooter {
-    height: calc( 100% - 8rem);
+    height: calc( 100% - 10rem);
 }
 
 .meetPeopleTab .tabMain ul li {
@@ -1338,7 +1406,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 .loginBG {
     height: 100%;
     width: 100%;
-    background: #5176AB;
+    background: #3d8cf8;
 }
 
 .loginBG .loginBox {
@@ -1383,7 +1451,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 
 .loginBG .loginBox footer button {
     border: 0;
-    background: #5176AB;
+    background: #3d8cf8;
     color: #ffffff;
     height: 0rem;
     line-height: 6rem;
@@ -1402,19 +1470,28 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 }
 
 body article .myMes li.changeMes {
-    padding: 1rem;
+    /* padding: 1rem; */
     margin-bottom: 1rem;
-    border-radius: 1rem;
 }
 
-body article .myMes li.changeMes input{
-    padding: 0 1rem;
-    width: calc(100% - 2rem);
+body article .myMes ul.newBox li.changeMes input {
+    font-size: 3rem;
+    color: #202020;
+    letter-spacing: 0;
+    line-height: 32px;
 }
 
+body article .myMes ul.newBox li.changeMes input[disabled] {
+    background: #ffffff;
+    color: #bbbbbb;
+}
 
-body article .myMes li.changeMes span {
+body article .myMes ul.newBox li.changeMes>span {
     width: auto;
+    line-height: 4.7rem;
+    display: inline-block;
+    color: #bbbbbb;
+    letter-spacing: 0;
 }
 
 body article .meetList h4 {
@@ -1447,60 +1524,19 @@ body article .meetList h4 {
     text-align: left;
 }
 
-article.cameraBox {
-    position: relative;
-}
-
-article.camera {
-    background: url(../img/bg.png) no-repeat center center;
-    filter: blur(4px);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-}
-
-div.camera {
-    background: rgba(0, 0, 0, .4);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-}
-
 div.camera #cameraInput {
     display: none;
 }
 
 div.camera #cameraBtn {
     display: block;
-    width: 20rem;
-    height: 20rem;
-    border-radius: 50%;
-    border: 1px solid #f0f0f0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -10rem;
-    margin-left: -10rem;
+    width: 7rem;
+    height: 7rem;
+    padding: 0;
+    border: 0;
     color: #f0f0f0;
     font-size: 4rem;
     background: transparent;
-}
-
-div.camera #cameraBtn:focus {
-    box-shadow: inset 0px 0px 8px 0px #383838;
-}
-
-div.camera #cameraBtn img {
-    width: 6rem;
-    vertical-align: middle;
 }
 
 div.qrcode {

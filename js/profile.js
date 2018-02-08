@@ -21,7 +21,8 @@ const save_day = 1;
 const chart_color = '#E73E51';
 
 // 一天内有会议的提醒背景色值
-const tip_mes_image = 'radial-gradient(circle closest-corner at 92% 16%, rgb(243, 52, 52) 20%, rgba(255, 0, 0, 0) 40%, rgb(76, 79, 88) 95%)';
+// const tip_mes_image = 'radial-gradient(circle closest-corner at 94% 14%, rgb(243, 52, 52) 10%, rgba(255, 0, 0, 0) 40%, rgb(76, 79, 88) 0%)';
+const tip_mes_image = 'radial-gradient(circle closest-corner at 100% 5%, rgb(255, 115, 115) 90%, rgba(255, 0, 0, 0) 100%, rgb(255, 255, 255) 0%)';
 
 // 工作时间段
 const work_time = [

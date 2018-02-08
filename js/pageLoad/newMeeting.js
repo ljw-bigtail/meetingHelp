@@ -56,13 +56,16 @@
             clickUser([])
         }
 
-        userBox.style.display = 'block';
+        // 没有动画
+        // userBox.style.display = 'block';
+        // 加上动画
+        userBox.className = 'openUserBox';
     })
     // 设置多选
     // events.chooseList(chooseListBox);
     // 是否选中状态
     events.addEventForList(selectChoose, 'click', function (item, index) {
-        events.toggleClass(item.querySelector('div'), 'selected', '');
+        events.toggleClass(item.querySelector('div'), 'rmSelected', 'selected');
     })
 
     const name = document.querySelector('#name');
@@ -263,11 +266,16 @@
         picData.map((dom) => {
             userBoxSelect.innerHTML += '<li>' + dom + '</li>';
         });
+        userBoxSelect.style.width = picData.length * 5 + 'rem';
     });
 
     // 确定并返回用户数组
     userBoxYes.addEventListener('click', (e) => {
-        userBox.style.display = 'none';
+        // 没有效果
+        // userBox.style.display = 'none';
+        // 有效果
+        userBox.className = 'closeUserBox';
+
         document.querySelector('#' + userBox.getAttribute('data-where')).innerHTML = userBoxYes.getAttribute('data-user') || '请选择';
     });
 

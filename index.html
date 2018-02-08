@@ -27,7 +27,7 @@
         <div class="tip adminTip"></div>
         <article class="btnBox">
             <herder class="btnTitle">
-                <h3>填写</h3>
+                <h3>发起</h3>
             </herder>
             <ul>
                 <li>
@@ -43,13 +43,20 @@
                         <div class="pic">
                             <img src="img/3.png" alt="">
                         </div>
-                        <h5>会议室</h5>
+                        <h5>查看会议室</h5>
                     </a>
                 </li>
                 <li>
-                    <a href="camera.html">
+                    <!-- <a href="camera.html">
                         <div class="pic">
                             <img src="img/7.png" alt="">
+                        </div>
+                        <h5>扫码签到</h5>
+                    </a> -->
+                    <a class="cameraBox" href="javascript:void(0)">
+                        <div class="pic camera">
+                            <button id="cameraBtn"><img src="img/7.png" alt=""></button>
+                            <input type="file" capture="camera" accept="image/*" id="cameraInput" value=""/>            
                         </div>
                         <h5>扫码签到</h5>
                     </a>
@@ -72,7 +79,7 @@
                 <li>
                     <a href="meet.html?end=true">
                         <div class="pic">
-                            <img src="img/1.png" alt="">
+                            <img src="img/5.png" alt="">
                         </div>
                         <h5>会议详情</h5>
                     </a>
@@ -80,7 +87,7 @@
                 <li>
                     <a href="user.html">
                         <div class="pic">
-                            <img src="img/5.png" alt="">
+                            <img src="img/1.png" alt="">
                         </div>
                         <h5>个人设置</h5>
                     </a>
@@ -135,6 +142,9 @@
 
     <div id="errMes"></div>
 
+    <script src="js/llqrcode.js"></script>
+    <!-- <script src="js/webqr.js"></script> -->
+
     <script src="js/profile.js"></script>
     <script src="js/tools.js"></script>
     <script src="js/err.js"></script>
@@ -142,6 +152,7 @@
     <script src="js/ajaxFunc.js"></script>
     <!-- <script src="js/main.js"></script> -->
     <script src="js/pageLoad/index.js"></script>
+
 </body>
 
 </html>
