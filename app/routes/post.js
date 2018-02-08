@@ -236,7 +236,6 @@ router.post('/addMeet', function (req, res) {
 			});
 			return false;
 		}
-		return false;
 		// 一切正常
 		// 是否成功保存
 		let sure = 0;
