@@ -130,7 +130,7 @@
         _data.map((data) => {
             userDom += '<li><div class="title">' + data[0].first + '</div><ul class="list">';
             data.map((user) => {
-                userDom += '<li class="userLine"><i data-name="' + user.user.name + '">√</i>';
+                userDom += '<li class="userLine"><i data-name="' + user.user.name + '"></i>';
                 userDom += '<div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + user.user.name.split('')[0] + '</div>';
                 userDom += '<span>' + user.user.name + '</span></li>';
             });

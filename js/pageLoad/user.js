@@ -33,11 +33,11 @@
     descDom.value = desc;
     departmentDom.value = department;
 
-    tools.runUserFunc(userData,()=>{
+    tools.runUserFunc(userData, () => {
         // 管理员
         descTit.innerHTML = '邮箱密码';
-        descDom.setAttribute('placeholder','请填写QQ邮箱授权码');
-        descDom.setAttribute('type','password');
+        descDom.setAttribute('placeholder', '请填写QQ邮箱授权码');
+        descDom.setAttribute('type', 'password');
 
         departmentLi.style.display = 'none';
     });
@@ -47,11 +47,11 @@
         // 校验
         if (phoneDom.value && emailDom.value) {
             if (!tools.isMobile(phoneDom.value)) {
-                phoneDom.parentNode.style.outline = '2px dashed red';
+                phoneDom.parentNode.className += ' wrong';
                 return false;
             }
             if (!tools.isEmail(emailDom.value)) {
-                emailDom.parentNode.style.outline = '2px dashed red';
+                emailDom.parentNode.className += ' wrong';
                 return false;
             }
             // 判断是否修改
@@ -77,10 +77,11 @@
     });
 
     phoneDom.addEventListener('focus', () => {
-        phoneDom.parentNode.style.outline = '0px';
+        phoneDom.parentNode.className = 'changeMes';
+
     });
     emailDom.addEventListener('focus', () => {
-        emailDom.parentNode.style.outline = '0px';
+        emailDom.parentNode.className = 'changeMes';
     });
 
     logout.addEventListener('click', () => {

@@ -29,8 +29,8 @@
     });
 
     const btnValue = '取消会议';
-    const startTit = '<h4>我发起的会议</h4><ul class="startDom">';
-    const joinTit = '<h4>我参加的会议</h4><ul class="joinDom">';
+    const startTit = '<h4>我发起的</h4><ul class="startDom">';
+    const joinTit = '<h4>我参加的</h4><ul class="joinDom">';
     const endTit = '<h4>历史会议</h4><ul class="endfDom">';
     const futureTit = '<h4>新的会议</h4><ul class="endfDom">';
 
@@ -100,13 +100,13 @@
                 }
             });
             if (startDom == startTit) {
-                startDom += noMeetDom('没有发起会议。');
+                startDom += noMeetDom('无相关会议');
             }
             if (joinDom == joinTit) {
-                joinDom += noMeetDom('暂无其他需要参加会议。');
+                joinDom += noMeetDom('暂无需要参加会议');
             }
             if (endDom == endTit) {
-                endDom += noMeetDom('暂无历史会议。');
+                endDom += noMeetDom('暂无历史会议');
             }
             startDom += '</ul>';
             joinDom += '</ul>';
