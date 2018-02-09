@@ -4,8 +4,8 @@
 
     const err = new Err(errMes);
 
-    tools.titleValue('我的纪要');
-    tools.headValue('我的纪要列表-' + project_name);
+    tools.titleValue('会议记录');
+    tools.headValue('我的记录列表-' + project_name);
 
     // 绑定事件
     let backList = document.querySelectorAll('.back');
@@ -102,7 +102,7 @@
                 '</h3><div class="mesPeople"><img src="img/03.png" alt=""><span>' +
                 changeTime(_data.meta.updateAt) + '</span></div><div class="mesIsPub"><img src="img/public1.png" alt=""><span>' +
                 (_data.name == '' ? '会议纪要' : '我的笔记') + '</span></div></a></div>' +
-                (_data.name == '' && userData.level == 1 ? '<span>&gt;</span></div>' : '<span class="showBtn">&gt;</span></div><div class="del">删除，不可逆</div>') +
+                (_data.name == '' && userData.level == 1 ? '<span>&gt;</span></div>' : '<span class="showBtn">&gt;</span></div><div class="del">彻底删除</div>') +
                 '</li>'
         });
         return dom;

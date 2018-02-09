@@ -28,6 +28,7 @@
     let email = meetAdmin.querySelector('.email');
     let phone = meetAdmin.querySelector('.phone');
     let pushMes = document.querySelector('#pushMes');
+    let pushShowBtn = document.querySelector('#pushShowBtn');
     let fileDownload = document.querySelector('#fileDownload');
     let pushBtn = document.querySelector('.pushBtn');
     let saveBtn = document.querySelector('.saveBtn');
@@ -71,9 +72,9 @@
                 dom += '<a href="' + data + '">会议文件下载</a>'
             });
             fileDownload.innerHTML = dom;
-            fileDownload.style.color = '#5176AB';
+            fileDownload.style.color = '#3d8cf8';
         } else {
-            fileDownload.innerHTML = '<a href="javascript:void(0)">会议文件下载</a>';
+            fileDownload.innerHTML = '<a href="javascript:void(0)">点击下载会议文件</a>';
             fileDownload.style.textDecoration = 'none';
             fileDownload.addEventListener('click', () => {
                 err.errMesShow('本场会议没有会议文件');
@@ -102,6 +103,7 @@
         if (meetData.mPeople.length == 0) {
             userDom += '<div class="adminMes"><span class="name">数据错误，请联系管理员</span></div>';
         } else {
+            console.log(meetData.mPeople)
             meetData.mPeople.map((data) => {
                 userDom += '<li><div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
             });
@@ -109,6 +111,7 @@
         meetPeople.innerHTML = userDom;
 
         // 加载二维码
+        qrBox.querySelector('h1').innerHTML = meetData.mName + '<br>签到二维码';
         qrBox.querySelector('span').innerHTML = project_name + '感谢您的使用';
 
         // 根据状态改变现实效果
@@ -249,7 +252,7 @@
 
     // 确认参加按钮
     joinBtn.addEventListener('click', () => {
-        tipBox.tipShow('确认参加？不可以反悔哦！', (selectRoomVal) => {
+        tipBox.tipShow('确认参加？不可以反悔哦！', null, () => {
             ajaxTool.updateStatus({
                 'option': {
                     'name': username,
@@ -390,7 +393,8 @@
     });
 
     // 点击输入框放大
-    pushMes.addEventListener('focus', () => {
+    pushShowBtn.addEventListener('click', () => {
+        pushShowBtn.style.display = 'none';
         pushMes.className = 'writeIn';
     });
 

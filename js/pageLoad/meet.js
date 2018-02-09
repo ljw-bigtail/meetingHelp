@@ -149,7 +149,7 @@
             data.mName + '"><h3>' +
             data.mName + '</h3>' + '<div class="mesPeople">' + '<img src="img/04.png" alt="">' + '<span>会议地点</span><span>' +
             data.rName + '</span>' + '</div><div class="mesPeople">' + '<img src="img/03.png" alt=""><span>开始时间</span>' + '<span>' +
-            data.mStartTime + '</span>' + '</div></a></div><span class="' + 
+            data.mStartTime.replace(/T/,' ') + '</span>' + '</div></a></div><span class="' + 
             (canManage ? 'showBtn' : '') + '">&gt;</span>' + '</div> ' +
             (canManage ? ('<div class="del">' + btnValue + '</div>') : '') + '</li>';
     }

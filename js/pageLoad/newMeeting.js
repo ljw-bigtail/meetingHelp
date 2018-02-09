@@ -372,16 +372,15 @@
 
     // 给选择的时间点增加对应链接
     timeChooseClock.addEventListener('click', (e) => {
-        if (e.target.tagName == 'SPAN') {
+        if (e.target.tagName == 'SPAN' && e.target.className.split(' ')[1] == 'chooseRadioTip') {
             let roomList = chooseRoom.querySelectorAll('input');
             let selectRoomVal = '';
             for (let i = 0; i < roomList.length - 1; i++) {
-                console.log(roomList[i].checked)
                 if (roomList[i].checked) {
                     selectRoomVal = roomList[i].getAttribute('title');
                 }
             }
-            tipBox.tipShow('点击确认后可以查看对应会议室信息与具体会议的联系人信息。', (selectRoomVal) => {
+            tipBox.tipShow('查看会议联系人信息，协商会议事项。', selectRoomVal, () => {
                 window.location.href = '/roomState.html?room=' + selectRoomVal;
             });
         }
@@ -389,21 +388,6 @@
 
     // 保存后获取对应位置的信息
     save.addEventListener('click', () => {
-        let gapIndex = isGap();
-        // 时间点连续
-        let gapState = true;
-        // 查看是否连贯
-        if (gapIndex.length) {
-            for (let i = 0; i < gapIndex.length; i++) {
-                if (gapIndex[i + 1] - gapIndex[i] > 1) {
-                    gapState = false;
-                }
-            }
-        } else {
-            err.errMesShow('请选择会议召开时间');
-            return false;
-        }
-
         if (save.innerHTML == '保存') {
             let changeMeet = {
                 'mDesc': detail.value,
@@ -416,11 +400,28 @@
                 'option': changeMeet
             }, (req) => {
                 if (req.status == "success") {
-                    err.errMesShow('修改信息成功');
+                    err.errMesShow('信息修改成功', () => {
+                        window.history.back();
+                    });
                     return false;
                 }
                 err.errMesShow(req.mes);
             });
+            return false;
+        }
+
+        let gapIndex = isGap();
+        // 时间点连续
+        let gapState = true;
+        // 查看是否连贯
+        if (gapIndex.length) {
+            for (let i = 0; i < gapIndex.length; i++) {
+                if (gapIndex[i + 1] - gapIndex[i] > 1) {
+                    gapState = false;
+                }
+            }
+        } else {
+            err.errMesShow('请选择会议召开时间');
             return false;
         }
 
@@ -477,6 +478,7 @@
             'mApplicant': userCookie.username,
             'mRecorder': write.innerHTML
         };
+
         err.errMesShow('正在创建，请稍后。');
         ajaxTool.addMeet(meetData, (res) => {
             // 不需要修改会议室状态
@@ -616,9 +618,12 @@
         ajaxTool.getNow((data) => {
             let serverNow = new Date(data.now);
             work_time.map((data, index) => {
-                let checkDom = '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled" checked="checked"><span></span></li>';
-                let disableDom = '<li><input type="checkbox" name="08" value="' + data + '" disabled="disabled"></li>';
-                let normalDom = '<li><input type="checkbox" name="08" value="' + data + '" ></li>';
+                // <input type="checkbox" name="chooseTime" value="' + data + '" disabled="disabled" checked="checked"><span></span>
+                let checkDom = '<li><label class="chooseLabel"><input class="chooseRadio" type="checkbox" value="' + data + '" name="chooseTime" disabled="disabled" checked="checked"><span class="chooseRadioInput chooseRadioTip"></span></label></li>';
+                // <li><input type="checkbox" name="chooseTime" value="' + data + '" disabled="disabled"></li>
+                let disableDom = '<li><label class="chooseLabel"><input class="chooseRadio" type="checkbox" value="' + data + '" name="chooseTime" disabled="disabled"><span class="chooseRadioInput"></span></label></li>';
+                // <li><input type="checkbox" name="chooseTime" value="' + data + '" ></li>
+                let normalDom = '<li><label class="chooseLabel"><input class="chooseRadio" type="checkbox" value="' + data + '" name="chooseTime"><span class="chooseRadioInput"></span></label></li>';
                 // 是不是今天现在之前的时间
                 let isFuture = data.split(':')[0] - 0 <= serverNow.getHours() && valDate - 0 == serverNow.getDate();
                 if (index % 2 == 0) {

@@ -92,7 +92,7 @@
                         meet.mAdmin + '</span></p></li>';
                 }
             });
-            document.querySelector('.roomStateMes').innerHTML = dom || '<li><span>会议室暂无预定</span></li>';
+            document.querySelector('.roomStateMes').innerHTML = dom || '<li><span>暂无预定</span></li>';
         });
     });
 

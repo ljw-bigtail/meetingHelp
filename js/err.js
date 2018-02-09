@@ -18,11 +18,15 @@ function Err(dom, time) {
 
     // ——————————————————————————
 
-    this.tipShow = (mes, callback, callback1) => {
+    this.tipShow = (mes, data, callback, callback1) => {
         dom.style.display = 'block';
         dom.querySelector('.mesMain').innerHTML = mes;
         dom.querySelector('.next').addEventListener('click', (a) => {
-            callback && callback(a);
+            if(data){
+                callback && callback(data);            
+            }else{
+                callback && callback();
+            }
         });
         dom.querySelector('.close').addEventListener('click', () => {
             if (callback1) {

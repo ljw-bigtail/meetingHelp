@@ -94,6 +94,8 @@
                     textMain.value = data.nMes;
                     textMain.removeAttribute('disabled');
                     detailTitle.innerHTML = '笔记内容';
+                    tools.titleValue('笔记详情');
+                    tools.headValue(note + '的笔记详情-' + project_name);
                 }
             });
         });

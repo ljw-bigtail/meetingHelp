@@ -28,6 +28,26 @@
     }
 }
 
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #999999;
+}
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #999999;
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #999999;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #999999;
+}
+
 html,
 body {
     width: 100%;
@@ -64,7 +84,7 @@ input:focus {
     margin: 1rem 2rem;
     font-size: 0;
     border-radius: 1rem;
-    border: 1px solid #cccccc;
+    border: 1px solid #d8d8d8;
 }
 
 .search input {
@@ -87,12 +107,12 @@ input:focus {
 
 .search.searchNoun input {
     background: #e8e8e8;
-    border: 1px solid #cccccc;
+    border: 1px solid #d8d8d8;
     border-radius: 1rem;
 }
 
 footer {
-    height: 8rem;
+    /* height: 8rem; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -110,7 +130,7 @@ footer .flexBox span {
     font-size: 3rem;
     /* margin: 0 1rem; */
     margin-top: -1px;
-    border: 1px solid #cccccc;
+    border: 1px solid #d8d8d8;
     border-radius: 1rem;
 }
 
@@ -123,6 +143,8 @@ footer .flexBox span.success {
     color: #ffffff;
     margin-top: 0;
     border: none;
+    line-height: calc(6.8rem - 2px);
+    height: calc(6.8rem - 2px);
 }
 
 footer .flexBox span.success a {
@@ -155,6 +177,8 @@ footer .flexBox span.wrong a {
     color: #ffffff;
 }
 
+.userPic {}
+
 .userPic li {
     font-size: 2.6rem;
     line-height: 3rem;
@@ -162,12 +186,13 @@ footer .flexBox span.wrong a {
     display: inline-block;
     padding: 1rem;
     margin: 0;
-    width: 9.6rem;
+    width: 9.4rem;
     vertical-align: top;
+    overflow: hidden;
 }
 
 .userPic li .pic {
-    height: 9.6rem;
+    height: 9.4rem;
     width: 100%;
     display: block;
     border-radius: 50%;
@@ -222,24 +247,43 @@ div#canNext {
     margin-top: -14rem;
     left: 50%;
     margin-left: -24rem;
-    height: 28rem;
+    height: 24rem;
     width: 48rem;
     background: #ffffff;
-    border-radius: 2rem;
+    border-radius: 1rem;
     overflow: hidden;
-    padding: 1rem;
+}
+
+#canNext .nextBox footer {
+    height: 8rem;
+}
+
+#canNext .nextBox footer .flexBox {
+    padding: 0;
+    height: 100%;
+}
+
+#canNext .nextBox footer .flexBox span {
+    height: 100%;
+    line-height: 8rem;
+    border-radius: 0;
+    border: 0;
+}
+
+#canNext .nextBox footer .flexBox span:first-child {
+    margin: 0;
 }
 
 #canNext .nextBox .mesMain {
-    height: 18rem;
-    margin: 1rem;
+    height: 12rem;
+    margin: 2rem;
     font-size: 3rem;
     line-height: 4rem;
     overflow-y: scroll;
 }
 
 #canNext .nextBox footer {
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #d8d8d8;
 }
 
 #user {
@@ -297,7 +341,7 @@ div#canNext {
     width: 10rem;
     margin-right: 2rem;
     font-size: 3rem;
-    background: #0BB908;
+    background: #3d8cf8;
     color: #ffffff;
     height: 5rem;
     line-height: 5rem;
@@ -377,7 +421,7 @@ div#canNext {
     height: 8rem;
     line-height: 8rem;
     font-size: 0;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #d8d8d8;
 }
 
 #user .userLits .list li i {
@@ -389,7 +433,7 @@ div#canNext {
     text-align: center;
     color: #ffffff;
     margin: 0 2rem;
-    border: 1px solid #ccc;
+    border: 1px solid #d8d8d8;
     font-size: 2rem;
     border-radius: 50%;
     font-family: serif;
@@ -414,6 +458,7 @@ div#canNext {
     text-align: center;
     padding: .5rem;
     color: #ffffff;
+    border-radius: 1rem;
 }
 
 #user .userLits .list li span {
@@ -433,6 +478,7 @@ div#canNext {
     display: inline-block;
     width: 30rem;
     font-size: 2.6rem;
+    line-height: 3.6rem;
 }
 
 .selectBox .choose {
@@ -440,6 +486,7 @@ div#canNext {
     vertical-align: middle;
     width: calc( 100% - 30rem);
     text-align: right;
+    vertical-align: middle;
 }
 
 .selectBox .choose>div {
@@ -457,7 +504,7 @@ div#canNext {
     width: calc( 3.6rem - 2px);
     border-radius: 50%;
     background: #ffffff;
-    border: 1px solid #aaaaaa;
+    border: 1px solid #d8d8d8;
     left: 0;
 }
 
@@ -522,7 +569,7 @@ body>header {
 
 body>header .back {
     display: inline-block;
-    width: 10rem;
+    width: 7rem;
     height: 8rem;
     border: 0;
     font-size: 3.6rem;
@@ -531,15 +578,16 @@ body>header .back {
     color: #ffffff;
     font-family: serif;
     font-weight: bold;
+    padding: 0;
 }
 
 body>header .title {
     font-size: 3.6rem;
     color: #ffffff;
     display: inline-block;
-    margin-right: 10rem;
+    margin-right: 7rem;
     text-align: center;
-    width: calc( 100% - 20rem);
+    width: calc( 100% - 14rem);
     vertical-align: top;
 }
 
@@ -573,7 +621,7 @@ body>article .adminTip {
 body>article .tip .num {
     font-size: 9.4rem;
     line-height: 11rem;
-    color: #3c8bf9;
+    color: #3d8cf8;
     font-weight: 500;
 }
 
@@ -586,7 +634,7 @@ body>article .tip p {
 body>article .tip a {
     font-size: 3rem;
     line-height: 6rem;
-    color: #3c8bf9;
+    color: #3d8cf8;
 }
 
 body>article .btnBox {
@@ -600,7 +648,7 @@ body>article .btnBox .btnTitle {
     height: 6rem;
     line-height: 6rem;
     color: #aaaaaa;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #d8d8d8;
 }
 
 body>article .btnBox .btnTitle h3 {
@@ -676,12 +724,16 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
     background: #FDA96E;
 }
 
+body>article .btnBox:nth-child(5) ul li:nth-child(1) .pic {
+    background: #6095ff;
+}
+
 .list ul li {
     margin-bottom: 1.5rem;
     display: block;
     background: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 4px;
+    border: 1px solid #d8d8d8;
+    /* border-radius: .5rem; */
 }
 
 .list ul li:last-child {
@@ -691,6 +743,7 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
 .list ul li .main {
     font-size: 0rem;
     padding: 1rem 2rem;
+    border-bottom: 1px solid #d8d8d8;
 }
 
 .list ul li .main .mes {
@@ -706,8 +759,8 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
 }
 
 .list ul li .main .mes+span {
-    display: inline-block;
-    font-size: 5rem;
+    display: none;
+    font-size: 4rem;
     font-family: serif;
     width: 4rem;
     text-align: center;
@@ -717,16 +770,25 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
 }
 
 .list ul li .main .mes+span.showBtn {
-    color: rgb(216, 23, 17);
+    display: inline-block;
+    /* color: rgb(216, 23, 17); */
 }
 
 .list ul li .main .mes h3 {
-    line-height: 7rem;
-    color: #3f3f3f;
+    font-size: 3.4rem;
+    line-height: 6rem;
+    color: #202020;
+    text-align: left;
 }
 
 .list ul li .main .mes>div {
     line-height: 3.6rem;
+}
+
+.list ul li .main .mes div.mesPeople span {
+    font-size: 2.8rem;
+    line-height: 3.6rem;
+    color: #999999;
 }
 
 .list ul li .main .mes img {
@@ -736,12 +798,14 @@ body>article .btnBox:nth-child(4) ul li:nth-child(3) .pic {
 
 .list ul li .del {
     display: none;
-    font-size: 4rem;
+    font-size: 3.2rem;
     background: rgb(200, 80, 80);
     color: #ffffff;
-    line-height: 7rem;
-    height: 7rem;
+    line-height: 6rem;
+    height: 6rem;
     text-align: center;
+    margin: 1.6rem 2.5rem;
+    border-radius: 1rem;
 }
 
 .list ul li .success {
@@ -756,7 +820,7 @@ body article .roomState h6 {
 
 body article .roomState .mes {
     background: #ffffff;
-    padding: 1.5rem;
+    padding: 2.5rem;
     position: relative;
 }
 
@@ -769,12 +833,12 @@ body article .roomState #fileDownload {
 
 body article .roomState .mes .openQr {
     display: block;
-    background: #0BB908;
+    background: #3d8cf8;
     color: #ffffff;
     height: 6rem;
     width: 20rem;
     line-height: 6rem;
-    border-radius: 3rem;
+    border-radius: 1rem;
     border: 0;
     margin: 0 auto;
 }
@@ -787,12 +851,14 @@ body article .roomState .mes .openQr {
     left: 0;
     right: 0;
     background: #ffffff;
+    z-index: 1000;
 }
 
 #qrBox h1 {
     font-size: 5rem;
+    line-height: 7rem;
     text-align: center;
-    margin: 20rem 0 2rem;
+    margin: 12rem 0 1rem;
     font-weight: bold;
     color: #3f3f3f;
 }
@@ -816,12 +882,29 @@ body article .roomState .mes .openQr {
     padding-left: 6rem;
 }
 
+body article .roomList .mes .mesPeople {
+    margin-top: 1rem;
+}
+
+body article .roomList .mes .mesPeople span {
+    margin-right: 4rem;
+}
+
+body article .roomList .mes .mesTime {
+    margin-top: 1rem;
+}
+
+body article .roomList .mes .mesTime span {
+    margin: 0 4rem 0 0;
+    color: #3d8cf8;
+}
+
 body article .roomState .mes>img {
     display: none;
     position: absolute;
-    top: 2rem;
+    top: 3rem;
     right: 2rem;
-    width: 4rem;
+    width: 3rem;
 }
 
 body article .roomState .mes .top {
@@ -843,26 +926,30 @@ body article .roomState .mes p span {
     text-decoration: underline;
 }
 
-body article .roomState .mes span {
+body article .roomState .mes *:not('footer') span {
     font-size: 3rem;
     color: #3f3f3f;
     line-height: 4rem;
 }
 
 body article .roomState .mes ul li {
-    font-size: 2.6rem;
+    font-size: 2.8rem;
     line-height: 3rem;
     color: #666666;
 }
 
 body article .roomState .mes ul li span {
     color: #666666;
-    font-size: 2.6rem;
+    font-size: 2.8rem;
+}
+
+body article .roomState .mes span.roomName {
+    margin: 0;
 }
 
 body article .roomState .mes ul li span.roomDevice {
     display: block;
-    padding-left: calc( 5 * 2.6rem);
+    padding-left: calc( 5 * 2.8rem);
 }
 
 body article .roomState .mes ul li span.roomDevice i {
@@ -907,9 +994,9 @@ body article .roomState .changeBox input {
     display: block;
     width: calc( 100% - 3rem);
     padding: 0 1rem;
-    height: 5rem;
-    line-height: 5rem;
-    border: 1px solid #ccc;
+    height: 7rem;
+    line-height: 7rem;
+    border: 1px solid #d8d8d8;
 }
 
 body article .new {
@@ -927,9 +1014,9 @@ body article .new .newBox {
 }
 
 body article .new .newBox li {
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #d8d8d8;
     font-size: 0;
-    padding: .51rem 0;
+    padding: .8rem 0;
 }
 
 body article .new .newBox li input {
@@ -944,7 +1031,7 @@ body article .new .newBox li input {
 
 body article .new .newBox li textarea {
     border: 0;
-    line-height: 3rem;
+    line-height: 4rem;
     font-size: 3rem;
     resize: none;
     height: 12rem;
@@ -975,9 +1062,9 @@ body article .new .newBox li.inputBox input#newsPic {
 body article .new .newBox li.inputBox input#upLoadPicBtn {
     width: 12rem;
     text-align: center;
-    background: #6DC56E;
+    background: #3d8cf8;
     color: #ffffff;
-    border-radius: 6rem;
+    border-radius: 1rem;
 }
 
 body article .new .newBox li:not(.selectBox) span {
@@ -1018,7 +1105,7 @@ body article .new .newBox li.chooseList ul {
 body article .new .newBox li.chooseBox ul li,
 body article .new .newBox li.chooseList ul li {
     font-size: 2.6rem;
-    border: 1px solid #ccc;
+    border: 1px solid #d8d8d8;
     display: inline-block;
     margin: 1rem;
     padding: 1rem 2rem;
@@ -1031,13 +1118,17 @@ body article .new .newBox li.chooseList ul li.select {
     border-color: #0BB908;
 }
 
+body article .meetMain .mes footer .flexBox {
+    padding: .1rem .9rem;
+}
+
 body article .meetMain footer {
     display: none;
 }
 
 body article .meetMain .mesPeople img {
     width: 2.4rem;
-    margin-right: 1rem;
+    /* margin-right: 1rem; */
     vertical-align: sub;
 }
 
@@ -1048,10 +1139,6 @@ body article .meetMain .mesPeople span {
     line-height: 4rem;
 }
 
-body article .meetMain .flexBox span {
-    line-height: 6rem;
-}
-
 body article .meetMain .flexBox span.success {
     color: #ffffff;
 }
@@ -1060,7 +1147,7 @@ body article .meetMain h3 {
     font-size: 3.4rem;
     color: #3f3f3f;
     line-height: 4rem;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     margin-bottom: 1rem;
 }
 
@@ -1072,29 +1159,46 @@ body article .meetMain h3+a {
     display: block;
 }
 
+/* 临时增加的样式，随后需要删除 */
+
+body article .meetMain h3+a.changeBtn {
+    position: absolute;
+    right: 2rem;
+    top: 2.5rem;
+    line-height: 4rem;
+    z-index: 10;
+    font-size: 3rem;
+}
+
+/* 临时增加的样式，随后需要删除 */
+
 body article .meetMain h5 {
     padding: 2rem 0;
     font-size: 2.8rem;
     line-height: 4rem;
 }
 
-body article .meetMain h5 a {
-    border-bottom: 1px solid #000;
-}
+/* body article .meetMain h5 a {
+    border-bottom: 1px solid #d8d8d8;
+} */
 
 body article .meetMain ul:not(.userPic) {
     display: flex;
+    border-top: 1px solid #d8d8d8;
+    border-bottom: 1px solid #d8d8d8;
+    margin-bottom: 2rem;
 }
 
 body article .meetMain ul:not(.userPic) li {
     flex: 3;
     text-align: center;
-    margin-bottom: 3rem;
+    line-height: 3rem;
+    margin: 1.5rem;
 }
 
 body article .meetMain ul:not(.userPic) li:nth-child(1),
 body article .meetMain ul:not(.userPic) li:nth-child(2) {
-    border-right: 1px solid #cccccc;
+    border-right: 1px solid #d8d8d8;
 }
 
 body article .meetMain ul li span {
@@ -1110,17 +1214,17 @@ body article .meetMain ul li.colorBlue span {
 }
 
 footer .inputBox {
-    border-top: 1px solid #999999;
-    background: #E8E8E8;
-    height: 8rem;
+    border-top: 1px solid #d8d8d8;
+    /* background: #E8E8E8; */
     font-size: 0;
-    padding: 1rem;
+    padding: 1.6rem 2.5rem;
+    position: relative;
 }
 
 footer .inputBox textarea {
-    border: 1px solid #cccccc;
+    border: 1px solid #d8d8d8;
     padding: 0;
-    height: 6rem;
+    height: 6.8rem;
     margin-top: -1px;
     display: inline-block;
     width: calc(100% - 2px - 2rem);
@@ -1129,6 +1233,36 @@ footer .inputBox textarea {
     padding: 0 1rem;
     resize: none;
     vertical-align: top;
+    /* display: none; */
+    visibility: hidden;
+    font-size: 2.8rem;
+}
+
+footer .inputBox #pushShowBtn {
+    display: block;
+    color: #3d8cf8;
+    font-size: 3.2rem;
+    background: #fff;
+    position: absolute;
+    top: 1.6rem;
+    bottom: 1.6rem;
+    left: 2.5rem;
+    right: 2.5rem;
+    border-radius: 1rem;
+    line-height: 6.8rem;
+    text-align: left;
+    border: 1px solid #3d8cf8;
+    padding: 0 2rem;
+}
+
+footer .inputBox #pushShowBtn i {
+    position: absolute;
+    display: block;
+    top: 0.3rem;
+    right: 3rem;
+    transform: rotate(90deg);
+    font-family: serif;
+    color: #3d8cf8;
 }
 
 footer .inputBox textarea+.mesFooter {
@@ -1146,14 +1280,19 @@ footer .inputBox textarea+.mesFooter {
 }
 
 footer .inputBox textarea.writeIn {
+    visibility: inherit;
     height: 70rem;
-    width: calc(100% - 2rem - 2px);
+    width: calc(100% - 4rem - 2px);
     position: fixed;
-    bottom: 8rem;
+    bottom: 10rem;
     left: 0;
     right: 0;
     animation: .5s toHeight;
-    padding: 1rem;
+    padding: 2rem;
+    border-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    line-height: 4rem;
 }
 
 footer .inputBox textarea.writeIn+.mesFooter {
@@ -1190,6 +1329,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 
 .writeMain .textMain {
     height: calc( 100% - 2.8rem - 3rem - 3rem - 2rem - 4rem - 4rem - 6rem - 4rem - 3rem);
+    margin-bottom: 2rem;
 }
 
 .writeMain .textMain textarea {
@@ -1223,7 +1363,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
     left: 4rem;
     right: 4rem;
     background: #ffffff;
-    border: 1px solid #999999;
+    /* border: 1px solid #d8d8d8; */
     border-radius: 1rem;
     overflow: hidden;
 }
@@ -1255,7 +1395,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 }
 
 .tipMain .leaveFooter {
-    border-top: 1px solid #cccccc;
+    border-top: 1px solid #d8d8d8;
     height: 7rem;
 }
 
@@ -1268,39 +1408,45 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
     line-height: 7rem;
     height: 7rem;
     border-radius: 0;
+    margin-top: 0;
 }
 
 .tipMain .leaveFooter .flexBox span:first-child {
-    border-right: 1px solid #cccccc;
+    border-right: 1px solid #d8d8d8;
+    margin-right: 0;
 }
 
 .tipMain .leaveFooter .flexBox span.save {
-    color: #0BB908;
+    color: #fff;
+    background: #3d8cf8;
 }
 
 .tab .tabTittle {
     display: flex;
+    height: 8rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+    background: #ffffff;
+    border-bottom: 1px solid #d8d8d8;
+    z-index: 10;
+    position: relative;
 }
 
 .tab .tabTittle li {
     flex: 3;
     font-size: 3rem;
     line-height: 8rem;
-    height: 8rem;
     text-align: center;
     font-weight: bold;
-    border-bottom: 1px solid #cccccc;
-    border-right: 1px solid #cccccc;
-}
-
-.tab .tabTittle li:last-child {
-    border-right: 0;
 }
 
 .tab .tabTittle li.select {
-    background: #ffffff;
+    color: #3d8cf8;
     border-bottom: 2px solid #3d8cf8;
     margin-bottom: -1px;
+}
+
+.tab .tabTittle li.select span {
+    color: #3d8cf8;
 }
 
 .meetPeopleTab .tabMain {
@@ -1310,7 +1456,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 
 .meetPeopleTab {
     height: 100%;
-    border-bottom: 1px solid #333333;
+    border-bottom: 1px solid #d8d8d8;
     margin-top: -1px;
 }
 
@@ -1332,7 +1478,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 
 .meetPeopleTab .tabMain ul li {
     background: #ffffff;
-    border-bottom: 1px solid #cccccc;
+    border-bottom: 1px solid #d8d8d8;
     padding: 2rem;
 }
 
@@ -1376,15 +1522,26 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 
 .meetPeopleTab .tabMain .userPic li {
     padding: 1rem;
-    margin: 1px .5rem;
+    /* margin: 1px .5rem; */
     border: 0;
     overflow: hidden;
+    position: relative;
 }
 
 .meetPeopleTab .tabMain .userPic li.active {
-    outline: 1px dashed #6DC56E;
-    background: url(../img/select.png) right bottom no-repeat;
-    background-size: 24px 24px;
+    color: #3d8cf8;
+}
+
+.meetPeopleTab .tabMain .userPic .active::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    background: url(../img/select.png) right top no-repeat;
+    background-size: 3rem;
 }
 
 .meetPeopleTabLittle .tabMain .pic {
@@ -1416,7 +1573,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
     left: 4rem;
     right: 4rem;
     background: #ffffff;
-    border: 1px solid #999999;
+    border: 1px solid #d8d8d8;
     border-radius: 1rem;
     overflow: hidden;
 }
@@ -1440,7 +1597,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
     padding: 1rem;
     text-align: center;
     border-radius: 1rem;
-    border: 1px solid #cccccc;
+    border: 1px solid #d8d8d8;
     margin-bottom: 2rem;
 }
 
@@ -1464,7 +1621,7 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
     display: none;
     text-align: center;
     font-size: 2.4rem;
-    color: red;
+    color: rgb(216, 23, 17);
     line-height: 3.4rem;
     margin-bottom: 2rem;
 }
@@ -1502,7 +1659,7 @@ body article .meetList h4 {
 
 .userPic.meetAdmin li {
     width: 100%;
-    padding: 1rem 0;
+    padding: 0;
 }
 
 .userPic.meetAdmin li .pic {
@@ -1564,7 +1721,7 @@ div.qrcode .qrcodeMain img {
 }
 
 div.qrcode .qrCodeClose {
-    border-top: 1px solid #cccccc;
+    border-top: 1px solid #d8d8d8;
     display: block;
     height: 8rem;
     line-height: 8rem;
@@ -1588,19 +1745,20 @@ body article .newMeet>span {
     font-size: 2.4rem;
     margin: 1rem 0;
     display: block;
-    color: #3f3f3f;
+    color: #999;
     line-height: 4rem;
     text-align: right;
 }
 
 body article .newMeet>span::before {
     content: '*';
-    color: red;
+    color: rgb(216, 23, 17);
+    font-weight: bold;
     padding-right: .5rem;
 }
 
 body article .newMeet span i {
-    background: #383838;
+    background: #999;
     color: #ffffff;
     padding: 0 1rem;
     margin: 0 1rem;
@@ -1614,9 +1772,9 @@ body article .newMeet input {
     display: block;
     width: calc( 100% - 3rem);
     padding: 0 1rem;
-    height: 5rem;
-    line-height: 5rem;
-    border: 1px solid #cccccc;
+    height: 7rem;
+    line-height: 7rem;
+    border: 1px solid #d8d8d8;
 }
 
 #showRoom {
@@ -1626,9 +1784,9 @@ body article .newMeet input {
 }
 
 #showRoom ul {
-    display: inline-block;
-    width: calc(100% - 12rem);
-    vertical-align: top;
+    /* display: inline-block;
+    width: calc(100% - 12rem); */
+    /* vertical-align: top; */
 }
 
 #showRoom>span {
@@ -1646,13 +1804,14 @@ body article .newMeet input {
 }
 
 #showRoom ul li.title span {
-    background: #6DC56E;
-    color: #fff;
-    text-align: center;
+    background: #eee;
+    color: #202020;
+    text-align: left;
+    padding-left: 1.4rem;
 }
 
 #showRoom ul li.title span:first-child {
-    width: 25rem;
+    width: 22.2rem;
 }
 
 #showRoom ul li.title span:last-child {
@@ -1671,13 +1830,12 @@ body article .newMeet input {
 #showRoom ul li span {
     width: calc(25rem - 3rem);
     height: 5rem;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 #showRoom ul li progress {
     height: 3rem;
     width: calc(100% - 25rem - 4rem);
-    margin: 0 2rem;
     vertical-align: middle;
 }
 
@@ -1702,10 +1860,16 @@ body article .newMeet input {
 #timeChoose ul.left li {
     font-size: 3rem;
     line-height: 4rem;
-    background: #6DC56E;
-    color: #ffffff;
+    background: #eee;
+    border-bottom: 1px solid #d8d8d8;
+    color: #202020;
     text-align: center;
 }
+
+#timeChoose ul.left li:last-child {
+    border-bottom: 0;
+}
+
 
 #timeChoose ul.right {
     width: calc(100% - 8rem);
@@ -1727,8 +1891,13 @@ body article .newMeet input {
     display: inline-block;
     width: 8rem;
     line-height: 4rem;
+    height: 4rem;
     text-align: center;
     position: relative;
+}
+
+#timeChoose ul.right li ul li:nth-child(n+15) {
+    border: 0;
 }
 
 #timeChoose ul.right li ul li input {
@@ -1736,12 +1905,70 @@ body article .newMeet input {
     height: 3rem;
 }
 
+#timeChoose .chooseLabel {
+    display: inline-block
+}
+
+#timeChoose .chooseRadio {
+    display: none
+}
+
+#timeChoose .chooseRadioInput {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    display: inline-block;
+    width: 2.6rem;
+    height: 2.6rem;
+    margin-top: -1px;
+    vertical-align: middle;
+    line-height: 1
+}
+
+#timeChoose .chooseRadio:checked+.chooseRadioInput:after {
+    background-color: #6DC56E;
+    content: "";
+    display: inline-block;
+    width: 2.6rem;
+    height: 2.6rem;
+}
+
+#timeChoose .chooseRadio:disabled+.chooseRadioInput:after {
+    background-color: #d8d8d8;
+    content: "";
+    display: inline-block;
+    width: 2.6rem;
+    height: 2.6rem;
+}
+
+#timeChoose .chooseRadio:disabled:checked+.chooseRadioInput:after {
+    content: "";
+    background: #3d8cf8;
+    display: inline-block;
+    width: 2.6rem;
+    height: 2.6rem;
+}
+
 #timeChoose ul.right li ul li input+span {
-    width: 3rem;
-    height: 3rem;
+    width: 2.6rem;
+    height: 2.6rem;
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -1.5rem;
     margin-top: -1.5rem;
 }
+
+/* #timeChoose ul.right::-webkit-scrollbar {
+    height: 4px;
+    background-color: #F5F5F5;
+}
+
+#timeChoose ul.right::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: #F5F5F5;
+}
+
+#timeChoose ul.right::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: #ccc;
+} */
