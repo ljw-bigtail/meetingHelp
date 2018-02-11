@@ -391,7 +391,7 @@
         if (save.innerHTML == '保存') {
             let changeMeet = {
                 'mDesc': detail.value,
-                'mPeople': join.innerHTML,
+                'mPeople': join.innerHTML.split(','),
                 'mNote': canRead.className == 'selected' ? 0 : 1,
                 'mJoin': autoJoin.className == 'selected' ? 0 : 1
             };
