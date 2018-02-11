@@ -13,7 +13,7 @@ let ajaxTool = {
             .then(data => {
                 callback(data);
             })
-            .catch(e => console.log("sendAjax报错信息：", e))
+            .catch(e => console.log("报错信息：", e))
     },
     //更新用户具体信息
     updateUser: function (req, callback) {

@@ -103,7 +103,7 @@
         if (meetData.mPeople.length == 0) {
             userDom += '<div class="adminMes"><span class="name">数据错误，请联系管理员</span></div>';
         } else {
-            console.log(meetData.mPeople)
+            // console.log(meetData.mPeople)
             meetData.mPeople.map((data) => {
                 userDom += '<li><div class="pic" style="background:' + tools.radomData(user_avatar_data) + '">' + data.split('')[0] + '</div><span>' + data + '</span></li>'
             });

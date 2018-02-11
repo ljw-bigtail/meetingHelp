@@ -23,7 +23,6 @@ router.post('/uploadImg', function (req, res) {
 	});
 	//上传完成后处理
 	form.parse(req, function (err, fields, files) {
-		// console.log(err, fields, files);
 		if (err) {
 			console.log(err);
 			return false;
@@ -49,12 +48,10 @@ router.post('/uploadImg', function (req, res) {
 });
 
 // 校验二维码
-router.post('/checkQR', function (req, res) {
-	// 拿到解析后得到的数据，在表中搜索，找到对应的状态并修改
+// router.post('/checkQR', function (req, res) {
+// 	// 拿到解析后得到的数据，在表中搜索，找到对应的状态并修改
 
-});
-
-
+// });
 
 // 获取账户列表
 // 需要过滤数组部分值，暂未处理

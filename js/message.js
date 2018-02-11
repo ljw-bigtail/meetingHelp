@@ -11,7 +11,7 @@ function Message(wayOption) {
             let resultCont = 0;
             wayOption.map((way) => {
                 if (way == 'email') {
-                    console.log('正在通过邮件发送信息')
+                    // console.log('正在通过邮件发送信息')
                     byMail(userList, title, mes, (req) => {
                         resultCont++;
                         let state = req.status.trim() == '250 Ok: queued as';
@@ -19,7 +19,7 @@ function Message(wayOption) {
                     });
                 }
                 if (way == 'app') {
-                    console.log('正在通过App发送提醒')
+                    // console.log('正在通过App发送提醒')
                     byApp(userList, mes, (req) => {
                         resultCont++;
                         let state = req == 'success';

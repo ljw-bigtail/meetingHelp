@@ -63,7 +63,7 @@ noteSchema.statics = {
 		});
 	},
 	findNoteList: function (name, callback) {
-		console.log("查询："+name)
+		// console.log("查询："+name)
 		this.find({
 			'name': name
 		}).sort({

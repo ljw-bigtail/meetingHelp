@@ -66,7 +66,7 @@
             "rNum": rNum.value,
             "rDevice": rDevice.value
         }, (req) => {
-            console.log(req);
+            // console.log(req);
             if (req.status == "success") {
                 err.errMesShow('创建成功', () => {
                     window.location.reload();

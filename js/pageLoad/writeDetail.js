@@ -120,7 +120,7 @@
         noteDate.nMes = textMain.value;
         // 更新请求
         ajaxTool.updateNote(noteDate, (data) => {
-            console.log(data)
+            // console.log(data)
             if (data.status == 'success') {
                 err.errMesShow('修改完成。');
             }

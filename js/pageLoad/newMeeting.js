@@ -49,7 +49,7 @@
 
         // 渲染选择的user
         let userData = item.parentElement.querySelector('.val').innerHTML.split(',');
-        console.log(userData)
+        // console.log(userData)
         if (userData[0] != '请选择') {
             clickUser(userData)
         } else {

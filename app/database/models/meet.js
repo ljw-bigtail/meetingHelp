@@ -77,10 +77,9 @@ meetSchema.pre('save', function (next) {
 	next();
 })
 
-
 meetSchema.statics = {
 	getMonthData: function (callback) {
-		console.log('----------------------')
+		// console.log('----------------------')
 		this.find().exec((err, meetList) => {
 			if (err) {
 				console.log(err);
