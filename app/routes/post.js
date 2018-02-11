@@ -38,7 +38,7 @@ router.post('/uploadImg', function (req, res) {
 			} else {
 				// files.file.path = dstPath;
 				// let data = files;
-				res.send(200, {
+				res.send({
 					mes: '文件上传完成！',
 					filePath: '/uploads_' + inputFile.originalFilename
 				});
@@ -62,13 +62,13 @@ router.post('/getUserList', function (req, res) {
 	let attr = req.body.attr || null;
 	let val = req.body.val || null;
 	if (attr !== 'desc' && attr !== 'dName' && attr !== 'initiate' && attr !== null) {
-		res.send(200, {
+		res.send({
 			mes: '仅支持通过 desc/dName/initiate 搜索。'
 		});
 		return false;
 	}
 	User.findUserList(attr, val, (userList) => {
-		res.send(200, {
+		res.send({
 			'userList': userList
 		});
 	})
@@ -77,91 +77,91 @@ router.post('/getUserList', function (req, res) {
 // 获取账户信息
 router.post('/getUserByAttr', function (req, res) {
 	if (!req.body.attr || !req.body.val) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	User.findUserByAttr(req.body.attr, req.body.val, (user) => {
-		res.send(200, user);
+		res.send(user);
 	})
 });
 
 // 新建账户
 router.post('/addUser', function (req, res) {
 	if (!req.body.name || !req.body.email || !req.body.phone || !req.body.dName) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	User.addUser(req.body, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 删除账户
 router.post('/delUser', function (req, res) {
 	if (!req.body.name) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	User.delUser(req.body.name, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 修改账户
 router.post('/updateUser', function (req, res) {
 	if (!req.body.name || !req.body.update) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	User.updateUser(req.body.name, req.body.update, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 校验密码
 router.post('/checkPassword', function (req, res) {
 	if (req.body.type !== 'name' && req.body.type !== 'email') {
-		res.send(200, {
+		res.send({
 			mes: '仅支持通过 name/email 登录。'
 		});
 		return false;
 	}
 	if (!req.body.val || !req.body.password) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	User.checkpassword(req.body.type, req.body.val, req.body.password, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 //新增房间，管理员权限
 router.post('/addRoom', function (req, res) {
 	if (!req.body.rName || !req.body.rPlace || !req.body.rNum || !req.body.rDevice) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Room.addRoom(req.body, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 新建会议
 router.post('/addMeet', function (req, res) {
 	if (!req.body.name || !req.body.detail || !req.body.start || !req.body.end || !req.body.room || !req.body.mAdmin || !req.body.joinList) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
@@ -184,7 +184,7 @@ router.post('/addMeet', function (req, res) {
 		}
 		// 如果有问题
 		if (questionCount > 0) {
-			res.send(200, {
+			res.send({
 				mes: '填写的过程中，您选择的时间段被占用了'
 			});
 			return false;
@@ -206,7 +206,7 @@ router.post('/addMeet', function (req, res) {
 		let qr_png_url = URL + '/uploads/qr_code/uploads_' + req.body.name + '.png';
 		let qr_pipe = qr_png.pipe(fs.createWriteStream(qr_png_url));
 		qr_pipe.on('error', function (err) {
-			res.send(200, {
+			res.send({
 				'mes': err
 			});
 			return false;
@@ -219,7 +219,7 @@ router.post('/addMeet', function (req, res) {
 			});
 			Meet.addMeet(meetData, (mes) => {
 				if (mes.status == "faile") {
-					res.send(200, mes);
+					res.send(mes);
 					return false;
 				}
 				// 创建参会人员状态
@@ -236,12 +236,12 @@ router.post('/addMeet', function (req, res) {
 					});
 				});
 				if (sure == 0) {
-					res.send(200, {
+					res.send({
 						'status': 'success',
 						'qrCode': '/uploads/qr_code/uploads_' + req.body.name + '.png'
 					});
 				} else {
-					res.send(200, {
+					res.send({
 						'status': 'false'
 					})
 				}
@@ -254,7 +254,7 @@ router.post('/addMeet', function (req, res) {
 // 删除会议
 router.post('/delMeet', function (req, res) {
 	if (!req.body.mName) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
@@ -286,11 +286,11 @@ router.post('/delMeet', function (req, res) {
 			isDel = true;
 		}
 		if (isDel) {
-			res.send(200, {
+			res.send({
 				mes: '删除成功。'
 			});
 		} else {
-			res.send(200, {
+			res.send({
 				mes: '删除失败。'
 			});
 		}
@@ -303,13 +303,13 @@ router.post('/getRoomList', function (req, res) {
 	let attr = req.body.attr || null;
 	let val = req.body.val || null;
 	if (attr && attr !== 'rDevice') {
-		res.send(200, {
+		res.send({
 			mes: '仅支持通过 rDevice 搜索。'
 		});
 		return false;
 	}
 	Room.findRoomList(attr, val, (roomList) => {
-		res.send(200, {
+		res.send({
 			'roomList': roomList
 		});
 	})
@@ -318,13 +318,13 @@ router.post('/getRoomList', function (req, res) {
 // 获取会议室信息
 router.post('/getRoomByAttr', function (req, res) {
 	if (!req.body.attr || !req.body.val) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Room.findRoomByAttr(req.body.attr, req.body.val, (user) => {
-		res.send(200, user);
+		res.send(user);
 	})
 });
 
@@ -345,7 +345,7 @@ router.post('/getwriteList', function (req, res) {
 			'name': user
 		});
 		Note.findNoteByCondition(condition, (writeList) => {
-			res.send(200, {
+			res.send({
 				'writeList': writeList
 			});
 		});
@@ -356,11 +356,11 @@ router.post('/getwriteList', function (req, res) {
 router.post('/findNoteList', function (req, res) {
 	Note.findNoteList(req.body.name, (note) => {
 		if (note == null) {
-			res.send(200, {
+			res.send({
 				'mes': null
 			});
 		} else {
-			res.send(200, note);
+			res.send(note);
 		}
 	})
 });
@@ -368,18 +368,18 @@ router.post('/findNoteList', function (req, res) {
 // 获取纪要信息
 router.post('/getNoteByAttr', function (req, res) {
 	if (!req.body.option) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Note.findNoteByAttr(req.body.option, (note) => {
 		if (note == null) {
-			res.send(200, {
+			res.send({
 				'mes': null
 			});
 		} else {
-			res.send(200, note);
+			res.send(note);
 		}
 	})
 });
@@ -387,26 +387,26 @@ router.post('/getNoteByAttr', function (req, res) {
 // 新建纪要 
 router.post('/addNote', function (req, res) {
 	if (!req.body.nTitle || !req.body.nMes || !req.body.nTitle) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Note.addNote(req.body, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 修改纪要
 router.post('/updateNote', function (req, res) {
 	if (!req.body.nTitle) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Note.updateNote(req.body.nTitle, req.body, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
@@ -417,13 +417,13 @@ router.post('/getMeetList', function (req, res) {
 	let val = req.body.val || null;
 	let user = req.body.user || null;
 	// if (attr || val) {
-	// 	res.send(200, {
+	// 	res.send({
 	// 		mes: '参数不正确。'
 	// 	});
 	// 	return false;
 	// }
 	Meet.findMeetList(user, attr, val, (meetList) => {
-		res.send(200, {
+		res.send({
 			'meetList': meetList
 		});
 	})
@@ -433,79 +433,79 @@ router.post('/getMeetList', function (req, res) {
 // 获取会议详情
 router.post('/getMeetByAttr', function (req, res) {
 	if (!req.body.attr || !req.body.val) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Meet.findMeetByAttr(req.body.attr, req.body.val, (meet) => {
-		res.send(200, meet);
+		res.send(meet);
 	})
 });
 
 //更新纪要信息
 router.post('/updateNote', function (req, res) {
 	if (!req.body.nTitle || !req.body.nMes || !req.body.mName) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Note.updateNote(req.body, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 //更新会议信息
 router.post('/updateMeet', function (req, res) {
 	if (!req.body.option || !req.body.mName) {
-		res.send(200, {
+		res.send({
 			'status': "faile",
 			'mes': '参数错误。'
 		});
 		return false;
 	}
 	Meet.updateMeet(req.body.mName, req.body.option, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 新建状态
 router.post('/addStatus', function (req, res) {
 	if (!req.body.name || !req.body.mName) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Status.addStatus(req.body, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 修改状态
 router.post('/updateStatus', function (req, res) {
 	if (!req.body.option || !req.body.option.name || !req.body.option.mName) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Status.updateStatus(req.body.option, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 查看用户+会议的状态
 router.post('/getStatusByOption', function (req, res) {
 	if (!req.body.option) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Status.findStatusOne(req.body.option, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
@@ -514,13 +514,13 @@ router.post('/getStatusList', function (req, res) {
 	let attr = req.body.attr || null;
 	let val = req.body.val || null;
 	if (attr !== null && attr !== 'mName') {
-		res.send(200, {
+		res.send({
 			mes: '仅支持通过 mName 搜索。'
 		});
 		return false;
 	}
 	Status.findStatusList(attr, val, (statusList) => {
-		res.send(200, {
+		res.send({
 			'statusList': statusList
 		});
 	})
@@ -532,7 +532,7 @@ router.post('/sendMail', function (req, res) {
 	let title = req.body.title || null;
 	let mes = req.body.mes || null;
 	if (userList == null || title == null || mes == null) {
-		res.send(200, {
+		res.send({
 			mes: '请输入收件人邮箱、邮件标题、邮件内容。'
 		});
 		return false;
@@ -556,11 +556,11 @@ router.post('/sendMail', function (req, res) {
 			}, (error, info) => {
 				if (error) {
 					console.log(error);
-					res.send(200, {
+					res.send({
 						status: error.response
 					});
 				} else {
-					res.send(200, {
+					res.send({
 						status: info.response
 					});
 				}
@@ -573,7 +573,7 @@ router.post('/sendMail', function (req, res) {
 router.post('/getMonthData', function (req, res) {
 	let username = req.body.username || null;
 	if (username == null) {
-		res.send(200, {
+		res.send({
 			mes: '请发送用户信息。'
 		});
 		return false;
@@ -581,13 +581,13 @@ router.post('/getMonthData', function (req, res) {
 	User.findUserByAttr('name', req.body.username, (req) => {
 		// console.log(req)
 		if (req.level !== 0) {
-			res.send(200, {
+			res.send({
 				mes: '该账户没有权限。'
 			});
 			return false;
 		}
 		Meet.getMonthData((meetData) => {
-			res.send(200, {
+			res.send({
 				'meetData': meetData
 			});
 		})
@@ -597,52 +597,52 @@ router.post('/getMonthData', function (req, res) {
 // 修改会议室
 router.post('/updateRoom', function (req, res) {
 	if (!req.body.rName || !req.body.update) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Room.updateRoom(req.body.rName, req.body.update, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 删除笔记
 router.post('/delNote', function (req, res) {
 	if (!req.body.option) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	Note.delNote(req.body.option, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 删除会议室
 router.post('/delRoom', function (req, res) {
 	if (!req.body.rName) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
 	}
 	if (req.body.level != 0) {
-		res.send(200, {
+		res.send({
 			mes: '权限不够。'
 		});
 		return false;
 	}
 	Room.delRoom(req.body.rName, (mes) => {
-		res.send(200, mes);
+		res.send(mes);
 	})
 });
 
 // 把房间未来状态一起返回
 router.post('/getRoomAndState', function (req, res) {
 	if (!req.body.userLevel) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
@@ -672,7 +672,7 @@ router.post('/getRoomAndState', function (req, res) {
 				'future': futureNum,
 			});
 		});
-		res.send(200, {
+		res.send({
 			'roomList': resList
 		});
 	});
@@ -681,7 +681,7 @@ router.post('/getRoomAndState', function (req, res) {
 // 计算会议室在某天的占用率
 router.post('/getRoomGap', function (req, res) {
 	if (!req.body.date) {
-		res.send(200, {
+		res.send({
 			mes: '参数错误。'
 		});
 		return false;
@@ -733,7 +733,7 @@ router.post('/getRoomGap', function (req, res) {
 					});
 				}
 			});
-			res.send(200, {
+			res.send({
 				'reqData': reqData
 			});
 		});
@@ -762,7 +762,7 @@ router.post('/getRoomGap', function (req, res) {
 });
 
 router.get('/getNow', function (req, res) {
-	res.send(200, {
+	res.send({
 		'now': new Date()
 	});
 });
