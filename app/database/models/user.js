@@ -136,15 +136,21 @@ userSchema.statics = {
 				console.log(err);
 				callback('faile');
 			} else {
-				// callback(user);
-				callback({
-					'name': user.name,
-					'email': user.email,
-					'phone': user.phone,
-					'desc': user.desc,
-					'dName': user.dName,
-					'level': user.level,
-				});
+				if(!user.name){
+					callback({
+						'state':'faile',
+						'mes':'未查询到正确数据'
+					});
+				} else {
+					callback({
+						'name': user.name,
+						'email': user.email,
+						'phone': user.phone,
+						'desc': user.desc,
+						'dName': user.dName,
+						'level': user.level,
+					});
+				}				
 			}
 		});
 	},

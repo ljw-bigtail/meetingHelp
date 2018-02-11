@@ -4,6 +4,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// 初始化数据库
+require('./initDatabase');
+
 var post = require('./routes/post');
 
 var app = express();
@@ -29,9 +32,5 @@ app.all('*', function (req, res, next) {
 });
 
 app.use('/api', post);
-
-// app.get('/', function (req, res) {
-//   res.send('hello world');
-// });
 
 module.exports = app;

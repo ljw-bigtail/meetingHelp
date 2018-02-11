@@ -53,7 +53,7 @@
                 tools.setCookie('initiate', req.userMes.initiate, save_day);
                 tools.setCookie('level', req.userMes.level, save_day);
                 // 跳转至主页
-                window.location.pathname = '/index.html';
+                window.location.pathname = './index.html';
             }
             //验证失败
             err.errMesShow(req.mes);

@@ -15,53 +15,6 @@ let Status = require('../database/models/status');
 
 const URL = 'D:/project/meetingHelp';
 
-
-//初始化数据
-// User.create({
-// 	"name": 'admin',
-// 	"email": '747624075@qq.com',
-// 	"phone": '17609234866',
-// 	"password": '111111',
-// 	"level": 0
-// })
-// Room.create({
-// 	"rName": '会议室1',
-// 	"rPlace": '1号',
-// 	"rNum": 100,
-// 	"rDevice": ['电脑', '投影仪']
-// })
-// Meet.create({
-// 	"mName": '总结会',
-// 	"mDesc": '总结一下按时打发阿萨德阿萨德',
-// 	"mFile": '',
-// 	"mStartTime": '2017/12/24 12:00:00',
-// 	"mEndTime": '2017/12/24 14:00:00',
-// 	"rName": '会议室1',
-// 	"mAdmin": 'Wi7fF5',
-// 	"mPeople": ["N5r8QC", "rAzTar"],
-// 	"mNote": 0,
-// 	"mJoin": 0,
-// 	"mQRcode":'./'
-// })
-// Department.create({
-// 	"dName": '会议室1',
-// 	"dFather": '-1'
-// })
-// Status.create({
-// 	"name": "6ECSwj",
-// 	"mName": "123",
-// 	"sMes": "",
-// 	"sLeave": 0,
-// 	"sSign": 1,
-// 	"sStatus": 2
-// })
-// Note.create({
-// 	"nTitle": '阿萨德阿萨的',
-// 	"name": 'N5r8QC',
-// 	"mName": '总结会',
-// 	"nMes": '下#%*^SDVB按时打发阿萨1号SDVB按时打发阿萨1号SDVB按时打发阿萨1号:SDVB按时打发阿萨1号',
-// })
-
 //上传文件
 router.post('/uploadImg', function (req, res) {
 	//生成multiparty对象，并配置上传目标路径

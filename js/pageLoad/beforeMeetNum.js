@@ -14,7 +14,7 @@
         // 放置没有权限的审批请假
         let canManage = userData.username != meetData.mAdmin && userData.level != 0;
         if (canManage) {
-            window.location.goBack();
+            window.history.back();
         }
     });
 

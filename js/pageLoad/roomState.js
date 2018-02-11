@@ -142,7 +142,7 @@
             });
         }
         if (newMeet.innerHTML == '新建会议') {
-            window.location.href = '/newMeeting.html?place=' + room;
+            window.location.href = './newMeeting.html?place=' + room;
             return false;
         }
         if (newMeet.innerHTML == '提交') {

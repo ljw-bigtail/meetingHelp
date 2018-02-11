@@ -381,7 +381,7 @@
                 }
             }
             tipBox.tipShow('查看会议联系人信息，协商会议事项。', selectRoomVal, () => {
-                window.location.href = '/roomState.html?room=' + selectRoomVal;
+                window.location.href = './roomState.html?room=' + selectRoomVal;
             });
         }
     });
@@ -531,7 +531,7 @@
 
 
     qrCodeClose.addEventListener('click', () => {
-        window.location.href = '/';
+        window.location.href = './';
     });
 
     // 根据会议室名称出发事件

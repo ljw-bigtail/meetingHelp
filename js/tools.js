@@ -101,7 +101,7 @@ let tools = {
     // 未获取到用户信息，跳转至登录
     noUser: (user) => {
         if (!user) {
-            window.location.href = 'login.html?isRe=true';
+            window.location.href = './login.html?isRe=true';
         }
     },
     // 通过cookie获取登录时存储的用户数据
