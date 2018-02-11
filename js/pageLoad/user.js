@@ -92,6 +92,6 @@
         tools.delCookie('department');
         tools.delCookie('initiate');
         tools.delCookie('level');
-        window.location.href = '/login.html';
+        window.location.href = 'login.html';
     });
 })()
