@@ -35,6 +35,7 @@
 
     // 拍照上传二维码文件
     qrInput.addEventListener('change', () => {
+        err.errMesShow('正在签到，请稍等……');        
         handleFiles(qrInput.files[0]);
         qrcode.callback = (e) => {
             let data = JSON.parse(decodeURI(e))
@@ -50,6 +51,14 @@
                     canSign += 1;
                 }
             });
+            // 管理员也可以签到
+            if (user == data.mAdmin) {
+                canSign += 1;
+            }
+            // 记录员也可以签到            
+            if (user == data.mRecorder) {
+                canSign += 1;
+            }
 
             // 校验时间，校验人员
             if (start <= now && now <= end) {
@@ -62,7 +71,7 @@
                 return false;
             }
             if (now <= start) {
-                if (canSign == 1) {
+                if (canSign > 0) {
                     ajaxTool.updateStatus({
                         'option': {
                             'name': userData.username,
@@ -81,7 +90,7 @@
                         err.errMesShow('签到失败，请稍后再试。');
                     });
                 } else {
-                    err.errMesShow('你无权参加本会议。');
+                    err.errMesShow('你无需参加本会议。');
                 }
             }
         };

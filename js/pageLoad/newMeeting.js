@@ -2,7 +2,8 @@
     // 提示信息
     const err = new Err(errMes);
     const tipBox = new Err(canNext);
-    const message = new Message(['email', 'app']);
+    const message = new Message(['email']);
+    // const message = new Message(['email', 'app']);
 
     let userCookie = tools.getUserFormCookie();
     let username = tools.getCookie('username');
@@ -224,6 +225,7 @@
                 // changeDom(start);
                 // 不允许修改管理员
                 chooseListBox[0].style.display = 'none';
+                write.innerHTML = req.mRecorder;
                 join.innerHTML = req.mPeople;
                 canRead.className = req.mNote == 1 ? 'selected' : '';
                 autoJoin.className = req.mJoin == 1 ? 'selected' : '';
@@ -291,8 +293,7 @@
         // 临时禁用保存按钮
         save.className = 'stop';
         ajaxTool.uploadImg(newsPic, (req) => {
-            uploadImg.src = 'http://192.168.199.206:5500/uploads/' + req.filePath;
-            // alert("上传完毕！");
+            uploadImg.src = website_url + '/uploads' + req.filePath;
             // 开启保存功能
             save.className = 'success';
         });
@@ -496,7 +497,9 @@
                     title: newMeet_admin_title,
                     mes: newMeet_admin_mes
                 }, (req) => {
-                    err.errMesShow(tools.checkState(req, '消息推送成功', '管理员的App端消息推送失败', '管理员的邮件推送失败'))
+                    tools.checkState(req, '消息推送成功', '管理员的App端消息推送失败', '管理员的邮件推送失败',(mes)=>{
+                        err.errMesShow(mes)
+                    });
                 })
                 // 记录员权限消息
                 message.sendMes({
@@ -504,7 +507,9 @@
                     title: newMeet_admin_title,
                     mes: newMeet_admin_mes
                 }, (req) => {
-                    err.errMesShow(tools.checkState(req, '消息推送成功', '记录员的App端消息推送失败', '记录员的邮件推送失败'))
+                    tools.checkState(req, '消息推送成功', '记录员的App端消息推送失败', '记录员的邮件推送失败',(mes)=>{
+                        err.errMesShow(mes)
+                    });
                 })
                 // 参会者权限消息
                 message.sendMes({
@@ -512,7 +517,9 @@
                     title: newMeet_admin_title,
                     mes: newMeet_admin_mes
                 }, (req) => {
-                    err.errMesShow(tools.checkState(req, '消息推送成功', '参会者的App端消息推送失败', '参会者的邮件推送失败'))
+                    tools.checkState(req, '消息推送成功', '参会者的App端消息推送失败', '参会者的邮件推送失败',(mes)=>{
+                        err.errMesShow(mes)
+                    });
                 })
             } else {
                 if (res.mes.code == 11000) {

@@ -159,13 +159,13 @@ let tools = {
         }
     },
     // 校验状态数组并返回消息
-    checkState: (stateArray, mesOk, mesApp, mesEmail) => {
+    checkState: (stateArray, mesOk, mesApp, mesEmail,callback) => {
         let mes = mesOk;
         let len = stateArray.length;
         let count = 0;
         stateArray.map((data) => {
             count++;
-            if (data.msg == 'false') {
+            if (data.msg == "false") {
                 if (data.way == 'app') {
                     mes = mesApp;
                 }
@@ -174,7 +174,7 @@ let tools = {
                 }
             }
             if (count >= len) {
-                return mes;
+                callback(mes)
             }
         });
     }

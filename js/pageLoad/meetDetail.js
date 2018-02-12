@@ -126,11 +126,11 @@
             if (userData.username == meetData.mAdmin) {
                 changeBtn.style.display = 'block';
                 leaveNum.href = 'beforeMeetNum.html?meet=' + meet;
-                qrBox.querySelector('img').src = '/uploads/' + meetData.mQRcode.split('uploads/')[1];
+                qrBox.querySelector('img').src = './uploads/' + meetData.mQRcode.split('uploads/')[1];
             } else {
                 changeBtn.style.display = 'none';
                 leaveNum.href = 'JavaScript:void(0)';
-                qrBox.querySelector('img').src = '/img/noQr.png';
+                qrBox.querySelector('img').src = './img/noQr.png';
             }
 
             // 自动参加会议
@@ -202,7 +202,6 @@
                 pushMes.value = noteData.nMes;
                 pushMesValue = noteData.nMes;
                 pushMes.setAttribute('data-title', noteData.nTitle);
-                return false;
             }
         });
     });

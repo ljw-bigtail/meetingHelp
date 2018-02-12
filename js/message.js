@@ -14,7 +14,7 @@ function Message(wayOption) {
                     // console.log('正在通过邮件发送信息')
                     byMail(userList, title, mes, (req) => {
                         resultCont++;
-                        let state = req.status.trim() == '250 Ok: queued as';
+                        let state = (req.status.trim() == '250 Ok: queued as');
                         reqMes(req, resultMessage, state, way, resultCont, wayOption.length, callback)
                     });
                 }

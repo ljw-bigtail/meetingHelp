@@ -2,7 +2,7 @@
 const project_name = '会议助手';
 
 // 页面地址
-const website_url = 'http://192.168.199.206:5500';
+const website_url = 'http://192.168.199.206:8020/meetingHelp';
 
 // 服务器后台地址
 const server_url = 'http://192.168.199.206:3000';

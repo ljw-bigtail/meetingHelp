@@ -882,7 +882,7 @@ body article .roomState .mes .openQr {
 }
 
 #qrBox span {
-    background: url(../../favicon.ico) no-repeat;
+    background: url(../favicon.ico) no-repeat;
     display: block;
     height: 6rem;
     line-height: 6rem;

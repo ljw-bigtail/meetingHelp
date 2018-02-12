@@ -34,6 +34,9 @@ router.post('/uploadImg', function (req, res) {
 		fs.rename(uploadedPath, dstPath, (err) => {
 			if (err) {
 				console.log('rename error: ' + err);
+				res.send({
+					mes: err
+				});
 			} else {
 				// files.file.path = dstPath;
 				// let data = files;
@@ -235,7 +238,7 @@ router.post('/addMeet', function (req, res) {
 				if (sure == 0) {
 					res.send({
 						'status': 'success',
-						'qrCode': '/uploads/qr_code/uploads_' + req.body.name + '.png'
+						'qrCode': './uploads/qr_code/uploads_' + req.body.name + '.png'
 					});
 				} else {
 					res.send({
