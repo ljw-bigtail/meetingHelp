@@ -28,8 +28,8 @@
     }
 }
 
-input{
-    -webkit-appearance:none;
+input {
+    -webkit-appearance: none;
 }
 
 ::-webkit-input-placeholder {
@@ -144,7 +144,6 @@ footer .flexBox span.back:first-child {
     line-height: calc(6.8rem - 2px);
     height: calc(6.8rem - 2px);
 }
-
 
 footer .flexBox span:first-child {
     margin-right: 2.5rem;
@@ -762,8 +761,8 @@ body>article .btnBox:nth-child(5) ul li:nth-child(1) .pic {
     vertical-align: middle;
 }
 
-.list ul li.noneData span{
-    color: #3f3f3f;    
+.list ul li.noneData span {
+    color: #3f3f3f;
 }
 
 .list ul li .main .mes h3 {
@@ -1051,6 +1050,11 @@ body article .new .newBox li textarea {
     width: 100%;
 }
 
+body article .new .newBox li.inputBox {
+    position: relative;
+    overflow: hidden;
+}
+
 body article .new .newBox li.inputBox span {
     font-size: 3rem;
     line-height: 5rem;
@@ -1059,6 +1063,51 @@ body article .new .newBox li.inputBox span {
 body article .new .newBox li.inputBox #uploadImg {
     display: block;
     max-height: 10rem;
+}
+
+body article .new .newBox li.inputBox #start {
+    /* visibility:hidden; */
+    /* position: absolute;
+    top: 0.8rem;
+    right: 0; */
+    margin-left: 4rem;
+    width: calc( 100% - 12rem - 4rem);
+    text-align: right;
+}
+
+body article .new .newBox li.inputBox #start::after {
+    content: '请选择>';
+    float: right;
+}
+
+body article .new .newBox li.inputBox #start.noText::after {
+    content: '';
+}
+
+body article .new .newBox li.inputBox #startVal {
+    display: none;
+    /* position: absolute;
+    background: #fff;
+    z-index: 10;
+    width: calc( 100% - 12rem);
+    text-align: right;
+    display: inline-block;
+    font-size: 3rem;
+    line-height: 5rem;
+    height: 5rem;
+    vertical-align: middle;
+    font-style: normal; */
+}
+
+body article .new .newBox li input[type="radio"]:checked {
+    background: #3d8cf8;
+    width: 2rem;
+    height: 2rem;
+}
+
+body article .new .newBox li input[type="radio"] {
+    width: 2rem;
+    height: 2rem;
 }
 
 body article .new .newBox li.inputBox input {
@@ -1646,7 +1695,8 @@ body article .myMes li.changeMes {
     margin-bottom: 1rem;
     position: relative;
 }
-body article .myMes li.changeMes.wrong::after{
+
+body article .myMes li.changeMes.wrong::after {
     content: '请填写正确格式';
     position: absolute;
     top: 1.8rem;
@@ -1655,10 +1705,9 @@ body article .myMes li.changeMes.wrong::after{
     color: rgb(216, 23, 17);
 }
 
-body article .myMes li.changeMes.wrong input{
+body article .myMes li.changeMes.wrong input {
     color: rgb(216, 23, 17);
 }
-
 
 body article .myMes li.changeMes input {
     font-size: 3rem;
@@ -1899,7 +1948,6 @@ body article .newMeet input {
 #timeChoose ul.left li:last-child {
     border-bottom: 0;
 }
-
 
 #timeChoose ul.right {
     width: calc(100% - 8rem);

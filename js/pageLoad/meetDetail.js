@@ -1,4 +1,6 @@
 (() => {
+    tools.stopZoomInIos();
+    
     const err = new Err(errMes);
     const tipBox = new Err(canNext);
 

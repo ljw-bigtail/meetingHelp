@@ -1,4 +1,6 @@
 (() => {
+    tools.stopZoomInIos();
+    
     let userData = tools.getUserFormCookie();
     tools.noUser(userData.username);
 

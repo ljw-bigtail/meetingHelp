@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,36 @@
     <title></title>
     <link rel="stylesheet" href="css/re.css">
     <link rel="stylesheet" href="css/main.css">
+    <script src="js/profile.js"></script>    
+    <script src="js/tools.js"></script>
+    <script>
+        // 演示假账号
+        let testUser = tools.getQuery('testUser');
+        if (testUser == 'admin') {
+            tools.setCookie('username', 'admin', save_day);
+            tools.setCookie('phone', '17609234866', save_day);
+            tools.setCookie('email', '747624075@qq.com', save_day);
+            tools.setCookie('desc', 'kpfwogrownswbbdj', save_day);
+            tools.setCookie('department', '', save_day);
+            tools.setCookie('initiate', 0, save_day);
+            tools.setCookie('level', 0, save_day);
+            // 跳转至主页
+            window.location.href = './index.html';
+        } else if (testUser == 'test01') {
+            //存cookie
+            tools.setCookie('username', 'test01', save_day);
+            tools.setCookie('phone', '15699998888', save_day);
+            tools.setCookie('email', '1@qq.com', save_day);
+            tools.setCookie('desc', '', save_day);
+            tools.setCookie('department', "技术部", save_day);
+            tools.setCookie('initiate', 0, save_day);
+            tools.setCookie('level', 1, save_day);
+            // 跳转至主页
+            window.location.href = './index.html';
+        }
+    </script>
 </head>
+
 <body>
     <div class="loginBG">
         <div class="loginBox">
@@ -24,12 +54,11 @@
 
     <div id="errMes"></div>
 
-    <script src="js/profile.js"></script>
-    <script src="js/tools.js"></script>
     <script src="js/err.js"></script>
     <script src="js/event.js"></script>
     <script src="js/ajaxFunc.js"></script>
     <!-- <script src="js/main.js"></script> -->
     <script src="js/pageLoad/login.js"></script>
 </body>
+
 </html>

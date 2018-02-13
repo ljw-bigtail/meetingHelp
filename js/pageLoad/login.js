@@ -1,4 +1,6 @@
 (function () {
+    tools.stopZoomInIos();
+    
     const err = new Err(errMes);
 
     let username = document.querySelector('#username');
@@ -59,5 +61,4 @@
             err.errMesShow(req.mes);
         });
     });
-    // 6ECSwj
 })()

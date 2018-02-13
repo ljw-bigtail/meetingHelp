@@ -1,4 +1,6 @@
 (() => {
+    tools.stopZoomInIos();
+    
     const err = new Err(errMes);
 
     let username = tools.getCookie('username');

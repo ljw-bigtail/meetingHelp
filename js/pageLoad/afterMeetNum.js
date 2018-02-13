@@ -1,4 +1,5 @@
 (() => {
+    tools.stopZoomInIos();
     const err = new Err(errMes);
     const message = new Message(['email', 'app']);
     let userData = tools.getUserFormCookie();

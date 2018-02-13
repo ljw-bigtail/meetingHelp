@@ -1,4 +1,6 @@
 (function () {
+    tools.stopZoomInIos();
+
     // 提示信息
     const err = new Err(errMes);
     const tipBox = new Err(canNext);
@@ -89,6 +91,13 @@
     const timeChoose = document.querySelector('#timeChoose');
     const timeChooseTit = timeChoose.querySelector('.right .title');
     const timeChooseClock = timeChoose.querySelector('.right .clock');
+
+    const startVal = document.querySelector('#startVal');
+
+    // startVal.addEventListener('click', () => {
+    //     console.log('123')
+    //     start.click();
+    // });
 
     let now = new Date();
 
@@ -320,6 +329,11 @@
             start.value = '';
             return false;
         }
+
+        // 赋值给i
+        // startVal.innerHTML = start.value;
+        start.className = 'noText';
+
         err.errMesShow('请尽快选择时间并提交，抢占先机');
         ajaxTool.getRoomGap({
             'date': start.value
@@ -497,7 +511,7 @@
                     title: newMeet_admin_title,
                     mes: newMeet_admin_mes
                 }, (req) => {
-                    tools.checkState(req, '消息推送成功', '管理员的App端消息推送失败', '管理员的邮件推送失败',(mes)=>{
+                    tools.checkState(req, '消息推送成功', '管理员的App端消息推送失败', '管理员的邮件推送失败', (mes) => {
                         err.errMesShow(mes)
                     });
                 })
@@ -507,7 +521,7 @@
                     title: newMeet_admin_title,
                     mes: newMeet_admin_mes
                 }, (req) => {
-                    tools.checkState(req, '消息推送成功', '记录员的App端消息推送失败', '记录员的邮件推送失败',(mes)=>{
+                    tools.checkState(req, '消息推送成功', '记录员的App端消息推送失败', '记录员的邮件推送失败', (mes) => {
                         err.errMesShow(mes)
                     });
                 })
@@ -517,7 +531,7 @@
                     title: newMeet_admin_title,
                     mes: newMeet_admin_mes
                 }, (req) => {
-                    tools.checkState(req, '消息推送成功', '参会者的App端消息推送失败', '参会者的邮件推送失败',(mes)=>{
+                    tools.checkState(req, '消息推送成功', '参会者的App端消息推送失败', '参会者的邮件推送失败', (mes) => {
                         err.errMesShow(mes)
                     });
                 })

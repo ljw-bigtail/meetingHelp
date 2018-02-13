@@ -1,4 +1,6 @@
 (() => {
+    tools.stopZoomInIos();
+    
     let err = new Err(document.querySelector('#errMes'));
     let userData = tools.getUserFormCookie();
 

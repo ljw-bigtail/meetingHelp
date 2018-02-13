@@ -159,7 +159,7 @@ let tools = {
         }
     },
     // 校验状态数组并返回消息
-    checkState: (stateArray, mesOk, mesApp, mesEmail,callback) => {
+    checkState: (stateArray, mesOk, mesApp, mesEmail, callback) => {
         let mes = mesOk;
         let len = stateArray.length;
         let count = 0;
@@ -177,5 +177,20 @@ let tools = {
                 callback(mes)
             }
         });
+    },
+    stopZoomInIos: () => {
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) {
+                event.preventDefault();
+            }
+        })
+        var lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            var now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false)
     }
 }
