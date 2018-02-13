@@ -331,8 +331,7 @@
         }
 
         // 赋值给i
-        // startVal.innerHTML = start.value;
-        start.className = 'noText';
+        startVal.innerHTML = start.value;
 
         err.errMesShow('请尽快选择时间并提交，抢占先机');
         ajaxTool.getRoomGap({

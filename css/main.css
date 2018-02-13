@@ -1066,37 +1066,36 @@ body article .new .newBox li.inputBox #uploadImg {
 }
 
 body article .new .newBox li.inputBox #start {
-    /* visibility:hidden; */
-    /* position: absolute;
-    top: 0.8rem;
-    right: 0; */
     margin-left: 4rem;
     width: calc( 100% - 12rem - 4rem);
     text-align: right;
+    color: transparent;
 }
 
-body article .new .newBox li.inputBox #start::after {
-    content: '请选择>';
-    float: right;
+body article .new .newBox li.inputBox #startVal::after {
+    content: '>';
+    position: absolute;
+    display: inline-block;
+    /* transform: rotateZ(90deg); */
+    right: -3rem;
+    font-family: serif;
+    color: #aaaaaa;
+    font-weight: bold;
 }
 
-body article .new .newBox li.inputBox #start.noText::after {
-    content: '';
-}
 
 body article .new .newBox li.inputBox #startVal {
-    display: none;
-    /* position: absolute;
+    position: absolute;
     background: #fff;
     z-index: 10;
-    width: calc( 100% - 12rem);
+    margin-left: 4rem;
+    top: 2rem;
+    right: 0;
     text-align: right;
-    display: inline-block;
     font-size: 3rem;
-    line-height: 5rem;
-    height: 5rem;
+    right: 4rem;
     vertical-align: middle;
-    font-style: normal; */
+    font-style: normal;
 }
 
 body article .new .newBox li input[type="radio"]:checked {
