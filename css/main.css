@@ -116,7 +116,6 @@ input:focus {
 }
 
 footer {
-    /* height: 8rem; */
     background: #ffffff;
     overflow: hidden;
 }
@@ -132,7 +131,6 @@ footer .flexBox span {
     line-height: 6.8rem;
     height: 6.8rem;
     font-size: 3rem;
-    /* margin: 0 1rem; */
     margin-top: -1px;
     border: 1px solid #d8d8d8;
     border-radius: 1rem;
@@ -154,8 +152,6 @@ footer .flexBox span.success {
     color: #ffffff;
     margin-top: 0;
     border: none;
-    /* line-height: calc(6.8rem - 2px); */
-    /* height: calc(6.8rem - 2px); */
 }
 
 footer .flexBox span.success a {
@@ -167,8 +163,6 @@ footer .flexBox span.warning {
     color: #ffffff;
     margin-top: 0;
     border: none;
-    /* line-height: calc(6.8rem - 2px); */
-    /* height: calc(6.8rem - 2px); */
 }
 
 footer .flexBox span.warning a {
@@ -180,15 +174,11 @@ footer .flexBox span.wrong {
     color: rgb(216, 23, 17);
     margin-top: 0;
     border: 1px solid rgb(216, 23, 17);
-    /* line-height: calc(6.8rem - 2px); */
-    /* height: calc(6.8rem - 2px); */
 }
 
 footer .flexBox span.wrong a {
     color: #ffffff;
 }
-
-.userPic {}
 
 .userPic li {
     font-size: 2.6rem;
@@ -207,7 +197,6 @@ footer .flexBox span.wrong a {
     width: 100%;
     display: block;
     border-radius: 50%;
-    /* border: 1px solid #cccccc; */
     line-height: 9.6rem;
     text-align: center;
     color: #ffffff;
@@ -583,7 +572,7 @@ body>header .back {
     background: transparent;
     line-height: 8rem;
     color: #ffffff;
-    font-family: serif;
+    font-family: 'serif';
     font-weight: bold;
     padding: 0;
 }
@@ -609,7 +598,6 @@ body>article {
 
 body>article .tip {
     overflow: hidden;
-    /* background: #4C4F58; */
     background: #fff;
     height: calc( 28% - 8rem);
     min-height: 16rem;
@@ -740,7 +728,6 @@ body>article .btnBox:nth-child(5) ul li:nth-child(1) .pic {
     display: block;
     background: #ffffff;
     border: 1px solid #d8d8d8;
-    /* border-radius: .5rem; */
 }
 
 .list ul li:last-child {
@@ -750,7 +737,6 @@ body>article .btnBox:nth-child(5) ul li:nth-child(1) .pic {
 .list ul li .main {
     font-size: 0rem;
     padding: 1rem 2rem;
-    /* border-bottom: 1px solid #d8d8d8; */
 }
 
 .list ul li .main .mes {
@@ -782,7 +768,6 @@ body>article .btnBox:nth-child(5) ul li:nth-child(1) .pic {
 
 .list ul li .main .mes+span.showBtn {
     display: inline-block;
-    /* color: rgb(216, 23, 17); */
 }
 
 .list ul li .main .mes h3 {
@@ -974,7 +959,6 @@ body article .roomState .mes ul li span.roomDevice i::before {
 }
 
 body article .roomState .changeBox {
-    /* margin: 1.5rem 0; */
     display: none;
 }
 
@@ -1076,7 +1060,6 @@ body article .new .newBox li.inputBox #startVal::after {
     content: '>';
     position: absolute;
     display: inline-block;
-    /* transform: rotateZ(90deg); */
     right: -3rem;
     font-family: serif;
     color: #aaaaaa;
@@ -1126,7 +1109,6 @@ body article .new .newBox li.inputBox #newsPicBox span{
     height: 100%;
     width: auto;
     margin: 0 4rem;
-    /* padding: 0 3rem; */
     text-align: center;
     background: #3d8cf8;
     color: #ffffff;
@@ -1143,8 +1125,6 @@ body article .new .newBox li.inputBox #newsPic{
 
 body article .new .newBox li.inputBox input#upLoadPicBtn {
     width: 12rem;
-    /* width: auto; */
-    /* padding: 0 3rem; */
     text-align: center;
     background: #3d8cf8;
     color: #ffffff;
@@ -1212,7 +1192,6 @@ body article .meetMain footer {
 
 body article .meetMain .mesPeople img {
     width: 2.4rem;
-    /* margin-right: 1rem; */
     vertical-align: sub;
 }
 
@@ -1231,7 +1210,6 @@ body article .meetMain h3 {
     font-size: 3.4rem;
     color: #3f3f3f;
     line-height: 4rem;
-    /* margin-top: 2rem; */
     margin-bottom: 1rem;
 }
 
@@ -1262,10 +1240,6 @@ body article .meetMain h5 {
     line-height: 4rem;
     font-weight: normal;
 }
-
-/* body article .meetMain h5 a {
-    border-bottom: 1px solid #d8d8d8;
-} */
 
 body article .meetMain ul:not(.userPic) {
     display: flex;
@@ -1300,7 +1274,6 @@ body article .meetMain ul li.colorBlue span {
 
 footer .inputBox {
     border-top: 1px solid #d8d8d8;
-    /* background: #E8E8E8; */
     font-size: 0;
     padding: 1.6rem 2.5rem;
     position: relative;
@@ -1318,7 +1291,6 @@ footer .inputBox textarea {
     padding: 0 1rem;
     resize: none;
     vertical-align: top;
-    /* display: none; */
     visibility: hidden;
     font-size: 2.8rem;
 }
@@ -1398,19 +1370,6 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
     height: calc(6.8rem - 2px);
 }
 
-/* footer .inputBox button {
-    vertical-align: top;
-    width: calc( 30% - 4rem);
-    font-size: 2.4rem;
-    background: #ffffff;
-    margin: 0;
-    padding: 0;
-    margin-left: 1rem;
-    border: 1px solid #cccccc;
-    height: 6rem;
-    border-radius: 1rem;
-} */
-
 .writeMain {
     height: 100%;
 }
@@ -1451,7 +1410,6 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
     left: 4rem;
     right: 4rem;
     background: #ffffff;
-    /* border: 1px solid #d8d8d8; */
     border-radius: 1rem;
     overflow: hidden;
 }
@@ -1610,7 +1568,6 @@ footer .inputBox textarea.writeIn+.mesFooter .flexBox span {
 
 .meetPeopleTab .tabMain .userPic li {
     padding: 1rem;
-    /* margin: 1px .5rem; */
     border: 0;
     overflow: hidden;
     position: relative;
@@ -1883,12 +1840,6 @@ body article .newMeet input {
     display: none;
     max-height: 30rem;
     overflow-y: scroll;
-}
-
-#showRoom ul {
-    /* display: inline-block;
-    width: calc(100% - 12rem); */
-    /* vertical-align: top; */
 }
 
 #showRoom>span {
