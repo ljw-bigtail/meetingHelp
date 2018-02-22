@@ -1115,12 +1115,36 @@ body article .new .newBox li.inputBox input {
     text-align: right;
 }
 
-body article .new .newBox li.inputBox input#newsPic {
-    width: calc( 100% - 12rem - 12rem);
+body article .new .newBox li.inputBox #newsPicBox {
+    width: calc( 100% - 12rem - 12rem );
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+body article .new .newBox li.inputBox #newsPicBox span{
+    display: block;
+    height: 100%;
+    width: auto;
+    margin: 0 4rem;
+    /* padding: 0 3rem; */
+    text-align: center;
+    background: #3d8cf8;
+    color: #ffffff;
+    border-radius: 1rem;
+}
+body article .new .newBox li.inputBox #newsPic{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;    
+    opacity: 0;
 }
 
 body article .new .newBox li.inputBox input#upLoadPicBtn {
     width: 12rem;
+    /* width: auto; */
+    /* padding: 0 3rem; */
     text-align: center;
     background: #3d8cf8;
     color: #ffffff;

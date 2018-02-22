@@ -294,6 +294,11 @@
     // 问题：live server后，上传文件后会刷新页面
     const upLoadPicBtn = document.querySelector('#upLoadPicBtn');
     const uploadImg = document.querySelector('#uploadImg');
+
+    newsPic.addEventListener('change',()=>{
+        upLoadPicBtn.click();
+    });
+
     upLoadPicBtn.addEventListener('click', () => {
         if (!newsPic.files.length) {
             alert('请选择文件后再上传！');
