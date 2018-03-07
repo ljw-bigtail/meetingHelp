@@ -31,7 +31,7 @@
     // let chooseOneBox = document.querySelectorAll('.chooseBox');
     // let chooseOneBtnList = document.querySelectorAll('.chooseBox .btn');
     let chooseListBox = document.querySelectorAll('.chooseList');
-    let chooseListBtnList = document.querySelectorAll('.chooseList .btn');
+    let chooseListBtnList = document.querySelectorAll('.chooseList .val');
     let selectChoose = document.querySelectorAll('.selectBox .choose');
     // 设置返回按钮
     events.goBack(backList);

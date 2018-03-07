@@ -225,6 +225,7 @@ div#errMes {
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     font-weight: bold;
+    z-index: 10000;
 }
 
 div.errMes {
@@ -293,6 +294,7 @@ div#canNext {
     bottom: 0;
     background: rgba(200, 200, 200, .8);
     font-size: 0;
+    z-index: 1000;
 }
 
 #user.openUserBox {
@@ -569,12 +571,17 @@ body>header .back {
     height: 8rem;
     border: 0;
     font-size: 3.6rem;
-    background: transparent;
     line-height: 8rem;
-    color: #ffffff;
     font-family: 'serif';
     font-weight: bold;
     padding: 0;
+    color: transparent;
+    background: url(../img/back.png) no-repeat center center;
+    background-size: 50%;
+}
+
+body>header .noBack{
+    background:transparent;
 }
 
 body>header .title {
@@ -1054,6 +1061,7 @@ body article .new .newBox li.inputBox #start {
     width: calc( 100% - 12rem - 4rem);
     text-align: right;
     color: transparent;
+    background: transparent;
 }
 
 body article .new .newBox li.inputBox #startVal::after {
@@ -1066,14 +1074,12 @@ body article .new .newBox li.inputBox #startVal::after {
     font-weight: bold;
 }
 
-
 body article .new .newBox li.inputBox #startVal {
     position: absolute;
     background: #fff;
     z-index: 10;
     margin-left: 4rem;
     top: 2rem;
-    right: 0;
     text-align: right;
     font-size: 3rem;
     right: 4rem;
@@ -1085,11 +1091,13 @@ body article .new .newBox li input[type="radio"]:checked {
     background: #3d8cf8;
     width: 2rem;
     height: 2rem;
+    border-color: #3d8cf8;
 }
 
 body article .new .newBox li input[type="radio"] {
     width: 2rem;
     height: 2rem;
+    border: 1px solid #3f3f3f;
 }
 
 body article .new .newBox li.inputBox input {
@@ -1099,12 +1107,13 @@ body article .new .newBox li.inputBox input {
 }
 
 body article .new .newBox li.inputBox #newsPicBox {
-    width: calc( 100% - 12rem - 12rem );
+    width: calc( 100% - 12rem - 12rem);
     display: inline-block;
     position: relative;
     vertical-align: middle;
 }
-body article .new .newBox li.inputBox #newsPicBox span{
+
+body article .new .newBox li.inputBox #newsPicBox span {
     display: block;
     height: 100%;
     width: auto;
@@ -1114,12 +1123,13 @@ body article .new .newBox li.inputBox #newsPicBox span{
     color: #ffffff;
     border-radius: 1rem;
 }
-body article .new .newBox li.inputBox #newsPic{
+
+body article .new .newBox li.inputBox #newsPic {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
-    bottom: 0;    
+    bottom: 0;
     opacity: 0;
 }
 
